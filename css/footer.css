@@ -45,6 +45,6 @@
   }
   .footer-contato li {
     font-size: 1.5rem;
-    justify-content: initial;
+    justify-content: start;
   }
 }
