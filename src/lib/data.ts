@@ -21,21 +21,21 @@ export function waLink(
 
 export const SERVICES = [
   {
-    title: "Landing Page de Conversão",
+    title: "Página para Captar Clientes",
     blurb:
-      "Página única, focada em transformar quem chega do Instagram em contato ou agendamento. Cada seção tem um trabalho a fazer.",
+      "Página única, focada em transformar quem chega do Instagram em contato ou agendamento direto pelo WhatsApp.",
     points: ["Estrutura que convence", "Botão de WhatsApp sempre à mão", "Pronta para o Google"],
   },
   {
     title: "Site Institucional",
     blurb:
-      "Presença completa para quem precisa apresentar serviços, equipe e diferenciais com profundidade — sem depender de plataformas.",
+      "Presença online completa para apresentar seus serviços, equipe e diferenciais — sem pagar mensalidade de plataforma.",
     points: ["Várias seções sob medida", "Identidade fiel à sua marca", "Rápido em qualquer celular"],
   },
   {
-    title: "Linktree Próprio",
+    title: "Link da Bio com a Sua Cara",
     blurb:
-      "Seu bio-link no seu domínio, com a sua cara — não a do Linktree. Inclusos sem custo extra em qualquer projeto de site.",
+      "Substitua o link genérico da bio do Instagram por uma página no seu domínio, com a sua identidade visual. Incluso sem custo extra em qualquer projeto.",
     points: ["100% na sua identidade", "Sem branding de terceiro", "No seu próprio domínio"],
   },
 ];
@@ -44,7 +44,7 @@ export const DIFFERENTIATORS = [
   {
     icon: "gauge",
     title: "3 a 5× mais rápido",
-    desc: "Código puro (React + Vite) carrega muito antes que WordPress ou Wix. Melhor experiência no celular e melhor ranqueamento no Google.",
+    desc: "Site feito do zero carrega muito antes que plataformas genéricas. Melhor experiência no celular e melhor ranqueamento no Google.",
   },
   {
     icon: "shield",
@@ -59,7 +59,7 @@ export const DIFFERENTIATORS = [
   {
     icon: "key",
     title: "O ativo é seu",
-    desc: "O código e o domínio pertencem a você, não a uma plataforma que pode mudar de preço ou encerrar amanhã.",
+    desc: "O código e o domínio pertencem a você. Sem dependência de plataforma — o site fica disponível enquanto você quiser.",
   },
 ];
 
@@ -100,18 +100,18 @@ export const WESEN = {
   challenge:
     "Uma clínica com identidade visual forte e conteúdo de qualidade, mas presa a um Linktree genérico como único elo entre o Instagram e o agendamento — invisível no Google e sem uma página que apresentasse os serviços com profundidade.",
   solution:
-    "Uma landing page institucional de 8 seções em código próprio (React + Vite), desenhada para converter visitantes em pacientes agendados, mais um bio-link 100% na identidade da clínica substituindo o Linktree.",
+    "Um site completo de 8 seções, desenhado para converter visitantes em pacientes agendados, mais um bio-link 100% na identidade da clínica substituindo o Linktree.",
   deliverables: [
-    "Landing page de 8 seções estratégicas",
+    "Site completo de 8 seções estratégicas",
     "Linktree customizado no mesmo domínio",
     "Design fiel à paleta e tipografia da marca",
     "Mobile-first (80%+ dos acessos no celular)",
     "Botão de WhatsApp flutuante para agendamento",
-    "SEO básico: título, meta tags e Open Graph",
+    "Configurado para aparecer no Google (SEO)",
   ],
   // A tabela de diagnóstico — a peça-assinatura, vinda direto da proposta.
   beforeAfter: [
-    { area: "Site próprio", before: "Inexistente", after: "LP completa com 8 seções" },
+    { area: "Site próprio", before: "Inexistente", after: "Site completo com 8 seções" },
     { area: "Linktree", before: "Plataforma genérica", after: "Página própria com a marca" },
     { area: "Conversão", before: "Instagram → WhatsApp sem contexto", after: "Instagram → site → WhatsApp" },
     { area: "Google", before: "Invisível nas buscas", after: "Página indexável e otimizada" },
@@ -129,3 +129,47 @@ export const TESTIMONIAL = {
   author: "Dra. Letícia",
   role: "Wesen Clínica",
 };
+
+// { client, segment, type: "site"|"lp"|"bio-link", desc, tags: string[], liveUrl: string }
+export const PROJECTS = [
+  {
+    client: "Wesen Clínica",
+    segment: "Medicina de Família · Joinville",
+    type: "site" as const,
+    desc: "Site completo de 8 seções para uma clínica de medicina de família — do Instagram direto ao agendamento, com identidade visual própria.",
+    tags: ["Site", "Saúde"],
+    liveUrl: "", // ← cole a URL quando o site estiver publicado
+  },
+  {
+    client: "Dra. Fabiana",
+    segment: "Cirurgia Reparadora · Joinville",
+    type: "lp" as const,
+    desc: "Página focada em esclarecer e converter pacientes que buscam cirurgia reparadora pós-bariátrica negada pelo plano de saúde.",
+    tags: ["Página", "Saúde"],
+    liveUrl: "",
+  },
+  {
+    client: "Giba Klein",
+    segment: "Educação · Marcenaria",
+    type: "lp" as const,
+    desc: "Página de inscrição para imersão presencial voltada a marceneiros e lojistas — com estrutura de autoridade e prova social.",
+    tags: ["Página", "Evento"],
+    liveUrl: "",
+  },
+  {
+    client: "Bem Estar Bucal",
+    segment: "Odontologia · Joinville",
+    type: "lp" as const,
+    desc: "Páginas focadas em tratamentos específicos — lentes, facetas e implantes — para converter visitantes do Instagram em consultas.",
+    tags: ["Página", "Saúde"],
+    liveUrl: "",
+  },
+  {
+    client: "De Mattia Advogados",
+    segment: "Advocacia · Joinville",
+    type: "site" as const,
+    desc: "Conceito de redesign para escritório de advocacia — identidade visual premium que transmite confiança e experiência.",
+    tags: ["Site", "Jurídico"],
+    liveUrl: "",
+  },
+];

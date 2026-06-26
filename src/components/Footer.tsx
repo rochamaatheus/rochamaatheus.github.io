@@ -1,5 +1,7 @@
+import { Instagram } from "lucide-react";
 import { GemMark } from "./GemMark";
-import { CONTACT } from "../lib/data";
+import { WhatsAppIcon } from "./WhatsAppIcon";
+import { CONTACT, waLink } from "../lib/data";
 
 export function Footer() {
   return (
@@ -15,9 +17,28 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="font-mono text-xs text-ink-dim">
-          Feito em código próprio — React + Vite + Tailwind.
-        </p>
+        <div className="flex items-center gap-5">
+          <a
+            href={`https://instagram.com/${CONTACT.instagram}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="flex items-center gap-1.5 font-mono text-xs text-ink-dim transition-colors hover:text-copper-300"
+          >
+            <Instagram className="h-4 w-4" />
+            @{CONTACT.instagram}
+          </a>
+          <a
+            href={waLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp"
+            className="flex items-center gap-1.5 font-mono text-xs text-ink-dim transition-colors hover:text-copper-300"
+          >
+            <WhatsAppIcon className="h-4 w-4" />
+            WhatsApp
+          </a>
+        </div>
       </div>
     </footer>
   );

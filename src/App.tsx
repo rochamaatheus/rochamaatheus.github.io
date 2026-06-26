@@ -2,6 +2,7 @@ import { Nav } from "./components/Nav";
 import { Hero } from "./components/Hero";
 import { Manifesto } from "./components/Manifesto";
 import { Services } from "./components/Services";
+import { Projects } from "./components/Projects";
 import { CaseWesen } from "./components/CaseWesen";
 import { Differentiators } from "./components/Differentiators";
 import { Process } from "./components/Process";
@@ -18,6 +19,7 @@ export default function App() {
         <Hero />
         <Manifesto />
         <Services />
+        <Projects />
         <CaseWesen />
         <Differentiators />
         <Process />

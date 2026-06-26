@@ -60,9 +60,9 @@ export function Hero() {
           variants={item}
           className="mt-7 max-w-xl text-lg leading-relaxed text-ink-dim"
         >
-          Sites próprios, feitos à mão em código (React + Vite) — rápidos no Google, fiéis à sua
-          identidade e <span className="text-ink">100% seus</span>. Sem templates, sem WordPress,
-          sem amarras.
+          Faço sites do zero para o seu negócio — sem template genérico, sem mensalidade de
+          plataforma. Rápido no Google, com a cara da sua marca e{" "}
+          <span className="text-ink">100% seu</span>.
         </motion.p>
 
         <motion.div variants={item} className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
