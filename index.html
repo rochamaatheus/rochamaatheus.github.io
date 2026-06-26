@@ -1,32 +1,868 @@
-<!doctype html>
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/gem.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#14302a" />
-    <title>Matheus Rocha · Desenvolvimento Web — Joinville, SC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Matheus Rocha — Sites, Sistemas e IA para o seu Negócio · Joinville, SC</title>
     <meta
       name="description"
-      content="Sites próprios em código (React + Vite) para clínicas e profissionais que tratam a presença digital como parte do cuidado. Rápidos no Google, fiéis à sua identidade e 100% seus."
+      content="Crio sites, sistemas e atendentes com IA do zero para empresas em Joinville e região. Sem template genérico, sem agência no meio. Você fala direto comigo."
     />
-    <meta property="og:title" content="Matheus Rocha · Desenvolvimento Web" />
+    <meta name="theme-color" content="#0a0a12" />
+    <meta property="og:title" content="Matheus Rocha — Sites e Sistemas para o seu Negócio" />
     <meta
       property="og:description"
-      content="Presença digital à altura de quem cuida de pessoas. Sites sob medida, em código próprio."
+      content="Sites que aparecem no Google, sistemas que organizam sua operação e atendentes com IA para o seu WhatsApp. Tudo feito do zero, com a cara da sua empresa."
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="pt_BR" />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide pinado na versão 0.460.0 — evita quebras de CDN com @latest -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: '#0a0a12',
+              surface: '#12101e',
+              surface2: '#181527',
+              card: '#1a1730',
+              line: '#272340',
+              ink: '#ece9fb',
+              dim: '#9d96bf',
+              violet: { 300: '#c7b6ff', 400: '#a585ff', 500: '#8a63ff', 600: '#7341f0' },
+              fuchsia: { 400: '#d27bff', 500: '#c668ff' },
+            },
+            fontFamily: {
+              display: ['Space Grotesk', 'sans-serif'],
+              sans: ['DM Sans', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html { background-color: #0a0a12; }
+
+      body {
+        font-family: 'DM Sans', sans-serif;
+        color: #ece9fb;
+        background-color: #0a0a12;
+        -webkit-tap-highlight-color: transparent;
+        overflow-x: hidden;
+      }
+
+      /* Atmosfera: brilhos violeta + grade sutil */
+      .bg-atmosphere {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-image:
+          radial-gradient(40rem 40rem at 80% -5%, rgba(138, 99, 255, 0.16), transparent 60%),
+          radial-gradient(36rem 36rem at 0% 30%, rgba(198, 104, 255, 0.1), transparent 60%),
+          linear-gradient(rgba(124, 92, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(124, 92, 255, 0.04) 1px, transparent 1px);
+        background-size: 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+      }
+
+      .gradient-text {
+        background: linear-gradient(100deg, #a585ff 0%, #c668ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition:
+          opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: none;
+      }
+
+      .glass {
+        background: rgba(18, 16, 30, 0.72);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+
+      .card-hover {
+        transition:
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        border-color: rgba(138, 99, 255, 0.55);
+        box-shadow: 0 18px 50px -20px rgba(138, 99, 255, 0.45);
+      }
+
+      .cursor-blink {
+        animation: blink 1.1s step-end infinite;
+      }
+      @keyframes blink { 50% { opacity: 0; } }
+
+      .marquee-track {
+        display: flex;
+        white-space: nowrap;
+        will-change: transform;
+        animation: marquee 28s linear infinite;
+      }
+      @keyframes marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+      }
+
+      #mobile-menu {
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(100%);
+      }
+      #mobile-menu.open { transform: translateX(0); }
+
+      /* Modal de demo ao vivo */
+      #demo-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: rgba(5, 4, 12, 0.82);
+        backdrop-filter: blur(8px);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      #demo-modal.active { display: flex; }
+      .demo-window {
+        width: 100%;
+        max-width: 1280px;
+        height: 88vh;
+        background: #0a0a12;
+        border: 1px solid #272340;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 40px 120px -30px rgba(138, 99, 255, 0.5);
+      }
+      .demo-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 12px 16px;
+        background: #12101e;
+        border-bottom: 1px solid #272340;
+        flex-shrink: 0;
+      }
+      .demo-content {
+        flex: 1;
+        position: relative;
+        background: #fff;
+        min-height: 0;
+      }
+      .demo-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+      }
+      #demo-loading {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0a0a12;
+        color: #a585ff;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        gap: 10px;
+      }
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(138, 99, 255, 0.3);
+        border-top-color: #8a63ff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      /* Botão flutuante WhatsApp */
+      .wa-fab {
+        position: fixed;
+        bottom: 24px;
+        right: 20px;
+        z-index: 900;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #25d366;
+        color: #fff;
+        border-radius: 9999px;
+        padding: 14px 20px;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45);
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .wa-fab:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 36px rgba(37, 211, 102, 0.55);
+      }
+      .wa-fab svg { flex-shrink: 0; }
+      @media (max-width: 480px) {
+        .wa-fab span { display: none; }
+        .wa-fab { padding: 14px; border-radius: 50%; }
+      }
+
+      @media (max-width: 768px) {
+        #demo-modal { padding: 0; }
+        .demo-window {
+          max-width: 100%;
+          height: 100vh;
+          height: 100dvh;
+          border: none;
+          border-radius: 0;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .reveal { transition: none; opacity: 1; transform: none; }
+        .marquee-track { animation: none; }
+        .cursor-blink { animation: none; }
+        .card-hover:hover { transform: none; }
+      }
+
+      ::selection { background: #8a63ff; color: #0a0a12; }
+      :focus-visible {
+        outline: 2px solid #a585ff;
+        outline-offset: 3px;
+        border-radius: 8px;
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+
+  <body class="font-sans">
+    <div class="bg-atmosphere" aria-hidden="true"></div>
+
+    <!-- NAV -->
+    <header class="fixed top-0 inset-x-0 z-50">
+      <nav
+        id="nav"
+        class="mx-auto max-w-6xl my-3 md:my-4 grid grid-cols-[1fr_auto_1fr] items-center rounded-2xl border border-transparent px-4 py-3 md:px-5 transition-all duration-300"
+      >
+        <!-- Col 1: Logo — alinhado à esquerda -->
+        <a href="#topo" class="flex items-center gap-2.5 justify-self-start" aria-label="Início — Matheus Rocha">
+          <svg viewBox="0 0 48 48" fill="none" class="h-8 w-8" aria-hidden="true">
+            <defs>
+              <linearGradient id="mr-nav" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8a63ff" /><stop offset="1" stop-color="#c668ff" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="44" height="44" rx="13" fill="#120f1f" stroke="url(#mr-nav)" stroke-width="2" />
+            <path d="M14 33 V16 L24 27 L34 16 V33" fill="none" stroke="url(#mr-nav)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="34" cy="32.5" r="1.9" fill="#c668ff" />
+          </svg>
+          <span class="font-display font-bold text-lg tracking-tight text-ink">Matheus Rocha</span>
+        </a>
+
+        <!-- Col 2: Links — centralizados de verdade -->
+        <div class="hidden md:flex items-center justify-center gap-8 text-sm text-dim">
+          <a href="#servicos" class="hover:text-violet-300 transition-colors">Serviços</a>
+          <a href="#projetos" class="hover:text-violet-300 transition-colors">Projetos</a>
+          <a href="#contato" class="hover:text-violet-300 transition-colors">Contato</a>
+        </div>
+
+        <!-- Col 3: Ação — alinhada à direita -->
+        <div class="flex items-center justify-end gap-3">
+          <a
+            href="#contato"
+            class="hidden sm:inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:-translate-y-0.5 hover:bg-violet-400"
+          >
+            Fale comigo
+          </a>
+
+          <button
+            id="menu-toggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            class="md:hidden grid h-11 w-11 place-items-center rounded-xl border border-line text-ink transition-colors hover:border-violet-400"
+          >
+            <i data-lucide="menu" class="h-6 w-6" id="menu-icon"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- MENU MOBILE -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 z-40 flex flex-col justify-center gap-3 px-8 glass md:hidden"
+      aria-hidden="true"
+    >
+      <a href="#servicos" class="mobile-link font-display text-3xl font-semibold text-ink py-2">Serviços</a>
+      <a href="#projetos" class="mobile-link font-display text-3xl font-semibold text-ink py-2">Projetos</a>
+      <a href="#contato" class="mobile-link font-display text-3xl font-semibold text-ink py-2">Contato</a>
+      <div class="mt-8 flex gap-3">
+        <a href="https://github.com/rochamaatheus" target="_blank" rel="noopener" aria-label="GitHub"
+           class="grid h-12 w-12 place-items-center rounded-xl border border-line text-ink transition-colors hover:text-violet-300 hover:border-violet-400">
+          <i data-lucide="github" class="h-5 w-5"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/matheus-rocha-269870234/" target="_blank" rel="noopener" aria-label="LinkedIn"
+           class="grid h-12 w-12 place-items-center rounded-xl border border-line text-ink transition-colors hover:text-violet-300 hover:border-violet-400">
+          <i data-lucide="linkedin" class="h-5 w-5"></i>
+        </a>
+        <a href="https://www.instagram.com/rocha.maatheus/" target="_blank" rel="noopener" aria-label="Instagram"
+           class="grid h-12 w-12 place-items-center rounded-xl border border-line text-ink transition-colors hover:text-violet-300 hover:border-violet-400">
+          <i data-lucide="instagram" class="h-5 w-5"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section id="topo" class="relative px-5 pt-28 pb-16 md:pt-40 md:pb-24">
+      <div class="mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
+        <div class="min-w-0">
+          <span class="reveal inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs uppercase tracking-[0.16em] text-violet-300">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-400 opacity-60"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-violet-400"></span>
+            </span>
+            Disponível para novos projetos · Joinville-SC
+          </span>
+
+          <h1 class="reveal font-display font-bold text-ink mt-5 leading-[1.05]" style="font-size: clamp(2.1rem, 8vw, 4.25rem)">
+            Sites, sistemas e <span class="gradient-text">atendimento com IA</span> para o seu negócio.
+          </h1>
+
+          <p class="reveal mt-6 max-w-xl text-base md:text-lg leading-relaxed text-dim">
+            Sou o Matheus. Crio do zero <span class="text-ink">sites que aparecem no Google</span>, sistemas que organizam a sua operação e atendentes com IA para o seu WhatsApp. Sem agência no meio — você fala direto comigo.
+          </p>
+
+          <div class="reveal mt-8 flex flex-col sm:flex-row gap-3">
+            <a
+              href="https://wa.me/5547999653593?text=Ol%C3%A1%20Matheus!%20Vi%20seu%20site%20e%20quero%20conversar%20sobre%20um%20projeto."
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center justify-center gap-2 rounded-full bg-violet-500 px-7 py-4 font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:-translate-y-0.5 hover:bg-violet-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Iniciar um projeto
+            </a>
+            <a
+              href="#projetos"
+              class="inline-flex items-center justify-center gap-2 rounded-full border border-line px-7 py-4 font-semibold text-ink transition-all hover:-translate-y-0.5 hover:border-violet-400 hover:text-violet-300"
+            >
+              Ver exemplos
+            </a>
+          </div>
+
+          <div class="reveal mt-8 flex items-center gap-3">
+            <a href="https://github.com/rochamaatheus" target="_blank" rel="noopener" aria-label="GitHub"
+               class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+              <i data-lucide="github" class="h-5 w-5"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/matheus-rocha-269870234/" target="_blank" rel="noopener" aria-label="LinkedIn"
+               class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+              <i data-lucide="linkedin" class="h-5 w-5"></i>
+            </a>
+            <a href="https://www.instagram.com/rocha.maatheus/" target="_blank" rel="noopener" aria-label="Instagram"
+               class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+              <i data-lucide="instagram" class="h-5 w-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Janela de código (elemento-assinatura) -->
+        <div class="reveal min-w-0">
+          <div class="rounded-2xl border border-line bg-surface/80 shadow-2xl shadow-violet-600/10 overflow-hidden min-w-0 max-w-full">
+            <div class="flex items-center gap-2 border-b border-line px-4 py-3">
+              <span class="h-3 w-3 rounded-full bg-violet-500"></span>
+              <span class="h-3 w-3 rounded-full bg-fuchsia-500"></span>
+              <span class="h-3 w-3 rounded-full bg-dim/40"></span>
+              <span class="ml-2 font-mono text-xs text-dim">matheus.ts</span>
+            </div>
+            <pre class="p-5 md:p-6 font-mono text-[13px] md:text-sm leading-relaxed overflow-x-auto"><code><span class="text-violet-400">const</span> <span class="text-ink">matheus</span> <span class="text-dim">=</span> {
+  <span class="text-violet-300">entrega</span><span class="text-dim">:</span> [<span class="text-fuchsia-400">'sites'</span>, <span class="text-fuchsia-400">'sistemas'</span>, <span class="text-fuchsia-400">'IA'</span>],
+  <span class="text-violet-300">foco</span><span class="text-dim">:</span>    <span class="text-fuchsia-400">'resultado para o seu negócio'</span>,
+  <span class="text-violet-300">base</span><span class="text-dim">:</span>    <span class="text-fuchsia-400">'Joinville, SC'</span>,
+  <span class="text-violet-300">processo</span><span class="text-dim">:</span> <span class="text-fuchsia-400">'do zero ao ar, sem intermediário'</span>,
+  <span class="text-violet-300">disponivel</span><span class="text-dim">:</span> <span class="text-violet-400">true</span>,
+}<span class="text-violet-400 cursor-blink">▍</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE STACK -->
+    <div class="relative border-y border-line bg-surface/50 py-4 overflow-hidden" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="flex items-center">
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Sites</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Sistemas</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">IA no WhatsApp</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Painéis</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Automação</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">SEO</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Design</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Joinville, SC</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Do zero ao ar</span><span class="text-violet-500">◆</span>
+        </span>
+        <span class="flex items-center" aria-hidden="true">
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Sites</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Sistemas</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">IA no WhatsApp</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Painéis</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Automação</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">SEO</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Design</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Joinville, SC</span><span class="text-violet-500">◆</span>
+          <span class="mx-6 font-display text-xl md:text-2xl font-semibold text-dim">Do zero ao ar</span><span class="text-violet-500">◆</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="px-5 py-20 md:py-28">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal max-w-2xl">
+          <span class="font-mono text-xs uppercase tracking-[0.18em] text-violet-300">O que eu faço</span>
+          <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(2rem, 5vw, 3rem)">
+            O que o seu negócio precisa — entregue do início ao fim.
+          </h2>
+          <p class="mt-4 text-dim text-lg">Sem hype, sem intermediário. Você me conta o problema, eu construo a solução.</p>
+        </div>
+
+        <div class="mt-12 grid gap-5 md:grid-cols-3">
+          <!-- Site -->
+          <article class="reveal card-hover rounded-2xl border border-line bg-card p-7">
+            <div class="grid h-12 w-12 place-items-center rounded-xl bg-violet-500/15 text-violet-300">
+              <i data-lucide="monitor" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-ink mt-5">Site Profissional</h3>
+            <p class="mt-3 text-sm leading-relaxed text-dim">
+              O seu negócio na internet com a cara da sua marca — uma página ou um site completo com várias seções, feito para atrair e converter.
+            </p>
+            <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Aparece no Google (SEO incluso)
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Rápido e bonito em qualquer celular
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Visual único, alinhado com a sua marca
+              </li>
+            </ul>
+          </article>
+
+          <!-- Sistema -->
+          <article class="reveal card-hover rounded-2xl border border-line bg-card p-7" style="transition-delay: 80ms">
+            <div class="grid h-12 w-12 place-items-center rounded-xl bg-violet-500/15 text-violet-300">
+              <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-ink mt-5">Sistema Web</h3>
+            <p class="mt-3 text-sm leading-relaxed text-dim">
+              Um painel feito para o seu negócio — controle de clientes, agendamentos, relatórios, pedidos ou qualquer fluxo que hoje está no papel ou em planilha.
+            </p>
+            <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Login e acesso por perfil de usuário
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Relatórios e gráficos em tempo real
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Acessa do celular, tablet ou computador
+              </li>
+            </ul>
+          </article>
+
+          <!-- IA -->
+          <article class="reveal card-hover rounded-2xl border border-line bg-card p-7" style="transition-delay: 160ms">
+            <div class="grid h-12 w-12 place-items-center rounded-xl bg-violet-500/15 text-violet-300">
+              <i data-lucide="bot" class="h-6 w-6"></i>
+            </div>
+            <h3 class="font-display text-xl font-semibold text-ink mt-5">Atendente com IA</h3>
+            <p class="mt-3 text-sm leading-relaxed text-dim">
+              Um robô de atendimento inteligente que responde perguntas, tira dúvidas, agenda consultas e atende clientes — mesmo quando você não está disponível.
+            </p>
+            <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Funciona 24h, 7 dias por semana
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Direto no WhatsApp da sua empresa
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
+                Elimina tarefas manuais repetitivas
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" class="px-5 pt-20 md:pt-28 pb-12 md:pb-16 border-t border-line bg-surface/30">
+      <div class="mx-auto max-w-6xl">
+        <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div class="max-w-2xl">
+            <span class="font-mono text-xs uppercase tracking-[0.18em] text-violet-300">Projetos</span>
+            <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(2rem, 5vw, 3rem)">
+              Veja exemplos do que eu entrego.
+            </h2>
+            <p class="mt-4 text-dim text-lg">Clique em qualquer projeto para navegar de verdade — sem precisar pagar nada para ver como fica.</p>
+          </div>
+        </div>
+
+        <!-- Grade gerada via JS — fácil de adicionar projetos reais -->
+        <div class="mt-12 grid gap-6 md:grid-cols-2" id="projetos-grid"></div>
+
+        <!-- GitHub CTA -->
+        <a href="https://github.com/rochamaatheus" target="_blank" rel="noopener"
+           class="reveal mt-6 flex items-center justify-center gap-3 rounded-2xl border border-dashed border-line p-6 text-dim transition-colors hover:border-violet-400 hover:text-violet-300">
+          <i data-lucide="github" class="h-6 w-6"></i>
+          <span class="font-display font-semibold">Mais projetos no GitHub — github.com/rochamaatheus</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="px-5 pt-12 md:pt-16 pb-20 md:pb-28">
+      <div class="mx-auto max-w-5xl reveal overflow-hidden rounded-3xl border border-line bg-card">
+        <div class="grid md:grid-cols-2">
+          <!-- Esquerda: CTA -->
+          <div class="relative p-8 md:p-12 border-b md:border-b-0 md:border-r border-line">
+            <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-violet-600/20 blur-3xl" aria-hidden="true"></div>
+            <span class="font-mono text-xs uppercase tracking-[0.18em] text-violet-300">Bora começar</span>
+            <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(1.9rem, 5vw, 2.75rem)">
+              Tirar a ideia do papel?
+            </h2>
+            <p class="mt-4 text-dim">Um site para o seu negócio, um sistema feito sob medida ou um atendente com IA. Me conta o que precisa — sem compromisso.</p>
+
+            <div class="mt-8 space-y-3">
+              <a
+                href="https://wa.me/5547999653593?text=Ol%C3%A1%20Matheus!%20Vi%20seu%20site%20e%20quero%20conversar%20sobre%20um%20projeto."
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3.5 text-sm text-ink transition-colors hover:border-violet-400"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                WhatsApp — resposta rápida
+              </a>
+              <a
+                href="https://www.instagram.com/rocha.maatheus/"
+                target="_blank"
+                rel="noopener"
+                class="flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3.5 text-sm text-ink transition-colors hover:border-violet-400"
+              >
+                <i data-lucide="instagram" class="h-5 w-5 text-violet-400"></i>
+                @rocha.maatheus
+              </a>
+              <a
+                href="mailto:gestor.agenciakamino@gmail.com"
+                class="flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3.5 text-sm text-ink transition-colors hover:border-violet-400 break-all"
+              >
+                <i data-lucide="mail" class="h-5 w-5 text-violet-400 shrink-0"></i>
+                gestor.agenciakamino@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <!-- Direita: investimento -->
+          <div class="p-8 md:p-12">
+            <span class="inline-block rounded-full border border-line px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-violet-300">Investimento estimado</span>
+            <div class="mt-6 space-y-3">
+              <div class="flex items-center justify-between rounded-xl border border-line bg-surface px-4 py-4 gap-3">
+                <div>
+                  <p class="font-semibold text-ink text-sm">Página de Captação</p>
+                  <p class="text-xs text-dim mt-0.5">Uma página focada em trazer contatos</p>
+                </div>
+                <span class="font-display text-lg font-semibold text-ink shrink-0">R$ 500+</span>
+              </div>
+              <div class="relative flex items-center justify-between rounded-xl border border-violet-500/50 bg-violet-500/10 px-4 py-4 gap-3">
+                <span class="absolute -top-2.5 right-3 rounded-full bg-violet-500 px-2 py-0.5 text-[10px] font-bold uppercase text-white">Popular</span>
+                <div>
+                  <p class="font-semibold text-ink text-sm">Site Completo</p>
+                  <p class="text-xs text-dim mt-0.5">Várias seções, serviços e contato</p>
+                </div>
+                <span class="font-display text-lg font-semibold text-ink shrink-0">R$ 1.000+</span>
+              </div>
+              <div class="flex items-center justify-between rounded-xl border border-line bg-surface px-4 py-4 gap-3">
+                <div>
+                  <p class="font-semibold text-ink text-sm">Sistemas e Painéis</p>
+                  <p class="text-xs text-dim mt-0.5">Sob medida para a sua operação</p>
+                </div>
+                <span class="font-display text-lg font-semibold text-ink shrink-0">Sob consulta</span>
+              </div>
+            </div>
+
+            <a
+              href="https://wa.me/5547999653593?text=Ol%C3%A1%20Matheus!%20Quero%20um%20or%C3%A7amento."
+              target="_blank"
+              rel="noopener"
+              class="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-violet-500 py-4 font-semibold text-white shadow-lg shadow-violet-600/30 transition-all hover:-translate-y-0.5 hover:bg-violet-400"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Pedir orçamento pelo WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-line px-5 py-12">
+      <div class="mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <svg viewBox="0 0 48 48" fill="none" class="h-8 w-8" aria-hidden="true">
+            <defs>
+              <linearGradient id="mr-footer" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8a63ff" /><stop offset="1" stop-color="#c668ff" />
+              </linearGradient>
+            </defs>
+            <rect x="2" y="2" width="44" height="44" rx="13" fill="#120f1f" stroke="url(#mr-footer)" stroke-width="2" />
+            <path d="M14 33 V16 L24 27 L34 16 V33" fill="none" stroke="url(#mr-footer)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="34" cy="32.5" r="1.9" fill="#c668ff" />
+          </svg>
+          <div>
+            <p class="font-display font-semibold text-ink">Matheus Rocha</p>
+            <p class="font-mono text-[11px] uppercase tracking-wide text-dim">Desenvolvimento Web · Joinville, SC</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <a href="https://github.com/rochamaatheus" target="_blank" rel="noopener" aria-label="GitHub"
+             class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+            <i data-lucide="github" class="h-5 w-5"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/matheus-rocha-269870234/" target="_blank" rel="noopener" aria-label="LinkedIn"
+             class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+            <i data-lucide="linkedin" class="h-5 w-5"></i>
+          </a>
+          <a href="https://www.instagram.com/rocha.maatheus/" target="_blank" rel="noopener" aria-label="Instagram"
+             class="grid h-11 w-11 place-items-center rounded-xl border border-line text-dim transition-colors hover:text-violet-300 hover:border-violet-400">
+            <i data-lucide="instagram" class="h-5 w-5"></i>
+          </a>
+        </div>
+      </div>
+      <p class="mx-auto max-w-6xl mt-8 font-mono text-[11px] text-dim">© 2026 Matheus Rocha · Feito em código próprio.</p>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE WHATSAPP -->
+    <a
+      href="https://wa.me/5547999653593?text=Ol%C3%A1%20Matheus!%20Vi%20seu%20site%20e%20quero%20conversar%20sobre%20um%20projeto."
+      target="_blank"
+      rel="noopener"
+      class="wa-fab"
+      aria-label="Conversar no WhatsApp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span>Conversar no WhatsApp</span>
+    </a>
+
+    <!-- MODAL DEMO -->
+    <div id="demo-modal" role="dialog" aria-modal="true" aria-label="Demonstração do projeto">
+      <div class="demo-window">
+        <div class="demo-header">
+          <div class="flex items-center gap-2.5 font-mono text-xs text-violet-300">
+            <i data-lucide="monitor-play" class="h-4 w-4"></i>
+            <span id="demo-title-text">Demonstração</span>
+          </div>
+          <button
+            onclick="closeDemo()"
+            class="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-1.5 font-mono text-xs text-ink transition-colors hover:border-violet-400 hover:text-violet-300"
+          >
+            Fechar <i data-lucide="x" class="h-4 w-4"></i>
+          </button>
+        </div>
+        <div class="demo-content">
+          <div id="demo-loading"><span class="spinner"></span> carregando demo…</div>
+          <iframe id="demo-frame" title="Demonstração do projeto" src=""></iframe>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ─────────────────────────────────────────────────────────
+      // PROJETOS — para adicionar um projeto real, adicione um
+      // objeto nesse array. Use "demo" para abrir no iframe ou
+      // "url" para abrir em nova aba (projetos de clientes reais).
+      // ─────────────────────────────────────────────────────────
+      const PROJETOS = [
+        {
+          titulo: 'Site Institucional',
+          subtitulo: 'Empresa de engenharia · exemplo demonstrativo',
+          tipo: 'Site',
+          img: 'assets/projetos/institucional.jpeg',
+          demo: 'institucional.html',   // iframe interno
+          url: null,                    // ou cole a URL do projeto real aqui
+        },
+        {
+          titulo: 'Sistema de Gestão',
+          subtitulo: 'Painel de controle · exemplo demonstrativo',
+          tipo: 'Sistema',
+          img: 'assets/projetos/sistema.jpeg',
+          demo: 'sistema.html',
+          url: null,
+        },
+        {
+          titulo: 'Painel Administrativo',
+          subtitulo: 'Gestão para clínica · exemplo demonstrativo',
+          tipo: 'Painel',
+          img: 'assets/projetos/painel.jpeg',
+          demo: 'painel.html',
+          url: null,
+        },
+        {
+          titulo: 'Atendente com IA',
+          subtitulo: 'Automação no WhatsApp · exemplo demonstrativo',
+          tipo: 'IA',
+          img: 'assets/projetos/ia.jpeg',
+          demo: 'IA.html',
+          url: null,
+        },
+      ];
+
+      function buildProjectCard(p, i) {
+        const action = p.url
+          ? `onclick="window.open('${p.url}', '_blank', 'noopener')"`
+          : `onclick="startDemo('${p.demo}', '${p.titulo}')"`;
+
+        return `
+          <article class="reveal group rounded-2xl border border-line bg-card overflow-hidden card-hover" style="transition-delay: ${(i % 2) * 80}ms">
+            <button ${action} class="block w-full text-left cursor-pointer">
+              <div class="relative aspect-[16/10] overflow-hidden bg-surface2">
+                <img src="${p.img}" alt="Prévia de ${p.titulo}" loading="lazy"
+                     class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-bg/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span class="inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-2.5 text-sm font-semibold text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    ${p.url ? 'Ver projeto' : 'Abrir demo'}
+                  </span>
+                </div>
+              </div>
+            </button>
+            <div class="flex items-center justify-between gap-3 p-5">
+              <div>
+                <h3 class="font-display text-lg font-semibold text-ink">${p.titulo}</h3>
+                <p class="font-mono text-xs text-dim mt-0.5">${p.subtitulo}</p>
+              </div>
+              <span class="rounded-full border border-line px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-violet-300 shrink-0">${p.tipo}</span>
+            </div>
+          </article>`;
+      }
+
+      document.getElementById('projetos-grid').innerHTML = PROJETOS.map(buildProjectCard).join('');
+
+      // Ícones Lucide
+      lucide.createIcons();
+
+      // Nav: fundo glass ao rolar
+      const nav = document.getElementById('nav');
+      const onScroll = () => {
+        if (window.scrollY > 20) nav.classList.add('glass', 'border-line');
+        else nav.classList.remove('glass', 'border-line');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Menu mobile — troca ícone menu ↔ x
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      const setMenu = (open) => {
+        mobileMenu.classList.toggle('open', open);
+        mobileMenu.setAttribute('aria-hidden', String(!open));
+        document.body.style.overflow = open ? 'hidden' : '';
+        menuToggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+        menuToggle.setAttribute('aria-expanded', String(open));
+        // Atualiza o ícone do botão
+        menuToggle.innerHTML = open
+          ? '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+          : '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      };
+
+      menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+      document.querySelectorAll('.mobile-link').forEach((l) =>
+        l.addEventListener('click', () => setMenu(false))
+      );
+
+      // Reveal on scroll
+      const io = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('active');
+              io.unobserve(e.target);
+            }
+          }),
+        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Modal de demo
+      const modal = document.getElementById('demo-modal');
+      const frame = document.getElementById('demo-frame');
+      const loading = document.getElementById('demo-loading');
+
+      function startDemo(url, title) {
+        document.getElementById('demo-title-text').textContent = title;
+        loading.style.display = 'flex';
+        frame.src = url;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      frame.addEventListener('load', () => { if (frame.src) loading.style.display = 'none'; });
+
+      function closeDemo() {
+        modal.classList.remove('active');
+        frame.src = '';
+        document.body.style.overflow = '';
+      }
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeDemo(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeDemo();
+      });
+    </script>
   </body>
 </html>

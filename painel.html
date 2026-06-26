@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MR Care - Painel Médico Avançado</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #0e7490;
+        --primary-dark: #155e75;
+        --primary-light: #ecfeff;
+        --accent: #f43f5e;
+
+        --bg-body: #f3f4f6;
+        --bg-surface: #ffffff;
+        --border-color: #e5e7eb;
+
+        --text-main: #1f2937;
+        --text-muted: #6b7280;
+
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --radius: 16px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-body);
+        color: var(--text-main);
+        display: flex;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-surface);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--border-color);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 50;
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+        display: none;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 40px;
+        color: var(--primary);
+        flex-shrink: 0;
+      }
+
+      .brand i {
+        font-size: 1.8rem;
+      }
+      .brand h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .menu-item:hover {
+        background-color: var(--bg-body);
+        color: var(--primary);
+      }
+
+      .menu-item.active {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .doctor-card {
+        margin-top: 20px;
+        background: linear-gradient(135deg, var(--primary), #0891b2);
+        padding: 20px;
+        border-radius: var(--radius);
+        color: white;
+        text-align: center;
+        box-shadow: 0 10px 15px -3px rgba(14, 116, 144, 0.3);
+      }
+      .doctor-avatar {
+        width: 60px;
+        height: 60px;
+        background: white;
+        border-radius: 50%;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .main {
+        margin-left: 260px;
+        flex: 1;
+        padding: 30px 40px;
+        width: 100%;
+        transition: margin-left 0.3s ease;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        gap: 20px;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        color: var(--text-main);
+        cursor: pointer;
+        background: none;
+        border: none;
+      }
+
+      .search-bar {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        width: 300px;
+        gap: 10px;
+        color: var(--text-muted);
+      }
+      .search-bar input {
+        border: none;
+        outline: none;
+        width: 100%;
+        color: var(--text-main);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .btn-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        background: white;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        color: var(--text-muted);
+        position: relative;
+        transition: 0.2s;
+      }
+      .btn-icon:hover {
+        background: var(--bg-body);
+        color: var(--primary);
+      }
+      .badge-dot {
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+        border-radius: 50%;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        border: 2px solid white;
+      }
+
+      .date-display {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: var(--bg-surface);
+        padding: 8px 16px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+
+      .page-section {
+        display: none;
+        animation: fadeUp 0.3s ease;
+      }
+      .page-section.active {
+        display: block;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin-bottom: 30px;
+      }
+      .stat-card {
+        background: var(--bg-surface);
+        padding: 24px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: transform 0.2s;
+      }
+      .stat-card:hover {
+        transform: translateY(-3px);
+      }
+      .stat-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+      }
+      .stat-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+      }
+      .icon-blue {
+        background: #e0f2fe;
+        color: #0284c7;
+      }
+      .icon-green {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+      .icon-purple {
+        background: #f3e8ff;
+        color: #9333ea;
+      }
+      .icon-red {
+        background: #ffe4e6;
+        color: #e11d48;
+      }
+
+      .stat-value {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .stat-label {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .panel {
+        background: var(--bg-surface);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .panel-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .btn-primary {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: 0.2s;
+      }
+      .btn-primary:hover {
+        background-color: var(--primary-dark);
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+      }
+      th {
+        text-align: left;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        padding: 12px 0;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      td {
+        padding: 16px 0;
+        border-top: 1px solid #f3f4f6;
+        font-size: 0.9rem;
+        color: var(--text-main);
+      }
+
+      .patient-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar-sm {
+        width: 36px;
+        height: 36px;
+        background: #e5e7eb;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 600;
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .status-waiting {
+        background: #fff7ed;
+        color: #c2410c;
+      }
+      .status-consulting {
+        background: #eff6ff;
+        color: #1d4ed8;
+      }
+      .status-done {
+        background: #f0fdf4;
+        color: #15803d;
+      }
+
+      .calendar-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .calendar-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .month-selector {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      .month-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 1rem;
+        padding: 5px;
+        border-radius: 50%;
+        transition: 0.2s;
+      }
+      .month-btn:hover {
+        background: #e5e7eb;
+        color: var(--primary);
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 10px;
+      }
+      .calendar-day-header {
+        text-align: center;
+        font-weight: 600;
+        color: var(--text-muted);
+        padding: 10px 0;
+        font-size: 0.9rem;
+      }
+      .calendar-day {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        min-height: 100px;
+        padding: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .calendar-day:hover {
+        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+      .day-number {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        color: var(--text-main);
+      }
+      .day-empty {
+        background: transparent;
+        border: none;
+        cursor: default;
+      }
+
+      .event-dot {
+        display: block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        margin-top: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .evt-blue {
+        background: #eff6ff;
+        color: #1d4ed8;
+        border-left: 2px solid #1d4ed8;
+      }
+      .evt-green {
+        background: #f0fdf4;
+        color: #15803d;
+        border-left: 2px solid #15803d;
+      }
+      .evt-orange {
+        background: #fff7ed;
+        color: #c2410c;
+        border-left: 2px solid #c2410c;
+      }
+
+      .today {
+        border: 2px solid var(--primary);
+        background: var(--primary-light);
+      }
+
+      .patient-search-area {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+      }
+      .patient-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #f3f4f6;
+        transition: 0.2s;
+      }
+      .patient-card:hover {
+        background: #f9fafb;
+      }
+      .tag {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 4px;
+        background: #eee;
+        color: #555;
+        margin-left: 5px;
+      }
+
+      .chart-container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        height: 300px;
+        padding-top: 20px;
+        border-bottom: 2px solid #e5e7eb;
+      }
+      .bar-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+      }
+      .bar {
+        width: 40px;
+        background: var(--primary);
+        border-radius: 8px 8px 0 0;
+        transition: height 1s ease;
+        position: relative;
+        cursor: pointer;
+      }
+      .bar:hover {
+        opacity: 0.8;
+      }
+      .bar::after {
+        content: attr(data-val);
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: var(--text-main);
+        opacity: 0;
+        transition: 0.2s;
+      }
+      .bar:hover::after {
+        opacity: 1;
+        top: -30px;
+      }
+      .bar-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 100;
+        padding: 20px;
+      }
+      .modal-box {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        width: 400px;
+        max-width: 100%;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+      .modal-box h3 {
+        margin-bottom: 16px;
+        color: var(--primary);
+      }
+      .modal-input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f9fafb;
+      }
+      .modal-btns {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      @media (max-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .calendar-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .calendar-day {
+          min-height: 80px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar.active {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+          padding: 20px;
+        }
+        .menu-toggle {
+          display: block;
+        }
+        .header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 15px;
+        }
+        .search-bar {
+          width: 100%;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .calendar-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+        }
+        .calendar-day-header {
+          display: none;
+        }
+        .calendar-day {
+          min-height: auto;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+        }
+        .day-empty {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+      onclick="toggleSidebar()"
+    ></div>
+
+    <nav class="sidebar" id="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-heart-pulse"></i>
+        <h2>MR Care</h2>
+      </div>
+
+      <ul class="menu">
+        <li class="menu-item active" onclick="navTo('dashboard', this)">
+          <i class="fa-solid fa-table-columns"></i> Visão Geral
+        </li>
+        <li class="menu-item" onclick="navTo('pacientes', this)">
+          <i class="fa-solid fa-user-injured"></i> Pacientes
+        </li>
+        <li class="menu-item" onclick="navTo('agenda', this); renderCalendar()">
+          <i class="fa-solid fa-calendar-check"></i> Agenda Médica
+        </li>
+        <li class="menu-item" onclick="navTo('financeiro', this)">
+          <i class="fa-solid fa-hand-holding-dollar"></i> Financeiro
+        </li>
+      </ul>
+
+      <div class="doctor-card">
+        <div class="doctor-avatar">MR</div>
+        <div class="doctor-name">Dr. Matheus Rocha</div>
+        <div class="doctor-role">Diretor Clínico CRM/SC</div>
+      </div>
+    </nav>
+
+    <main class="main">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar no sistema..." />
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="date-display" id="headerDate"></div>
+          <div class="btn-icon">
+            <i class="fa-regular fa-bell"></i>
+            <div class="badge-dot"></div>
+          </div>
+          <div class="btn-icon">
+            <i class="fa-solid fa-gear"></i>
+          </div>
+        </div>
+      </header>
+
+      <section id="dashboard" class="page-section active">
+        <div class="welcome" style="margin-bottom: 25px">
+          <h1 style="font-size: 1.8rem">Olá, Doutor Rocha.</h1>
+          <p style="color: var(--text-muted)">
+            Aqui está o resumo dos seus atendimentos hoje.
+          </p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon icon-blue">
+                <i class="fa-solid fa-users"></i>
+              </div>
+              <i class="fa-solid fa-arrow-trend-up" style="color: #16a34a"></i>
+            </div>
+            <div class="stat-value">124</div>
+            <div class="stat-label">Pacientes (Dezembro)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon icon-green">
+                <i class="fa-solid fa-stethoscope"></i>
+              </div>
+            </div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Consultas Hoje</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon icon-purple">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </div>
+            </div>
+            <div class="stat-value">95%</div>
+            <div class="stat-label">NPS (Satisfação)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-icon icon-red">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+            </div>
+            <div class="stat-value">2</div>
+            <div class="stat-label">Retornos Pendentes</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">Fila de Atendimento Hoje</span>
+            <button class="btn-primary" onclick="toggleModal(true)">
+              <i class="fa-solid fa-plus"></i> Novo Paciente
+            </button>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Motivo</th>
+                  <th>Horário</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="avatar-sm">AS</div>
+                      <div>
+                        <strong>Ana Souza</strong><br />
+                        <span style="font-size: 0.75rem; color: #888"
+                          >Particular</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td>Cardiologia</td>
+                  <td>09:30</td>
+                  <td>
+                    <span class="status-badge status-consulting"
+                      >Em Consulta</span
+                    >
+                  </td>
+                  <td>
+                    <i
+                      class="fa-solid fa-ellipsis-vertical"
+                      style="color: #ccc; cursor: pointer"
+                    ></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="avatar-sm">JP</div>
+                      <div>
+                        <strong>João Pereira</strong><br />
+                        <span style="font-size: 0.75rem; color: #888"
+                          >Unimed</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td>Check-up Geral</td>
+                  <td>10:00</td>
+                  <td>
+                    <span class="status-badge status-waiting">Aguardando</span>
+                  </td>
+                  <td>
+                    <i
+                      class="fa-solid fa-ellipsis-vertical"
+                      style="color: #ccc; cursor: pointer"
+                    ></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="patient-cell">
+                      <div class="avatar-sm">LM</div>
+                      <div>
+                        <strong>Luiza Martins</strong><br />
+                        <span style="font-size: 0.75rem; color: #888"
+                          >Bradesco</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td>Retorno Exames</td>
+                  <td>08:45</td>
+                  <td>
+                    <span class="status-badge status-done">Finalizado</span>
+                  </td>
+                  <td>
+                    <i
+                      class="fa-solid fa-ellipsis-vertical"
+                      style="color: #ccc; cursor: pointer"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="pacientes" class="page-section">
+        <h2 style="margin-bottom: 20px">Prontuários Eletrônicos</h2>
+        <div class="panel">
+          <div class="patient-search-area">
+            <div
+              class="search-bar"
+              style="width: 100%; border: 1px solid #ddd; background: #f9fafb"
+            >
+              <i class="fa-solid fa-search"></i>
+              <input
+                type="text"
+                id="patientSearchInput"
+                placeholder="Buscar por nome, CPF ou condição..."
+                onkeyup="filterPatients()"
+              />
+            </div>
+          </div>
+          <div class="patient-list" id="patientListContainer"></div>
+        </div>
+      </section>
+
+      <section id="agenda" class="page-section">
+        <div class="panel" style="min-height: 80vh">
+          <div class="calendar-controls">
+            <div class="month-selector">
+              <button class="month-btn" onclick="changeMonth(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <span id="calendarMonthYear">Dezembro 2025</span>
+              <button class="month-btn" onclick="changeMonth(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <button
+              class="btn-primary"
+              onclick="alert('Função para adicionar agendamento')"
+            >
+              <i class="fa-solid fa-plus"></i> Agendar
+            </button>
+          </div>
+
+          <div class="calendar-grid" style="margin-bottom: 10px">
+            <div class="calendar-day-header">DOM</div>
+            <div class="calendar-day-header">SEG</div>
+            <div class="calendar-day-header">TER</div>
+            <div class="calendar-day-header">QUA</div>
+            <div class="calendar-day-header">QUI</div>
+            <div class="calendar-day-header">SEX</div>
+            <div class="calendar-day-header">SÁB</div>
+          </div>
+
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+      </section>
+
+      <section id="financeiro" class="page-section">
+        <h2 style="margin-bottom: 20px">Gestão Financeira</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-green">
+              <i class="fa-solid fa-dollar-sign"></i>
+            </div>
+            <div class="stat-value">R$ 45.200</div>
+            <div class="stat-label">Faturamento Total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-blue">
+              <i class="fa-solid fa-file-invoice"></i>
+            </div>
+            <div class="stat-value">R$ 12.500</div>
+            <div class="stat-label">A Receber (Convênios)</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3 style="margin-bottom: 20px">Receita Mensal (2º Semestre)</h3>
+          <div class="chart-container">
+            <div class="bar-group">
+              <div class="bar" style="height: 120px" data-val="R$ 32k"></div>
+              <span class="bar-label">Jul</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 140px" data-val="R$ 38k"></div>
+              <span class="bar-label">Ago</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 110px" data-val="R$ 30k"></div>
+              <span class="bar-label">Set</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 160px" data-val="R$ 42k"></div>
+              <span class="bar-label">Out</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 150px" data-val="R$ 40k"></div>
+              <span class="bar-label">Nov</span>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="height: 180px" data-val="R$ 45k"></div>
+              <span class="bar-label">Dez</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-overlay" id="modalPaciente">
+      <div class="modal-box">
+        <h3>Cadastrar Paciente</h3>
+        <input type="text" class="modal-input" placeholder="Nome Completo" />
+        <input type="text" class="modal-input" placeholder="CPF" />
+        <input type="text" class="modal-input" placeholder="Convênio" />
+        <div class="modal-btns">
+          <button
+            class="btn-primary"
+            style="background: #ef4444; flex: 1; justify-content: center"
+            onclick="toggleModal(false)"
+          >
+            Cancelar
+          </button>
+          <button
+            class="btn-primary"
+            style="flex: 1; justify-content: center"
+            onclick="savePatient()"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function navTo(pageId, element) {
+        document
+          .querySelectorAll('.menu-item')
+          .forEach(item => item.classList.remove('active'));
+        element.classList.add('active');
+
+        document
+          .querySelectorAll('.page-section')
+          .forEach(sec => sec.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+
+        if (window.innerWidth <= 768) {
+          toggleSidebar();
+        }
+      }
+
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.style.overflow = sidebar.classList.contains('active')
+          ? 'hidden'
+          : '';
+      }
+
+      const today = new Date();
+      const options = { weekday: 'short', day: 'numeric', month: 'long' };
+      document.getElementById('headerDate').textContent =
+        today.toLocaleDateString('pt-BR', options);
+
+      let currentMonth = new Date().getMonth();
+      let currentYear = new Date().getFullYear();
+      const monthNames = [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
+      ];
+
+      const eventsDB = {
+        15: [
+          { title: 'Ana Souza', type: 'evt-blue' },
+          { title: 'Reunião Clínica', type: 'evt-orange' },
+        ],
+        16: [{ title: 'João Pereira', type: 'evt-blue' }],
+        20: [
+          { title: 'Cirurgia Mr.', type: 'evt-green' },
+          { title: 'Carlos Silva', type: 'evt-blue' },
+        ],
+        25: [{ title: 'Natal (Folga)', type: 'evt-orange' }],
+      };
+
+      function renderCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const label = document.getElementById('calendarMonthYear');
+
+        grid.innerHTML = '';
+        label.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(
+          currentYear,
+          currentMonth + 1,
+          0,
+        ).getDate();
+
+        for (let i = 0; i < firstDay; i++) {
+          const empty = document.createElement('div');
+          empty.className = 'day-empty';
+          grid.appendChild(empty);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const cell = document.createElement('div');
+          cell.className = 'calendar-day';
+
+          if (
+            day === new Date().getDate() &&
+            currentMonth === new Date().getMonth() &&
+            currentYear === new Date().getFullYear()
+          ) {
+            cell.classList.add('today');
+          }
+
+          let htmlContent = `<div class="day-number">${day}</div>`;
+
+          if (currentMonth === new Date().getMonth() && eventsDB[day]) {
+            eventsDB[day].forEach(evt => {
+              htmlContent += `<span class="event-dot ${evt.type}">${evt.title}</span>`;
+            });
+          }
+
+          cell.innerHTML = htmlContent;
+          grid.appendChild(cell);
+        }
+      }
+
+      function changeMonth(direction) {
+        currentMonth += direction;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        } else if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        renderCalendar();
+      }
+
+      const patientsData = [
+        {
+          name: 'Ana Souza',
+          age: 34,
+          lastVisit: '10/12/2025',
+          condition: 'Cardiologia',
+          tag: 'Retorno',
+        },
+        {
+          name: 'Carlos Drummond',
+          age: 58,
+          lastVisit: '01/12/2025',
+          condition: 'Diabetes Tipo 2',
+          tag: 'Crônico',
+        },
+        {
+          name: 'Fernanda Montenegro',
+          age: 82,
+          lastVisit: '15/11/2025',
+          condition: 'Geriatria',
+          tag: 'Checkup',
+        },
+        {
+          name: 'João Pereira',
+          age: 29,
+          lastVisit: 'Hoje',
+          condition: 'Check-up Geral',
+          tag: 'Rotina',
+        },
+        {
+          name: 'Luiza Martins',
+          age: 45,
+          lastVisit: 'Hoje',
+          condition: 'Exames Laboratoriais',
+          tag: 'Exames',
+        },
+        {
+          name: 'Roberto Carlos',
+          age: 60,
+          lastVisit: '20/11/2025',
+          condition: 'Ortopedia',
+          tag: 'Cirúrgico',
+        },
+      ];
+
+      function renderPatients(list) {
+        const container = document.getElementById('patientListContainer');
+        container.innerHTML = '';
+        list.forEach(p => {
+          const html = `
+                <div class="patient-card">
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="avatar-sm" style="background: #e0f2fe; color: #0284c7;">${p.name.charAt(
+                          0,
+                        )}</div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--text-main);">${
+                              p.name
+                            } <span style="font-size: 0.8rem; font-weight: 400; color: #888;">(${
+            p.age
+          } anos)</span></div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted);">Última visita: ${
+                              p.lastVisit
+                            }</div>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.85rem; font-weight: 500;">${
+                          p.condition
+                        }</span><br>
+                        <span class="tag">${p.tag}</span>
+                    </div>
+                </div>
+                `;
+          container.innerHTML += html;
+        });
+      }
+
+      function filterPatients() {
+        const term = document
+          .getElementById('patientSearchInput')
+          .value.toLowerCase();
+        const filtered = patientsData.filter(
+          p =>
+            p.name.toLowerCase().includes(term) ||
+            p.condition.toLowerCase().includes(term),
+        );
+        renderPatients(filtered);
+      }
+
+      renderPatients(patientsData);
+
+      function toggleModal(show) {
+        document.getElementById('modalPaciente').style.display = show
+          ? 'flex'
+          : 'none';
+      }
+      function savePatient() {
+        alert('Paciente salvo com sucesso!');
+        toggleModal(false);
+      }
+    </script>
+  </body>
+</html>

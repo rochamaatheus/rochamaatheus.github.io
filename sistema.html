@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MR Enterprise - Gestão de Telecom</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg-body: #121214;
+        --bg-sidebar: #202024;
+        --bg-card: #202024;
+        --bg-input: #121214;
+
+        --text-primary: #e1e1e6;
+        --text-secondary: #a8a8b3;
+
+        --brand-purple: #8257e5;
+        --brand-purple-hover: #9466ff;
+        --brand-green: #04d361;
+        --brand-red: #e83f5b;
+
+        --border: #323238;
+        --radius: 8px;
+        --shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-body);
+        color: var(--text-primary);
+        height: 100vh;
+        display: flex;
+        overflow: hidden;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-body);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--brand-purple);
+      }
+
+      .sidebar {
+        width: 260px;
+        background-color: var(--bg-sidebar);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        transition: transform 0.3s ease;
+        z-index: 50;
+
+        position: relative;
+        height: 100vh;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo span {
+        color: var(--brand-purple);
+      }
+
+      .nav-menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .nav-item {
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        cursor: pointer;
+        color: var(--text-secondary);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.2s;
+      }
+
+      .nav-item:hover {
+        background-color: rgba(130, 87, 229, 0.1);
+        color: var(--brand-purple);
+      }
+
+      .nav-item.active {
+        background-color: var(--brand-purple);
+        color: white;
+      }
+
+      .user-profile {
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--brand-purple), #5e35b1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        flex-shrink: 0;
+      }
+
+      .user-info h4 {
+        font-size: 0.9rem;
+      }
+      .user-info p {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 32px;
+        overflow-y: auto;
+        position: relative;
+        height: 100vh;
+      }
+
+      .mobile-header {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .btn-menu {
+        background: none;
+        border: none;
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .page-header {
+        margin-bottom: 32px;
+      }
+
+      .page-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+      .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-top: 4px;
+      }
+
+      .section-view {
+        display: none;
+        animation: fadeIn 0.4s ease;
+      }
+      .section-view.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .card {
+        background-color: var(--bg-card);
+        padding: 24px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+
+        min-width: 0;
+      }
+
+      .kpi-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+      }
+
+      .kpi-title {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+      .kpi-icon {
+        color: var(--brand-purple);
+        font-size: 1.2rem;
+      }
+      .kpi-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .kpi-meta {
+        font-size: 0.75rem;
+        color: var(--brand-green);
+        margin-top: 8px;
+        display: block;
+      }
+
+      .chart-container {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        position: relative;
+        height: 300px;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .chart-container svg {
+        min-width: 800px;
+        height: 100%;
+      }
+
+      .table-container {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+      }
+
+      th {
+        text-align: left;
+        padding: 16px 24px;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--border);
+      }
+
+      td {
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text-primary);
+        font-size: 0.875rem;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover {
+        background-color: rgba(255, 255, 255, 0.02);
+      }
+
+      .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .badge-success {
+        background: rgba(4, 211, 97, 0.1);
+        color: var(--brand-green);
+      }
+      .badge-warning {
+        background: rgba(130, 87, 229, 0.1);
+        color: var(--brand-purple);
+      }
+      .badge-danger {
+        background: rgba(232, 63, 91, 0.1);
+        color: var(--brand-red);
+      }
+
+      .btn-action {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-primary);
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.75rem;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+      .btn-action:hover {
+        border-color: var(--brand-purple);
+        color: var(--brand-purple);
+      }
+
+      .filter-bar {
+        display: flex;
+        margin-bottom: 24px;
+        gap: 16px;
+      }
+
+      .input-group {
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .input-group input {
+        background: transparent;
+        border: none;
+        color: var(--text-primary);
+        width: 100%;
+        outline: none;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        max-width: 800px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .form-group label {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+      .form-group input {
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px;
+        color: var(--text-primary);
+        outline: none;
+      }
+      .form-group input:focus {
+        border-color: var(--brand-purple);
+      }
+
+      .btn-primary {
+        background-color: var(--brand-purple);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: var(--radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        align-self: flex-start;
+      }
+      .btn-primary:hover {
+        background-color: var(--brand-purple-hover);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        padding: 20px;
+        backdrop-filter: blur(2px);
+      }
+
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .modal-content {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        width: 400px;
+        max-width: 100%;
+        border-radius: var(--radius);
+        padding: 32px;
+        transform: translateY(20px);
+        transition: transform 0.3s;
+      }
+
+      .modal-overlay.open .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+      .close-modal {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+
+      .modal-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.9rem;
+      }
+      .modal-row span:first-child {
+        color: var(--text-secondary);
+      }
+
+      .report-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .report-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .report-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(130, 87, 229, 0.1);
+        color: var(--brand-purple);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 40;
+        display: none;
+        backdrop-filter: blur(2px);
+      }
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          transform: translateX(-100%);
+          box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          padding: 20px;
+          margin-left: 0;
+        }
+
+        .mobile-header {
+          display: flex;
+        }
+
+        .page-title {
+          font-size: 1.5rem;
+        }
+
+        .kpi-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .chart-container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="sidebar-overlay"
+      id="sidebarOverlay"
+      onclick="toggleSidebar()"
+    ></div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <i class="fa-solid fa-shapes" style="color: var(--brand-purple)"></i>
+        MR<span>Enterprise</span>
+      </div>
+
+      <ul class="nav-menu">
+        <li
+          class="nav-item active"
+          onclick="navigate('dashboard', this); checkMobileClose()"
+        >
+          <i class="fa-solid fa-chart-pie"></i> Dashboard
+        </li>
+        <li
+          class="nav-item"
+          onclick="navigate('financeiro', this); checkMobileClose()"
+        >
+          <i class="fa-solid fa-file-invoice-dollar"></i> Faturas
+        </li>
+        <li
+          class="nav-item"
+          onclick="navigate('ativos', this); checkMobileClose()"
+        >
+          <i class="fa-solid fa-mobile-screen-button"></i> Ativos
+        </li>
+        <li
+          class="nav-item"
+          onclick="navigate('relatorios', this); checkMobileClose()"
+        >
+          <i class="fa-solid fa-file-arrow-down"></i> Relatórios
+        </li>
+        <li
+          class="nav-item"
+          onclick="navigate('config', this); checkMobileClose()"
+        >
+          <i class="fa-solid fa-gear"></i> Configurações
+        </li>
+      </ul>
+
+      <div class="user-profile">
+        <div class="avatar">MR</div>
+        <div class="user-info">
+          <h4>Matheus Rocha</h4>
+          <p>Admin · Rocha Corp</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="mobile-header">
+        <button class="btn-menu" onclick="toggleSidebar()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span style="font-weight: 600; color: var(--text-primary)"
+          >MR Enterprise</span
+        >
+        <div style="width: 24px"></div>
+      </div>
+
+      <section id="dashboard" class="section-view active">
+        <div class="page-header">
+          <h1 class="page-title">Visão Geral</h1>
+          <p class="page-subtitle">
+            Bem-vindo ao Sistema Matheus Rocha de Gestão.
+          </p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="card">
+            <div class="kpi-header">
+              <span class="kpi-title">Gasto Total (Mês)</span>
+              <i class="fa-solid fa-dollar-sign kpi-icon"></i>
+            </div>
+            <div class="kpi-value">R$ 45.230</div>
+            <span class="kpi-meta"
+              ><i class="fa-solid fa-arrow-down"></i> 12% vs mês anterior</span
+            >
+          </div>
+          <div class="card">
+            <div class="kpi-header">
+              <span class="kpi-title">Linhas Ativas</span>
+              <i class="fa-solid fa-signal kpi-icon"></i>
+            </div>
+            <div class="kpi-value">142</div>
+            <span class="kpi-meta" style="color: var(--text-secondary)"
+              >Todas operando</span
+            >
+          </div>
+          <div class="card">
+            <div class="kpi-header">
+              <span class="kpi-title">Faturas Pendentes</span>
+              <i class="fa-regular fa-clock kpi-icon"></i>
+            </div>
+            <div class="kpi-value">3</div>
+            <span class="kpi-meta" style="color: var(--brand-purple)"
+              >Vencimento em 5 dias</span
+            >
+          </div>
+          <div class="card">
+            <div class="kpi-header">
+              <span class="kpi-title">Economia Gerada</span>
+              <i class="fa-solid fa-piggy-bank kpi-icon"></i>
+            </div>
+            <div class="kpi-value">R$ 12.500</div>
+            <span class="kpi-meta">Acumulado ano</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="kpi-header">
+            <span class="kpi-title">Evolução de Gastos (Semestre)</span>
+          </div>
+          <div
+            class="chart-container"
+            style="
+              display: flex;
+              align-items: flex-end;
+              justify-content: space-around;
+              padding-bottom: 40px;
+            "
+          >
+            <svg
+              viewBox="0 0 800 200"
+              style="width: 100%; height: 100%; overflow: visible"
+            >
+              <line
+                x1="0"
+                y1="0"
+                x2="800"
+                y2="0"
+                stroke="#323238"
+                stroke-dasharray="4"
+              />
+              <line
+                x1="0"
+                y1="100"
+                x2="800"
+                y2="100"
+                stroke="#323238"
+                stroke-dasharray="4"
+              />
+              <line
+                x1="0"
+                y1="200"
+                x2="800"
+                y2="200"
+                stroke="#323238"
+                stroke-dasharray="4"
+              />
+
+              <polyline
+                points="0,180 160,150 320,160 480,80 640,100 800,40"
+                fill="none"
+                stroke="#8257e5"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <path
+                d="M0,180 L160,150 L320,160 L480,80 L640,100 L800,40 V200 H0 Z"
+                fill="rgba(130, 87, 229, 0.1)"
+                stroke="none"
+              />
+
+              <circle cx="0" cy="180" r="4" fill="#04d361" />
+              <circle
+                cx="160"
+                cy="150"
+                r="4"
+                fill="#121214"
+                stroke="#8257e5"
+                stroke-width="2"
+              />
+              <circle
+                cx="320"
+                cy="160"
+                r="4"
+                fill="#121214"
+                stroke="#8257e5"
+                stroke-width="2"
+              />
+              <circle
+                cx="480"
+                cy="80"
+                r="4"
+                fill="#121214"
+                stroke="#8257e5"
+                stroke-width="2"
+              />
+              <circle
+                cx="640"
+                cy="100"
+                r="4"
+                fill="#121214"
+                stroke="#8257e5"
+                stroke-width="2"
+              />
+              <circle
+                cx="800"
+                cy="40"
+                r="6"
+                fill="#04d361"
+                stroke="white"
+                stroke-width="2"
+              />
+
+              <text x="0" y="230" fill="#a8a8b3" font-size="12">JUL</text>
+              <text x="160" y="230" fill="#a8a8b3" font-size="12">AGO</text>
+              <text x="320" y="230" fill="#a8a8b3" font-size="12">SET</text>
+              <text x="480" y="230" fill="#a8a8b3" font-size="12">OUT</text>
+              <text x="640" y="230" fill="#a8a8b3" font-size="12">NOV</text>
+              <text
+                x="780"
+                y="230"
+                fill="#e1e1e6"
+                font-weight="bold"
+                font-size="12"
+              >
+                DEZ
+              </text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="financeiro" class="section-view">
+        <div class="page-header">
+          <h1 class="page-title">Faturas</h1>
+          <p class="page-subtitle">Gerencie os pagamentos das operadoras.</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Operadora</th>
+                <th>Mês Ref</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Status</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#INV-2024</td>
+                <td>
+                  <i
+                    class="fa-solid fa-signal"
+                    style="color: purple; margin-right: 8px"
+                  ></i>
+                  Vivo Corp
+                </td>
+                <td>Dez/2025</td>
+                <td>R$ 12.450,00</td>
+                <td>15/12/2025</td>
+                <td><span class="badge badge-warning">Pendente</span></td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="openModal('Vivo Corp', 'R$ 12.450,00', 'Pendente')"
+                  >
+                    Ver Detalhes
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>#INV-2023</td>
+                <td>
+                  <i
+                    class="fa-solid fa-globe"
+                    style="color: red; margin-right: 8px"
+                  ></i>
+                  Claro Empresas
+                </td>
+                <td>Nov/2025</td>
+                <td>R$ 8.200,50</td>
+                <td>10/11/2025</td>
+                <td><span class="badge badge-success">Pago</span></td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="openModal('Claro Empresas', 'R$ 8.200,50', 'Pago')"
+                  >
+                    Ver Detalhes
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>#INV-2022</td>
+                <td>
+                  <i
+                    class="fa-solid fa-satellite"
+                    style="color: blue; margin-right: 8px"
+                  ></i>
+                  Tim Business
+                </td>
+                <td>Out/2025</td>
+                <td>R$ 5.100,00</td>
+                <td>15/10/2025</td>
+                <td><span class="badge badge-danger">Em Atraso</span></td>
+                <td>
+                  <button
+                    class="btn-action"
+                    onclick="openModal('Tim Business', 'R$ 5.100,00', 'Atrasado')"
+                  >
+                    Ver Detalhes
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="ativos" class="section-view">
+        <div class="page-header">
+          <h1 class="page-title">Gestão de Ativos</h1>
+          <p class="page-subtitle">
+            Inventário de linhas e dispositivos da Rocha Corp.
+          </p>
+        </div>
+
+        <div class="filter-bar">
+          <div class="input-group">
+            <i
+              class="fa-solid fa-magnifying-glass"
+              style="color: var(--text-secondary)"
+            ></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Buscar por funcionário ou número..."
+              onkeyup="filterTable()"
+            />
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="ativosTable">
+            <thead>
+              <tr>
+                <th>Funcionário</th>
+                <th>Cargo</th>
+                <th>Número</th>
+                <th>Dispositivo</th>
+                <th>Centro de Custo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Matheus Rocha</td>
+                <td>CEO / Founder</td>
+                <td>(11) 99999-0001</td>
+                <td>iPhone 15 Pro Max</td>
+                <td>Diretoria</td>
+              </tr>
+              <tr>
+                <td>Ana Silva (MR Tech)</td>
+                <td>CTO</td>
+                <td>(11) 98888-1234</td>
+                <td>Samsung S24 Ultra</td>
+                <td>Tecnologia</td>
+              </tr>
+              <tr>
+                <td>Carlos Souza</td>
+                <td>Gerente de Vendas</td>
+                <td>(21) 97777-5555</td>
+                <td>iPhone 14</td>
+                <td>Comercial</td>
+              </tr>
+              <tr>
+                <td>Fernanda Lima</td>
+                <td>Analista UX</td>
+                <td>(11) 96666-4444</td>
+                <td>iPhone 13</td>
+                <td>Produto</td>
+              </tr>
+              <tr>
+                <td>Roberto Almeida</td>
+                <td>Dev Frontend</td>
+                <td>(31) 95555-3333</td>
+                <td>Samsung A54</td>
+                <td>Tecnologia</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="relatorios" class="section-view">
+        <div class="page-header">
+          <h1 class="page-title">Relatórios</h1>
+          <p class="page-subtitle">Exportação de dados para auditoria.</p>
+        </div>
+
+        <div style="max-width: 600px">
+          <div class="report-item">
+            <div class="report-info">
+              <div class="report-icon">
+                <i class="fa-solid fa-file-csv"></i>
+              </div>
+              <div>
+                <h4>Consolidado de Gastos 2025</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary)">
+                  Gerado em 15/12/2025
+                </p>
+              </div>
+            </div>
+            <button class="btn-action">
+              <i class="fa-solid fa-download"></i> Baixar
+            </button>
+          </div>
+
+          <div class="report-item">
+            <div class="report-info">
+              <div class="report-icon">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div>
+                <h4>Auditoria de Linhas Inativas</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary)">
+                  Gerado em 10/12/2025
+                </p>
+              </div>
+            </div>
+            <button class="btn-action">
+              <i class="fa-solid fa-download"></i> Baixar
+            </button>
+          </div>
+
+          <div class="report-item">
+            <div class="report-info">
+              <div class="report-icon">
+                <i class="fa-solid fa-file-excel"></i>
+              </div>
+              <div>
+                <h4>Rateio por Centro de Custo</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary)">
+                  Automático Mensal
+                </p>
+              </div>
+            </div>
+            <button class="btn-action">
+              <i class="fa-solid fa-download"></i> Baixar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="config" class="section-view">
+        <div class="page-header">
+          <h1 class="page-title">Configurações</h1>
+          <p class="page-subtitle">Dados da conta empresarial.</p>
+        </div>
+
+        <div class="card" style="max-width: 800px">
+          <h3 style="margin-bottom: 24px">Dados da Empresa</h3>
+          <form onsubmit="saveConfig(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Nome Fantasia</label>
+                <input
+                  type="text"
+                  value="Rocha Corp Technology"
+                  readonly
+                  style="opacity: 0.7; cursor: not-allowed"
+                />
+              </div>
+              <div class="form-group">
+                <label>CNPJ</label>
+                <input
+                  type="text"
+                  value="12.345.678/0001-90"
+                  readonly
+                  style="opacity: 0.7; cursor: not-allowed"
+                />
+              </div>
+              <div class="form-group">
+                <label>Email do Administrador</label>
+                <input type="email" value="matheus@mrtech.com" />
+              </div>
+              <div class="form-group">
+                <label>Limite de Alerta de Gasto (R$)</label>
+                <input type="number" value="50000" />
+              </div>
+            </div>
+            <div style="margin-top: 16px">
+              <button type="submit" class="btn-primary">
+                Salvar Alterações
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-overlay" id="invoiceModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Detalhes da Fatura</h3>
+          <button class="close-modal" onclick="closeModal()">&times;</button>
+        </div>
+        <div id="modalBody"></div>
+        <button
+          class="btn-primary"
+          style="width: 100%; margin-top: 24px"
+          onclick="closeModal()"
+        >
+          Fechar
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function navigate(screenId, element) {
+        document
+          .querySelectorAll('.nav-item')
+          .forEach(item => item.classList.remove('active'));
+
+        element.classList.add('active');
+
+        document
+          .querySelectorAll('.section-view')
+          .forEach(section => section.classList.remove('active'));
+
+        document.getElementById(screenId).classList.add('active');
+      }
+
+      function openModal(operadora, valor, status) {
+        const modal = document.getElementById('invoiceModal');
+        const body = document.getElementById('modalBody');
+
+        let color = '#e1e1e6';
+        if (status === 'Pago') color = 'var(--brand-green)';
+        if (status === 'Pendente') color = 'var(--brand-purple)';
+        if (status === 'Atrasado') color = 'var(--brand-red)';
+
+        body.innerHTML = `
+                <div class="modal-row"><span>Operadora:</span> <strong>${operadora}</strong></div>
+                <div class="modal-row"><span>Valor:</span> <strong>${valor}</strong></div>
+                <div class="modal-row"><span>Status:</span> <strong style="color: ${color}">${status}</strong></div>
+                <div class="modal-row"><span>Responsável:</span> <span>Matheus Rocha</span></div>
+                <div class="modal-row" style="border:none"><span>Data Emissão:</span> <span>01/Dez/2025</span></div>
+            `;
+
+        modal.classList.add('open');
+      }
+
+      function closeModal() {
+        document.getElementById('invoiceModal').classList.remove('open');
+      }
+
+      document.getElementById('invoiceModal').addEventListener('click', e => {
+        if (e.target === document.getElementById('invoiceModal')) {
+          closeModal();
+        }
+      });
+
+      function filterTable() {
+        const input = document.getElementById('searchInput');
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById('ativosTable');
+        const tr = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < tr.length; i++) {
+          const tdName = tr[i].getElementsByTagName('td')[0];
+          const tdNum = tr[i].getElementsByTagName('td')[2];
+
+          if (tdName || tdNum) {
+            const txtName = tdName.textContent || tdName.innerText;
+            const txtNum = tdNum.textContent || tdNum.innerText;
+
+            if (
+              txtName.toLowerCase().indexOf(filter) > -1 ||
+              txtNum.indexOf(filter) > -1
+            ) {
+              tr[i].style.display = '';
+            } else {
+              tr[i].style.display = 'none';
+            }
+          }
+        }
+      }
+
+      function saveConfig(event) {
+        event.preventDefault();
+        alert('Sucesso! As configurações da Rocha Corp foram atualizadas.');
+      }
+
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+
+        if (sidebar.classList.contains('active')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function checkMobileClose() {
+        if (window.innerWidth <= 768) {
+          toggleSidebar();
+        }
+      }
+    </script>
+  </body>
+</html>
