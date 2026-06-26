@@ -9,7 +9,7 @@ export const CONTACT = {
   city: "Joinville, SC",
   phone: "(47) 9 9965-3593",
   whatsapp: "5547999653593", // só dígitos, com DDI 55 + DDD
-  instagram: "matheusrocha.dev", // ← EDITE com o seu @ real (sem o @)
+  instagram: "rocha.maatheus",
   email: "gestor.agenciakamino@gmail.com", // ← EDITE se quiser outro e-mail de contato
 };
 
