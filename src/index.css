@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  /* Verde-floresta — cor dominante da marca */
+  --color-forest-950: #0c1d19;
+  --color-forest-900: #14302a;
+  --color-forest-850: #183931;
+  --color-forest-800: #1c3d35;
+  --color-forest-700: #25493f;
+  --color-forest-600: #345a4e;
+
+  /* Creme — respiro e seções claras */
+  --color-cream-50: #faf6ee;
+  --color-cream-100: #f3ebdd;
+  --color-cream-200: #e8dcc7;
+  --color-cream-300: #dccbad;
+
+  /* Cobre — acento cirúrgico */
+  --color-copper-300: #e3ad80;
+  --color-copper-400: #d2935f;
+  --color-copper-500: #bf7a45;
+  --color-copper-600: #a3632f;
+
+  /* Tinta sobre fundo escuro */
+  --color-ink: #ece6d8;
+  --color-ink-dim: #aeb8ac;
+
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-forest-900);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-copper-500);
+    color: var(--color-forest-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper-400);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Serifa de display sempre com ligaduras e otimização editorial */
+.font-serif {
+  font-feature-settings: "liga" 1, "calt" 1;
+  letter-spacing: -0.01em;
+}
