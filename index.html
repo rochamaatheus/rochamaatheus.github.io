@@ -3,23 +3,93 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Matheus Rocha — Sites, Sistemas e IA para o seu Negócio · Joinville, SC</title>
+    <title>Matheus Rocha · Sites, Sistemas e IA para o seu Negócio · Joinville, SC</title>
     <meta
       name="description"
-      content="Crio sites, sistemas e atendentes com IA do zero para empresas em Joinville e região. Sem template genérico, sem agência no meio. Você fala direto comigo."
+      content="Crio sites, sistemas e atendentes com IA do zero para empresas em Joinville e região. Sem template genérico, você fala direto comigo."
     />
+    <meta name="keywords" content="desenvolvimento web Joinville, criação de sites, sistemas web sob medida, atendente IA WhatsApp, agência de sites SC" />
+    <meta name="author" content="Matheus Rocha" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://rochamaatheus.github.io/" />
     <meta name="theme-color" content="#0a0a12" />
-    <meta property="og:title" content="Matheus Rocha — Sites e Sistemas para o seu Negócio" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rochamaatheus.github.io/" />
+    <meta property="og:site_name" content="Matheus Rocha · Desenvolvimento Web" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Matheus Rocha · Sites e Sistemas para o seu Negócio" />
     <meta
       property="og:description"
       content="Sites que aparecem no Google, sistemas que organizam sua operação e atendentes com IA para o seu WhatsApp. Tudo feito do zero, com a cara da sua empresa."
     />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:image" content="https://rochamaatheus.github.io/assets/og-image.jpeg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Matheus Rocha — Sites, sistemas e atendimento com IA para o seu negócio. Joinville, SC." />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Matheus Rocha · Sites e Sistemas para o seu Negócio" />
+    <meta
+      name="twitter:description"
+      content="Sites que aparecem no Google, sistemas que organizam sua operação e atendentes com IA para o seu WhatsApp. Tudo feito do zero, com a cara da sua empresa."
+    />
+    <meta name="twitter:image" content="https://rochamaatheus.github.io/assets/og-image.jpeg" />
+    <meta name="twitter:image:alt" content="Matheus Rocha — Sites, sistemas e atendimento com IA para o seu negócio. Joinville, SC." />
+
     <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <link rel="manifest" href="manifest.json" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://rochamaatheus.github.io/#negocio",
+            "name": "Matheus Rocha — Desenvolvimento Web",
+            "image": "https://rochamaatheus.github.io/assets/og-image.jpeg",
+            "url": "https://rochamaatheus.github.io/",
+            "telephone": "+5547999653593",
+            "email": "matheus@agenciakamino.com.br",
+            "priceRange": "R$500+",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Joinville",
+              "addressRegion": "SC",
+              "addressCountry": "BR"
+            },
+            "areaServed": "Joinville e região, SC",
+            "founder": { "@id": "https://rochamaatheus.github.io/#matheus" },
+            "sameAs": [
+              "https://github.com/rochamaatheus",
+              "https://www.linkedin.com/in/matheus-rocha-269870234/",
+              "https://www.instagram.com/rocha.maatheus/"
+            ]
+          },
+          {
+            "@type": "Person",
+            "@id": "https://rochamaatheus.github.io/#matheus",
+            "name": "Matheus Rocha",
+            "url": "https://rochamaatheus.github.io/",
+            "jobTitle": "Desenvolvedor Web",
+            "worksFor": { "@id": "https://rochamaatheus.github.io/#negocio" },
+            "sameAs": [
+              "https://github.com/rochamaatheus",
+              "https://www.linkedin.com/in/matheus-rocha-269870234/",
+              "https://www.instagram.com/rocha.maatheus/"
+            ]
+          }
+        ]
+      }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide pinado na versão 0.460.0 — evita quebras de CDN com @latest -->
+    <!-- Lucide pinado na versão 0.460.0, evita quebras de CDN com @latest -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.460.0/dist/umd/lucide.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -122,6 +192,7 @@
 
       .marquee-track {
         display: flex;
+        width: max-content;
         white-space: nowrap;
         will-change: transform;
         animation: marquee 28s linear infinite;
@@ -271,10 +342,10 @@
     <header class="fixed top-0 inset-x-0 z-50">
       <nav
         id="nav"
-        class="mx-auto max-w-6xl my-3 md:my-4 grid grid-cols-[1fr_auto_1fr] items-center rounded-2xl border border-transparent px-4 py-3 md:px-5 transition-all duration-300"
+        class="mx-auto max-w-6xl my-3 md:my-4 flex md:grid md:grid-cols-[1fr_auto_1fr] items-center justify-between rounded-2xl border border-transparent px-4 py-3 md:px-5 transition-all duration-300"
       >
-        <!-- Col 1: Logo — alinhado à esquerda -->
-        <a href="#topo" class="flex items-center gap-2.5 justify-self-start" aria-label="Início — Matheus Rocha">
+        <!-- Col 1: Logo, alinhado à esquerda -->
+        <a href="#topo" class="flex items-center gap-2.5 justify-self-start" aria-label="Página inicial">
           <svg viewBox="0 0 48 48" fill="none" class="h-8 w-8" aria-hidden="true">
             <defs>
               <linearGradient id="mr-nav" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
@@ -288,14 +359,14 @@
           <span class="font-display font-bold text-lg tracking-tight text-ink">Matheus Rocha</span>
         </a>
 
-        <!-- Col 2: Links — centralizados de verdade -->
+        <!-- Col 2: Links, centralizados -->
         <div class="hidden md:flex items-center justify-center gap-8 text-sm text-dim">
           <a href="#servicos" class="hover:text-violet-300 transition-colors">Serviços</a>
           <a href="#projetos" class="hover:text-violet-300 transition-colors">Projetos</a>
           <a href="#contato" class="hover:text-violet-300 transition-colors">Contato</a>
         </div>
 
-        <!-- Col 3: Ação — alinhada à direita -->
+        <!-- Col 3: Ação, alinhada à direita -->
         <div class="flex items-center justify-end gap-3">
           <a
             href="#contato"
@@ -358,7 +429,7 @@
           </h1>
 
           <p class="reveal mt-6 max-w-xl text-base md:text-lg leading-relaxed text-dim">
-            Sou o Matheus. Crio do zero <span class="text-ink">sites que aparecem no Google</span>, sistemas que organizam a sua operação e atendentes com IA para o seu WhatsApp. Sem agência no meio — você fala direto comigo.
+            Sou o Matheus. Crio do zero <span class="text-ink">sites que aparecem no Google</span>, sistemas que organizam a sua operação e atendentes com IA para o seu WhatsApp. Você fala direto comigo, sem meio de campo.
           </p>
 
           <div class="reveal mt-8 flex flex-col sm:flex-row gap-3">
@@ -408,9 +479,9 @@
             </div>
             <pre class="p-5 md:p-6 font-mono text-[13px] md:text-sm leading-relaxed overflow-x-auto"><code><span class="text-violet-400">const</span> <span class="text-ink">matheus</span> <span class="text-dim">=</span> {
   <span class="text-violet-300">entrega</span><span class="text-dim">:</span> [<span class="text-fuchsia-400">'sites'</span>, <span class="text-fuchsia-400">'sistemas'</span>, <span class="text-fuchsia-400">'IA'</span>],
-  <span class="text-violet-300">foco</span><span class="text-dim">:</span>    <span class="text-fuchsia-400">'resultado para o seu negócio'</span>,
+  <span class="text-violet-300">foco</span><span class="text-dim">:</span>    <span class="text-fuchsia-400">'resolver, sem enrolação'</span>,
   <span class="text-violet-300">base</span><span class="text-dim">:</span>    <span class="text-fuchsia-400">'Joinville, SC'</span>,
-  <span class="text-violet-300">processo</span><span class="text-dim">:</span> <span class="text-fuchsia-400">'do zero ao ar, sem intermediário'</span>,
+  <span class="text-violet-300">processo</span><span class="text-dim">:</span> <span class="text-fuchsia-400">'do zero ao ar, direto comigo'</span>,
   <span class="text-violet-300">disponivel</span><span class="text-dim">:</span> <span class="text-violet-400">true</span>,
 }<span class="text-violet-400 cursor-blink">▍</span></code></pre>
           </div>
@@ -452,9 +523,9 @@
         <div class="reveal max-w-2xl">
           <span class="font-mono text-xs uppercase tracking-[0.18em] text-violet-300">O que eu faço</span>
           <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(2rem, 5vw, 3rem)">
-            O que o seu negócio precisa — entregue do início ao fim.
+            O que o seu negócio precisa, do início ao fim.
           </h2>
-          <p class="mt-4 text-dim text-lg">Sem hype, sem intermediário. Você me conta o problema, eu construo a solução.</p>
+          <p class="mt-4 text-dim text-lg">Sem hype e sem intermediário. Você me conta o problema, eu construo a solução.</p>
         </div>
 
         <div class="mt-12 grid gap-5 md:grid-cols-3">
@@ -465,7 +536,7 @@
             </div>
             <h3 class="font-display text-xl font-semibold text-ink mt-5">Site Profissional</h3>
             <p class="mt-3 text-sm leading-relaxed text-dim">
-              O seu negócio na internet com a cara da sua marca — uma página ou um site completo com várias seções, feito para atrair e converter.
+              O seu site com a cara da sua marca: uma página ou um site completo, com várias seções, pensado para atrair e converter.
             </p>
             <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
               <li class="flex items-center gap-2.5">
@@ -478,7 +549,7 @@
               </li>
               <li class="flex items-center gap-2.5">
                 <i data-lucide="check" class="h-4 w-4 text-violet-400 shrink-0"></i>
-                Visual único, alinhado com a sua marca
+                Visual próprio, nada de tema pronto
               </li>
             </ul>
           </article>
@@ -490,7 +561,7 @@
             </div>
             <h3 class="font-display text-xl font-semibold text-ink mt-5">Sistema Web</h3>
             <p class="mt-3 text-sm leading-relaxed text-dim">
-              Um painel feito para o seu negócio — controle de clientes, agendamentos, relatórios, pedidos ou qualquer fluxo que hoje está no papel ou em planilha.
+              Um painel para organizar clientes, agendamentos, relatórios, pedidos ou qualquer processo que hoje ainda vive no papel ou na planilha.
             </p>
             <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
               <li class="flex items-center gap-2.5">
@@ -515,7 +586,7 @@
             </div>
             <h3 class="font-display text-xl font-semibold text-ink mt-5">Atendente com IA</h3>
             <p class="mt-3 text-sm leading-relaxed text-dim">
-              Um robô de atendimento inteligente que responde perguntas, tira dúvidas, agenda consultas e atende clientes — mesmo quando você não está disponível.
+              Um robô de atendimento inteligente que responde perguntas, tira dúvidas, agenda consultas e atende clientes mesmo quando você não pode responder.
             </p>
             <ul class="mt-5 space-y-2.5 border-t border-line pt-5 text-sm text-dim">
               <li class="flex items-center gap-2.5">
@@ -545,18 +616,18 @@
             <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(2rem, 5vw, 3rem)">
               Veja exemplos do que eu entrego.
             </h2>
-            <p class="mt-4 text-dim text-lg">Clique em qualquer projeto para navegar de verdade — sem precisar pagar nada para ver como fica.</p>
+            <p class="mt-4 text-dim text-lg">Clique em qualquer projeto para navegar de verdade, sem pagar nada para ver como fica.</p>
           </div>
         </div>
 
-        <!-- Grade gerada via JS — fácil de adicionar projetos reais -->
+        <!-- Grade gerada via JS, fácil de adicionar projetos reais -->
         <div class="mt-12 grid gap-6 md:grid-cols-2" id="projetos-grid"></div>
 
         <!-- GitHub CTA -->
         <a href="https://github.com/rochamaatheus" target="_blank" rel="noopener"
            class="reveal mt-6 flex items-center justify-center gap-3 rounded-2xl border border-dashed border-line p-6 text-dim transition-colors hover:border-violet-400 hover:text-violet-300">
           <i data-lucide="github" class="h-6 w-6"></i>
-          <span class="font-display font-semibold">Mais projetos no GitHub — github.com/rochamaatheus</span>
+          <span class="font-display font-semibold">Mais projetos no GitHub: github.com/rochamaatheus</span>
         </a>
       </div>
     </section>
@@ -572,7 +643,7 @@
             <h2 class="font-display font-bold text-ink mt-4" style="font-size: clamp(1.9rem, 5vw, 2.75rem)">
               Tirar a ideia do papel?
             </h2>
-            <p class="mt-4 text-dim">Um site para o seu negócio, um sistema feito sob medida ou um atendente com IA. Me conta o que precisa — sem compromisso.</p>
+            <p class="mt-4 text-dim">Um site, um sistema sob medida ou um atendente com IA: me conta o que precisa, sem compromisso.</p>
 
             <div class="mt-8 space-y-3">
               <a
@@ -584,7 +655,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-violet-400 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
-                WhatsApp — resposta rápida
+                WhatsApp (resposta rápida)
               </a>
               <a
                 href="https://www.instagram.com/rocha.maatheus/"
@@ -596,11 +667,11 @@
                 @rocha.maatheus
               </a>
               <a
-                href="mailto:gestor.agenciakamino@gmail.com"
+                href="mailto:matheus@agenciakamino.com.br"
                 class="flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3.5 text-sm text-ink transition-colors hover:border-violet-400 break-all"
               >
                 <i data-lucide="mail" class="h-5 w-5 text-violet-400 shrink-0"></i>
-                gestor.agenciakamino@gmail.com
+                matheus@agenciakamino.com.br
               </a>
             </div>
           </div>
@@ -627,7 +698,7 @@
               <div class="flex items-center justify-between rounded-xl border border-line bg-surface px-4 py-4 gap-3">
                 <div>
                   <p class="font-semibold text-ink text-sm">Sistemas e Painéis</p>
-                  <p class="text-xs text-dim mt-0.5">Sob medida para a sua operação</p>
+                  <p class="text-xs text-dim mt-0.5">Construído em cima do jeito que você trabalha</p>
                 </div>
                 <span class="font-display text-lg font-semibold text-ink shrink-0">Sob consulta</span>
               </div>
@@ -724,7 +795,7 @@
 
     <script>
       // ─────────────────────────────────────────────────────────
-      // PROJETOS — para adicionar um projeto real, adicione um
+      // PROJETOS, para adicionar um projeto real, adicione um
       // objeto nesse array. Use "demo" para abrir no iframe ou
       // "url" para abrir em nova aba (projetos de clientes reais).
       // ─────────────────────────────────────────────────────────
@@ -806,7 +877,7 @@
       onScroll();
       window.addEventListener('scroll', onScroll, { passive: true });
 
-      // Menu mobile — troca ícone menu ↔ x
+      // Menu mobile, troca ícone menu ↔ x
       const menuToggle = document.getElementById('menu-toggle');
       const mobileMenu = document.getElementById('mobile-menu');
 

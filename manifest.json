@@ -1,0 +1,23 @@
+{
+  "name": "Matheus Rocha · Desenvolvimento Web",
+  "short_name": "Matheus Rocha",
+  "description": "Sites, sistemas e atendimento com IA para o seu negócio. Joinville, SC.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a0a12",
+  "theme_color": "#0a0a12",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

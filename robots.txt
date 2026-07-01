@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /institucional.html
+Disallow: /sistema.html
+Disallow: /painel.html
+Disallow: /IA.html
+
+Sitemap: https://rochamaatheus.github.io/sitemap.xml
