@@ -4,3 +4,10 @@ dist
 *.local
 .playwright-mcp/
 posts/
+STATUS.json
+video/node_modules/
+video/frames/
+video/out/
+.claude/
+video/lucide.umd.js
+video/dbg.mjs

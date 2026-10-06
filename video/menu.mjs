@@ -1,0 +1,14 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+const p = await ctx.newPage();
+await p.goto('http://localhost:5510/', { waitUntil: 'networkidle' });
+await p.waitForTimeout(2500);
+await p.tap('#menu-toggle');
+await p.waitForTimeout(900);
+await p.screenshot({ path: 'C:/Users/Matheus/AppData/Local/Temp/claude/menu.png' });
+await p.tap('#mobile-menu a[href="#projetos"]');
+await p.waitForTimeout(1200);
+console.log(await p.evaluate(() => ({ open: document.getElementById('mobile-menu').classList.contains('open'), y: scrollY, top: document.getElementById('projetos').offsetTop })));
+await p.screenshot({ path: 'C:/Users/Matheus/AppData/Local/Temp/claude/menu2.png' });
+await b.close();
