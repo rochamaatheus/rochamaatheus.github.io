@@ -26,7 +26,7 @@ const browser = await chromium.launch({ args: ['--force-color-profile=srgb', '--
 async function openPage() {
   const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
   page.on('pageerror', (e) => console.error('PAGEERROR', e.message));
-  await page.goto(`http://localhost:${port}/scene.html?f=${F}&render=1`, { waitUntil: 'networkidle' });
+  await page.goto(`http://localhost:${port}/scene.html?f=${F}&render=1${mode === 'bg' ? '&bgonly=1' : ''}`, { waitUntil: 'networkidle' });
   await page.evaluate(() => window.ready);
   return page;
 }
@@ -36,6 +36,15 @@ if (mode === 'cues') {
   const cues = await page.evaluate(() => window.CUES);
   writeFileSync(`out/cues-${F}.json`, JSON.stringify({ duration: 34, cues }, null, 1));
   console.log('cues', cues.length);
+} else if (mode === 'bg') {
+  // Fundo sozinho a cada 6 frames, para separar conteúdo de fundo na medição de margens
+  const page = await openPage();
+  mkdirSync(`out/bg-${F}`, { recursive: true });
+  for (let i = 0; i < 2040; i += 6) {
+    await page.evaluate((tt) => window.seek(tt), i / 60);
+    await page.screenshot({ path: `out/bg-${F}/${String(i).padStart(5, '0')}.jpg`, type: 'jpeg', quality: 94 });
+  }
+  console.log('bg ok');
 } else if (mode === 'snap') {
   const times = a3.split(',').map(Number);
   const page = await openPage();

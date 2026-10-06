@@ -41,16 +41,6 @@ const PROJETOS = [
 // Propostas e protótipos apresentados a clientes: abrem no modal
 const PROTOTIPOS = [
   {
-    titulo: 'EasyJur',
-    tipo: 'Landing page',
-    descricao: 'Landing page de conversão do EasyJur Work, operação de Legal Ops para escritórios de advocacia.',
-    stack: 'React · TypeScript · Tailwind',
-    img: 'assets/projetos/easyjur.webp',
-    demo: 'https://rochamaatheus.github.io/easyjur-landing/',
-    repo: 'https://github.com/rochamaatheus/easyjur-landing',
-    span: 'md:col-span-2',
-  },
-  {
     titulo: 'LIDERARH Check',
     tipo: 'Protótipo de app',
     descricao: 'App de check-in emocional e riscos psicossociais (NR-01), com visões de colaborador, líder e RH.',
@@ -58,6 +48,7 @@ const PROTOTIPOS = [
     img: 'assets/projetos/liderarh.webp',
     demo: 'https://rochamaatheus.github.io/liderarh-check-prototipo/',
     repo: 'https://github.com/rochamaatheus/liderarh-check-prototipo',
+    span: 'md:col-span-2',
   },
   {
     titulo: 'Wesen Clínica',
@@ -78,15 +69,6 @@ const PROTOTIPOS = [
     repo: 'https://github.com/rochamaatheus/site-lynch-store',
   },
   {
-    titulo: 'EVDL Escola de Vôlei',
-    tipo: 'Wireframe de sistema',
-    descricao: 'Sistema de planejamento, horas realizadas e custos dos professores de uma escola de vôlei.',
-    stack: 'HTML · CSS · JS',
-    img: 'assets/projetos/evdl.webp',
-    demo: 'https://rochamaatheus.github.io/evdl-escola-de-volei/',
-    repo: 'https://github.com/rochamaatheus/evdl-escola-de-volei',
-  },
-  {
     titulo: 'Ties Comunicação',
     tipo: 'Estudo de layout',
     descricao: 'Três rascunhos de layout para o novo site, com o mesmo conteúdo organizado de jeitos diferentes.',
@@ -103,7 +85,6 @@ const PROTOTIPOS = [
     img: 'assets/projetos/az3.webp',
     demo: 'https://rochamaatheus.github.io/az3-apresentacao/',
     repo: 'https://github.com/rochamaatheus/az3-apresentacao',
-    span: 'lg:col-span-2',
   },
 ];
 
