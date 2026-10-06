@@ -26,7 +26,7 @@ def loudnorm_filter(wav):
 wav = f'out/audio-{F}.wav'
 af = loudnorm_filter(wav) + ',aresample=48000'
 src = ['-framerate', str(FPS), '-i', f'frames/{F}/%05d.jpg', '-i', wav]
-common = ['-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709',
+common = ['-vf', 'scale=in_range=pc:out_range=tv,format=yuv420p', '-color_range', 'tv', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709',
           '-c:a', 'aac', '-b:a', '256k', '-ar', '48000', '-af', af, '-shortest', '-movflags', '+faststart']
 
 if F == 'desktop':
