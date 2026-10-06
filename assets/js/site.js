@@ -287,7 +287,21 @@ document.addEventListener('keydown', (e) => {
 const reel = $('#showreel');
 const reelBtn = $('#reel-sound');
 if (reel) {
+  // Vertical (9:16) no celular, horizontal (16:9) a partir do tablet; troca também ao redimensionar
+  const mqMobile = window.matchMedia('(max-width: 767px)');
+  let reelVisible = false;
+  const pickReel = () => {
+    const kind = mqMobile.matches ? 'mobile' : 'desktop';
+    if (reel.dataset.current === kind) return;
+    reel.dataset.current = kind;
+    reel.poster = reel.dataset[`${kind}Poster`];
+    reel.src = reel.dataset[kind];
+    if (reelVisible) reel.play().catch(() => {});
+  };
+  pickReel();
+  mqMobile.addEventListener('change', pickReel);
   new IntersectionObserver((entries) => entries.forEach((e) => {
+    reelVisible = e.isIntersecting;
     if (e.isIntersecting) reel.play().catch(() => {});
     else reel.pause();
   }), { threshold: 0.35 }).observe(reel);

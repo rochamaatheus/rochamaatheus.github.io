@@ -40,4 +40,8 @@ else:
     run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', *src, *common, '-preset', 'slow', '-crf', '17', '-g', '120', '-maxrate', '20M', '-bufsize', '40M',
          'out/matheus-rocha-reels-1080x1920-60fps.mp4'])
     run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', 'frames/mobile/00276.jpg', '-q:v', '3', 'out/reels-capa.jpg'])
+    run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', 'out/matheus-rocha-reels-1080x1920-60fps.mp4', '-c:v', 'libx264', '-preset', 'slow', '-crf', '26',
+         '-maxrate', '6M', '-bufsize', '12M', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-g', '120', '-c:a', 'aac', '-b:a', '160k', '-movflags', '+faststart',
+         '../assets/video/showreel-mobile.mp4'])
+    run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', 'frames/mobile/00276.jpg', '-vf', 'scale=720:-2', '-q:v', '4', '../assets/video/showreel-mobile-poster.jpg'])
 print('ok')
