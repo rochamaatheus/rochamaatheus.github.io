@@ -11,3 +11,6 @@ video/out/
 .claude/
 video/lucide.umd.js
 video/dbg.mjs
+github-org.py
+github-org.log.json
+video/speed.mjs

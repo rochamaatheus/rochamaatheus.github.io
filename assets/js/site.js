@@ -10,9 +10,9 @@ const PROJETOS = [
     span: 'md:col-span-7',
   },
   {
-    titulo: 'CRM Kamino',
-    tipo: 'Sistema em produção',
-    descricao: 'CRM com automações, bots de conversa 24h e agentes de IA, com rastreabilidade do lead até a venda.',
+    titulo: 'Kamino CRM',
+    tipo: 'SaaS em produção',
+    descricao: 'CRM para WhatsApp com atendimento por IA 24h, funil de vendas e automações, do primeiro contato até a venda.',
     tags: ['Next.js', 'IA', 'WhatsApp'],
     img: 'assets/projetos/crm-kamino.webp',
     url: 'https://crm.agenciakamino.com.br/',
@@ -282,6 +282,23 @@ document.addEventListener('keydown', (e) => {
   if (modal.classList.contains('active')) closeDemo();
   else if (mobileMenu.classList.contains('open')) setMenu(false);
 });
+
+// Vídeo: toca sem som quando aparece na tela, pausa quando sai
+const reel = $('#showreel');
+const reelBtn = $('#reel-sound');
+if (reel) {
+  new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) reel.play().catch(() => {});
+    else reel.pause();
+  }), { threshold: 0.35 }).observe(reel);
+  reelBtn.addEventListener('click', () => {
+    reel.muted = !reel.muted;
+    if (!reel.muted) { reel.currentTime = 0; reel.play().catch(() => {}); }
+    $('#reel-label').textContent = reel.muted ? 'Ativar som' : 'Som ativado';
+    $('#reel-icon-off').classList.toggle('hidden', !reel.muted);
+    $('#reel-icon-on').classList.toggle('hidden', reel.muted);
+  });
+}
 
 // Copiar e-mail
 const copyBtn = $('#copy-email');

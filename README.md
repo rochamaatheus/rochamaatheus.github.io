@@ -43,3 +43,21 @@ cd video && node build-icons.cjs
 ```
 
 Servidor local: `python -m http.server 5510` e abra http://localhost:5510
+
+## Vídeo de apresentação
+
+Feito em código, frame a frame, dentro de `video/`:
+
+- `scene.html` + `scene.js`: animação em GSAP com timeline determinística (`?f=desktop` ou `?f=mobile`)
+- `render.mjs`: captura cada frame com Playwright (60 fps, em paralelo)
+- `analyze.py` e `occupancy.py`: checam saltos entre frames, trechos parados, ocupação da tela e zonas seguras do Reels
+- `audio.py`: trilha e efeitos sonoros sintetizados do zero, sincronizados pelos eventos da timeline
+- `encode.py`: gera os MP4 (volume normalizado em -14 LUFS)
+
+```bash
+cd video && npm i && npx playwright install chromium && node build-icons.cjs
+node render.mjs desktop full 60 8 && node render.mjs desktop cues
+python audio.py desktop && python encode.py desktop
+```
+
+Legendas e textos do anúncio: `video/anuncio-instagram.md`.

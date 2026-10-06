@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Matheus Rocha · motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=block" rel="stylesheet" />
+<style>
+  :root { --bg: #08070f; --violet: #8a63ff; --fuchsia: #c668ff; --ink: #f1eefc; --dim: #a19bc2; --line: rgba(255,255,255,.12); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #000; overflow: hidden; }
+  body { font-family: 'Geist', sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  #stage { position: relative; overflow: hidden; background: var(--bg); }
+  .desktop #stage { width: 1920px; height: 1080px; }
+  .mobile #stage { width: 1080px; height: 1920px; }
+  #cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+  .layer, .scene { position: absolute; inset: 0; }
+  .scene { visibility: hidden; }
+  .abs { position: absolute; }
+  .serif { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+  .mono { font-family: 'Geist Mono', monospace; }
+  .grad { background: linear-gradient(100deg, #b49bff 0%, #c668ff 45%, #ff8fd8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .glass {
+    background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(255,255,255,.025));
+    border: 1.5px solid rgba(255,255,255,.14);
+    backdrop-filter: blur(22px) saturate(160%);
+    box-shadow: 0 40px 100px -40px rgba(0,0,0,.8), inset 0 1.5px 0 rgba(255,255,255,.14);
+  }
+  .chip { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; padding: 16px 28px; font-size: 28px; font-weight: 500; white-space: nowrap; }
+  .chip svg { width: 28px; height: 28px; color: #c7b6ff; }
+
+  /* fundo */
+  #bg .aurora { position: absolute; border-radius: 50%; opacity: .95; -webkit-mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,.72) 38%, transparent 100%); mask-image: radial-gradient(circle closest-side, #000 0%, rgba(0,0,0,.72) 38%, transparent 100%); }
+  #grid { position: absolute; left: -50%; right: -50%; height: 120%; bottom: -55%; transform-origin: 50% 0;
+    transform: perspective(900px) rotateX(72deg);
+    background-image: linear-gradient(rgba(138,99,255,.35) 2px, transparent 2px), linear-gradient(90deg, rgba(138,99,255,.35) 2px, transparent 2px);
+    background-size: 120px 120px; mask-image: linear-gradient(to bottom, transparent 0%, #000 30%, #000 60%, transparent 100%); opacity: .35; }
+  .particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #c7b6ff; box-shadow: 0 0 12px #8a63ff; }
+  #noise { position: absolute; inset: 0; opacity: .035; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  #vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%); pointer-events: none; }
+  #flash { position: absolute; inset: 0; background: radial-gradient(circle, rgba(220,200,255,.9), rgba(138,99,255,.5) 60%, transparent 100%); opacity: 0; mix-blend-mode: screen; pointer-events: none; }
+
+  /* S1 logo */
+  #logo1, #logo8 { position: absolute; left: 50%; top: 50%; }
+  .logo-svg { width: 100%; height: 100%; overflow: visible; }
+  #name1 { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: -0.04em; }
+  #name1 .ch { display: inline-block; }
+
+  /* S2 hook */
+  #hook { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: -0.05em; line-height: .98; }
+  #hook .ln { display: block; white-space: nowrap; }
+  #hook .w { display: inline-block; margin: 0 .12em; transform-origin: 50% 80%; }
+  #tmpl { position: relative; display: inline-block; }
+  #strike { position: absolute; left: -4%; top: 52%; height: .085em; width: 108%; background: linear-gradient(90deg, #ff5f7a, #ff8fd8); border-radius: 99px; transform-origin: 0 50%; transform: scaleX(0); }
+  
+  #medida { position: absolute; left: 0; top: 0; white-space: nowrap; padding: 0 .06em 0 0; }
+  .hchip { position: absolute; }
+
+  /* S3 cards */
+  .svc { position: absolute; border-radius: 40px; overflow: hidden; }
+  .svc .ic { width: 84px; height: 84px; border-radius: 24px; display: grid; place-items: center; background: linear-gradient(135deg, rgba(138,99,255,.45), rgba(198,104,255,.15)); border: 1.5px solid rgba(199,182,255,.35); }
+  .svc .ic svg { width: 42px; height: 42px; color: #ece6ff; }
+  .svc h3 { font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+  .svc p { color: var(--dim); }
+  .ill { position: absolute; border-radius: 24px; background: rgba(8,7,15,.55); border: 1.5px solid rgba(255,255,255,.08); overflow: hidden; }
+  .bar { position: absolute; bottom: 18px; width: 15%; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, #c668ff, #8a63ff); transform-origin: 50% 100%; }
+  .bub { position: absolute; border-radius: 22px; padding: 12px 18px; font-size: 20px; white-space: nowrap; }
+  .bub.in { background: rgba(255,255,255,.1); color: var(--ink); border-bottom-left-radius: 6px; }
+  .bub.out { background: linear-gradient(135deg, #8a63ff, #b05cff); color: white; border-bottom-right-radius: 6px; }
+  .wf { position: absolute; border-radius: 6px; background: rgba(255,255,255,.13); }
+
+  /* S4 projetos */
+  .browser { position: absolute; border-radius: 26px; overflow: hidden; }
+  .browser .bar-top { height: 54px; display: flex; align-items: center; gap: 12px; padding: 0 22px; border-bottom: 1.5px solid rgba(255,255,255,.1); background: rgba(16,14,27,.85); }
+  .dot { width: 16px; height: 16px; border-radius: 50%; }
+  .url { margin-left: 18px; flex: 1; height: 32px; border-radius: 10px; background: rgba(255,255,255,.07); display: flex; align-items: center; padding: 0 16px; font-size: 18px; color: var(--dim); }
+  .vp { position: absolute; left: 0; right: 0; bottom: 0; overflow: hidden; background: #fff; }
+  .strip { position: absolute; top: 0; left: 0; height: 100%; display: flex; }
+  .slot { position: relative; height: 100%; overflow: hidden; flex: none; }
+  .slot img { position: absolute; left: 0; top: 0; width: 100%; display: block; }
+  .phone { position: absolute; border-radius: 64px; background: #0d0b16; border: 3px solid rgba(255,255,255,.18); box-shadow: 0 60px 120px -40px rgba(0,0,0,.9), 0 0 0 10px rgba(255,255,255,.04), inset 0 0 0 2px rgba(0,0,0,.6); }
+  .phone .scr { position: absolute; inset: 16px; border-radius: 50px; overflow: hidden; background: #fff; }
+  .phone .notch { position: absolute; top: 28px; left: 50%; width: 32%; height: 34px; margin-left: -16%; background: #0d0b16; border-radius: 20px; z-index: 3; }
+  #plabel { position: absolute; border-radius: 32px; overflow: hidden; background: linear-gradient(145deg, rgba(22,18,40,.9), rgba(12,10,22,.86)) !important; }
+  #plabel .t { font-weight: 600; letter-spacing: -0.04em; line-height: 1.05; white-space: nowrap; }
+  .swap { position: relative; overflow: hidden; }
+  .swap > div { position: absolute; left: 0; top: 0; white-space: nowrap; }
+  #phead { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+
+  /* S5 protótipos */
+  #wall { position: absolute; left: 50%; top: 50%; transform-style: preserve-3d; }
+  .tile { position: absolute; border-radius: 22px; overflow: hidden; border: 2px solid rgba(255,255,255,.12); box-shadow: 0 30px 60px -20px rgba(0,0,0,.8); background: #222; }
+  .tile img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  #wallShade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(8,7,15,.92), rgba(8,7,15,.35) 70%); }
+  #protoPanel { position: absolute; border-radius: 44px; }
+
+  /* S6 processo */
+  #chat { position: absolute; border-radius: 40px; overflow: hidden; }
+  .msg { position: absolute; max-width: 80%; border-radius: 28px; padding: 22px 30px; font-size: 32px; line-height: 1.3; }
+  .desktop .msg { font-size: 34px; }
+  .msg.in { left: 32px; background: rgba(255,255,255,.1); border-bottom-left-radius: 8px; }
+  .msg.out { right: 32px; background: linear-gradient(135deg, #8a63ff, #b05cff); border-bottom-right-radius: 8px; }
+  .msg .tm { display: block; margin-top: 6px; font-size: 18px; opacity: .6; text-align: right; }
+  .typing { position: absolute; left: 32px; display: flex; gap: 10px; padding: 26px 30px; border-radius: 28px; background: rgba(255,255,255,.1); border-bottom-left-radius: 8px; }
+  .typing i { width: 14px; height: 14px; border-radius: 50%; background: var(--dim); display: block; }
+  .step { position: absolute; display: flex; gap: 30px; align-items: flex-start; }
+  .step .n { flex: none; display: grid; place-items: center; border-radius: 50%; border: 2px solid rgba(199,182,255,.5); background: var(--bg); font-family: 'Geist Mono'; color: #ddd3ff; position: relative; }
+  .step .n .ok { position: absolute; inset: -2px; border-radius: 50%; background: linear-gradient(135deg, #8a63ff, #c668ff); display: grid; place-items: center; }
+  .step .n .ok svg { color: white; }
+  .step h4 { font-weight: 600; letter-spacing: -0.03em; }
+  .step p { color: var(--dim); line-height: 1.35; }
+  #pline { position: absolute; background: rgba(255,255,255,.12); }
+  #pline i { position: absolute; inset: 0; background: linear-gradient(180deg, #8a63ff, #c668ff); transform-origin: 0 0; }
+
+  /* S7 */
+  .stat { position: absolute; border-radius: 36px; }
+  .stat .v { font-weight: 600; letter-spacing: -0.05em; line-height: 1; }
+  .stat .v b { color: #a585ff; font-weight: 600; }
+  .stat .l { color: var(--dim); }
+  .row { position: absolute; left: 0; display: flex; gap: 22px; white-space: nowrap; }
+  #blobSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+
+  /* S8 */
+  .pill { position: absolute; display: flex; align-items: center; gap: 22px; border-radius: 999px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; overflow: hidden; }
+  .pill .pi { flex: none; display: grid; place-items: center; border-radius: 50%; }
+  .pill.wa { background: linear-gradient(135deg, #25d366, #1ebe5a); color: white; box-shadow: 0 30px 80px -25px rgba(37,211,102,.7); }
+  .pill .shine { position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%); transform: translateX(-120%); }
+  #cta { position: absolute; left: 0; right: 0; text-align: center; font-weight: 600; letter-spacing: -0.05em; line-height: 1; }
+  #cta .ln { display: block; overflow: hidden; padding-bottom: .08em; }
+  #cta .ln > span { display: inline-block; }
+  #sign { position: absolute; left: 0; right: 0; text-align: center; color: var(--dim); letter-spacing: .14em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="mblur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="mblurG" stdDeviation="0 0" /></filter>
+      <filter id="vblur" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur id="vblurG" stdDeviation="0 0" /></filter>
+      <linearGradient id="lg" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop stop-color="#8a63ff" /><stop offset="1" stop-color="#c668ff" /></linearGradient>
+      <linearGradient id="blobGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7341f0" /><stop offset=".55" stop-color="#a25cff" /><stop offset="1" stop-color="#e07bff" /></linearGradient>
+    </defs>
+  </svg>
+
+  <div id="cam">
+    <div id="bg" class="layer">
+      <div class="aurora" id="au1"></div>
+      <div class="aurora" id="au2"></div>
+      <div class="aurora" id="au3"></div>
+      <div id="grid"></div>
+      <div id="particles" class="layer"></div>
+    </div>
+
+    <!-- S1 -->
+    <section class="scene" id="s1">
+      <div id="logo1"></div>
+      <div id="name1"></div>
+    </section>
+
+    <!-- S2 -->
+    <section class="scene" id="s2">
+      <div id="hook"></div>
+      <div id="hchips"></div>
+    </section>
+
+    <!-- S3 -->
+    <section class="scene" id="s3"></section>
+
+    <!-- S4 -->
+    <section class="scene" id="s4">
+      <div id="phead"><div class="chip glass" id="pheadChip"><span class="mono" style="color:#c7b6ff">03</span><span>Projetos reais, <span class="serif grad" style="font-size:1.25em">no ar hoje</span></span></div></div>
+      <div class="browser glass" id="browser">
+        <div class="bar-top"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><div class="url mono"><span class="swap" id="urlSwap" style="height:24px;flex:1"></span></div></div>
+        <div class="vp" id="bvp"><div class="strip" id="bstrip"></div></div>
+      </div>
+      <div class="phone" id="phone"><div class="notch"></div><div class="scr" id="pscr"><div class="strip" id="pstrip"></div></div></div>
+      <div id="plabel" class="glass"></div>
+    </section>
+
+    <!-- S5 -->
+    <section class="scene" id="s5">
+      <div id="wall"></div>
+      <div id="wallShade"></div>
+      <div id="protoPanel" class="glass"></div>
+    </section>
+
+    <!-- S6 -->
+    <section class="scene" id="s6"></section>
+
+    <!-- S7 -->
+    <section class="scene" id="s7"></section>
+
+    <!-- S8 -->
+    <section class="scene" id="s8">
+      <div id="logo8"></div>
+      <div id="cta"></div>
+      <div id="pills"></div>
+      <div id="sign" class="mono"></div>
+    </section>
+
+    <svg id="blobSvg"><path id="blob" fill="url(#blobGrad)" d="" /></svg>
+  </div>
+  <div id="flash"></div>
+  <div id="vignette"></div>
+  <div id="noise"></div>
+</div>
+
+<script src="lucide.umd.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/MorphSVGPlugin.min.js"></script>
+<script src="scene.js"></script>
+</body>
+</html>
