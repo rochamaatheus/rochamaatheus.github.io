@@ -189,6 +189,9 @@ body {
 /* O parágrafo é o maior texto da primeira tela (LCP): sobe sem sumir, para contar já na primeira pintura */
 p[data-hero] { animation-name: hero-rise; }
 @keyframes hero-rise { from { transform: translateY(18px); } }
+/* Quem volta pelo botão "voltar" já viu a entrada: a página aparece pronta */
+.no-intro .hw > span, .no-intro [data-hero], .no-intro [data-hero-card] { animation-name: none; }
+.no-intro [data-hero-card].float-y { animation: floaty 6s ease-in-out infinite; }
 @keyframes hero-in { from { opacity: 0.01; transform: translateY(var(--hy, 24px)) scale(var(--hs, 1)); } }
 .code-box > * { grid-area: 1 / 1; }
 .cursor-blink { animation: blink 1.05s step-end infinite; }
