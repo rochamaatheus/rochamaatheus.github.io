@@ -397,7 +397,7 @@ function initMotion() {
 
   // Hero entra só com CSS (primeira pintura); aqui fica a digitação da janela de código
   const typing = { n: 0 };
-  gsap.to(typing, { n: totalChars, duration: 2.6, ease: 'none', delay: 1.1, onUpdate: () => renderCode(Math.round(typing.n)) });
+  gsap.to(typing, { n: totalChars, duration: 2.2, ease: 'none', delay: 0.7, onUpdate: () => renderCode(Math.round(typing.n)) });
 
   gsap.to('.scroll-progress', {
     scaleX: 1,
@@ -441,7 +441,11 @@ function initMotion() {
     }, { rootMargin: '120% 0px' });
     io.observe(el);
   };
+  // Ligar o WebGL acorda o processo de GPU do navegador: isso só acontece depois da primeira pintura e da entrada do hero
+  const painted = new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   afterLoad
+    .then(() => painted)
+    .then(() => new Promise((r) => setTimeout(r, 1200)))
     .then(() => idle(initParticles))
     .then(() => idle(initExtras))
     .then(() => {
