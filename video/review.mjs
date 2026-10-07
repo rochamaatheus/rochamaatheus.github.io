@@ -6,7 +6,7 @@ const sizes = [
   { name: 'desktop', width: 1440, height: 900, mobile: false },
   { name: 'mobile', width: 390, height: 844, mobile: true },
 ];
-const browser = await chromium.launch();
+const browser = await chromium.launch({ args: ['--use-angle=d3d11', '--enable-gpu', '--ignore-gpu-blocklist'] });
 for (const s of sizes) {
   const ctx = await browser.newContext({
     viewport: { width: s.width, height: s.height },

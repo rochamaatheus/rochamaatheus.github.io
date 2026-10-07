@@ -1,0 +1,38 @@
+# Matheus Rocha · Desenvolvimento Web
+
+> Desenvolvedor full-stack em Joinville, Santa Catarina, Brasil. Cria do zero sites profissionais, landing pages, sistemas web sob medida e atendentes com inteligência artificial para WhatsApp. Atende empresas de todo o Brasil, com contato direto do primeiro dia à entrega, sem intermediário.
+
+## Serviços
+
+- Página de captação (landing page): a partir de R$ 500. Página focada em trazer contatos, com SEO e versão para celular.
+- Site profissional completo: a partir de R$ 1.000. Várias seções, serviços e contato, visual próprio (sem template) e SEO incluso.
+- Sistema web sob medida: sob consulta. Painéis para clientes, agendamentos, pedidos e relatórios, com login e acesso por perfil.
+- Atendente com IA para WhatsApp: sob consulta. Do menu por opções à IA conversacional que atende 24 horas por dia.
+- Outros projetos com código: automação, integração entre sistemas, aplicativos e ferramentas internas.
+
+## Como funciona
+
+1. Conversa pelo WhatsApp, sem formulário e sem call de vendas.
+2. Proposta com escopo, prazo e valor fechados. Quando faz sentido, um protótipo navegável antes de começar.
+3. Construção do zero, com o andamento mostrado durante o projeto.
+4. Publicação com domínio, Google e rastreamento configurados, e suporte depois da entrega.
+
+## Projetos no ar
+
+- [Agência Kamino](https://agenciakamino.com.br/): site institucional e infraestrutura (VPS) da agência.
+- [Kamino CRM](https://crm.agenciakamino.com.br/): CRM para WhatsApp com atendimento por IA 24h, funil de vendas e automações.
+- [Mobcorp Fleet](https://mobcorp.eco.br/): site, sistema de gestão web e aplicativo Android/iOS para transporte executivo elétrico.
+- [O Ponto Cego da Marcenaria](https://pontocegodamarcenaria.com.br/): landing page de captação para imersão presencial do setor moveleiro.
+
+## Tecnologias
+
+TypeScript, React, Next.js, Vue, Tailwind, Node.js, PHP, Laravel, Python, PostgreSQL, MySQL, OpenAI, Claude, N8N, Evolution API, Docker, Linux/VPS, Nginx, Traefik, Meta Ads, Google Ads, GTM.
+
+## Contato
+
+- Site: https://rochamaatheus.github.io/
+- WhatsApp: +55 47 99965-3593 (https://wa.me/5547999653593)
+- E-mail: matheus@agenciakamino.com.br
+- Instagram: https://www.instagram.com/rocha.maatheus/
+- LinkedIn: https://www.linkedin.com/in/matheus-rocha-269870234/
+- GitHub: https://github.com/rochamaatheus

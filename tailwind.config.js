@@ -11,7 +11,7 @@ module.exports = {
         line: '#24203a',
         ink: '#f1eefc',
         dim: '#a19bc2',
-        mute: '#6f6990',
+        mute: '#8a84ab',
         violet: { 200: '#ddd3ff', 300: '#c7b6ff', 400: '#a585ff', 500: '#8a63ff', 600: '#7341f0' },
         fuchsia: { 400: '#d27bff', 500: '#c668ff' },
       },

@@ -9,9 +9,11 @@ Sites, sistemas e atendimento com IA feitos sob medida.
 
 - HTML estático, sem framework, publicado no GitHub Pages a cada push na `main` (`.github/workflows/deploy.yml`)
 - Tailwind CSS 3 pré-compilado em `assets/css/site.css` (fonte em `src/site.css`)
-- GSAP + ScrollTrigger + SplitText para as animações, Lenis para a rolagem suave no desktop
+- GSAP + ScrollTrigger + SplitText para as animações, Lenis para a rolagem suave no desktop (hospedados em `assets/vendor/`, sem CDN)
+- Campo de partículas em WebGL puro (`assets/js/particles.js`, sem biblioteca): muda de forma conforme a seção e reage ao mouse e ao toque
 - Ícones: subconjunto do Lucide gerado em `assets/js/icons.js`
-- Tipografia: Geist, Geist Mono e Instrument Serif
+- Tipografia: Geist, Geist Mono e Instrument Serif, hospedadas em `assets/fonts/` (subconjunto latino)
+- SEO: JSON-LD (negócio local, pessoa, serviços com preço e perguntas frequentes), `llms.txt` para buscadores de IA e `robots.txt` liberando os robôs de busca e de IA
 
 ## Estrutura
 
@@ -19,6 +21,7 @@ Sites, sistemas e atendimento com IA feitos sob medida.
 index.html            página única
 assets/css/site.css   CSS compilado (não editar à mão)
 assets/js/site.js     dados dos projetos e todas as interações
+assets/js/particles.js  campo de partículas (WebGL)
 assets/js/icons.js    ícones usados no site
 assets/projetos/      prints dos projetos (WebP)
 assets/video/         vídeo de apresentação
@@ -43,6 +46,23 @@ cd video && node build-icons.cjs
 ```
 
 Servidor local: `python -m http.server 5510` e abra http://localhost:5510
+
+## Animações e acessibilidade
+
+Quem usa "reduzir movimento" no sistema (inclusive o Windows com os efeitos de animação desligados) vê o site estático, com o processo já montado. Para conferir as animações mesmo assim, abra com `?motion=1`.
+
+Testes visuais com Playwright (dentro de `video/`, com o servidor local no ar):
+
+```bash
+node fxshots.mjs desktop
+node fxshots.mjs mobile
+node fxhover.mjs
+node fxmobile.mjs
+```
+
+Para medir com Lighthouse num servidor com gzip parecido com o GitHub Pages: `node gzserve.mjs 5511` e rode o Lighthouse em `http://localhost:5511/?motion=1`.
+
+As perguntas frequentes aparecem na seção `#duvidas` e também no JSON-LD (`FAQPage`) no topo do `index.html`: ao mudar uma, mude as duas.
 
 ## Vídeo de apresentação
 
