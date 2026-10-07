@@ -276,7 +276,7 @@
 }
     </script>
 
-    <script>document.documentElement.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches||/[?&]motion=1/.test(location.search))document.documentElement.classList.add('motion');</script>
+    <script>document.documentElement.classList.add('js');if(!/[?&]motion=0/.test(location.search))document.documentElement.classList.add('motion');</script>
     <link rel="preload" href="assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="assets/fonts/instrument-serif-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="assets/css/site.css" />

@@ -111,8 +111,8 @@ const CODE_CLASS = { k: 'text-violet-400', t: 'text-ink', d: 'text-dim', p: 'tex
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
-// ?motion=1 força as animações mesmo com "reduzir movimento" ligado no sistema (útil para conferir)
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches && !/[?&]motion=1/.test(location.search);
+// As animações sempre rodam, mesmo com "reduzir movimento" ligado no sistema; ?motion=0 desliga (teste/acessibilidade)
+const reduceMotion = /[?&]motion=0/.test(location.search);
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const hasGsap = typeof window.gsap !== 'undefined';
 if (!hasGsap) document.documentElement.classList.remove('js', 'motion');

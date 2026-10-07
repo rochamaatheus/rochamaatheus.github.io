@@ -49,7 +49,7 @@ Servidor local: `python -m http.server 5510` e abra http://localhost:5510
 
 ## Animações e acessibilidade
 
-Quem usa "reduzir movimento" no sistema (inclusive o Windows com os efeitos de animação desligados) vê o site estático, com o processo já montado. Para conferir as animações mesmo assim, abra com `?motion=1`.
+As animações rodam sempre, mesmo com "reduzir movimento" ligado no sistema (inclusive o Windows com os efeitos de animação desligados). Para ver o site estático, com o processo já montado, abra com `?motion=0`.
 
 Testes visuais com Playwright (dentro de `video/`, com o servidor local no ar):
 
@@ -60,7 +60,7 @@ node fxhover.mjs
 node fxmobile.mjs
 ```
 
-Para medir com Lighthouse num servidor com gzip parecido com o GitHub Pages: `node gzserve.mjs 5511` e rode o Lighthouse em `http://localhost:5511/?motion=1`.
+Para medir com Lighthouse num servidor com gzip parecido com o GitHub Pages: `node gzserve.mjs 5511` e rode o Lighthouse em `http://localhost:5511/`.
 
 As perguntas frequentes aparecem na seção `#duvidas` e também no JSON-LD (`FAQPage`) no topo do `index.html`: ao mudar uma, mude as duas.
 

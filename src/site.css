@@ -757,10 +757,9 @@ html:not(.motion) .build-hint { display: none; }
 .bs-toast b { font-size: 13px; font-weight: 600; color: #f1eefc; }
 .bs-toast small { font: 11px 'Geist Mono', monospace; color: #a19bc2; }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .js [data-reveal] { opacity: 1; transform: none; }
-  .blob, .float-y, .cursor-blink, .hw > span, [data-hero], [data-hero-card] { animation: none !important; }
-  .lift:hover { transform: none; }
-  #mobile-menu, #mobile-menu .mobile-link { transition: none; }
-}
+/* Sem movimento só com ?motion=0 (a classe .motion some); fora isso as animações rodam sempre */
+html:not(.motion) { scroll-behavior: auto; }
+.js:not(.motion) [data-reveal] { opacity: 1; transform: none; }
+html:not(.motion) :is(.blob, .float-y, .cursor-blink, .hw > span, [data-hero], [data-hero-card]) { animation: none !important; }
+html:not(.motion) .lift:hover { transform: none; }
+html:not(.motion) :is(#mobile-menu, #mobile-menu .mobile-link) { transition: none; }
