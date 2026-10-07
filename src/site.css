@@ -3,8 +3,8 @@
 @font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; font-display: swap; src: url(../fonts/instrument-serif-italic-latin.woff2) format('woff2'); }
 
 /* Reservas com as mesmas medidas das fontes do site: quando a fonte real chega, o texto não muda de lugar (CLS zero) */
-@font-face { font-family: 'Geist Fallback'; src: local('Arial'), local('ArialMT'), local('Roboto'), local('Helvetica'); size-adjust: 103.93%; ascent-override: 96.7%; descent-override: 28.38%; line-gap-override: 0%; }
-@font-face { font-family: 'Instrument Serif Fallback'; font-style: italic; src: local('Georgia Italic'), local('Georgia-Italic'), local('Times New Roman Italic'); size-adjust: 79.73%; ascent-override: 124.17%; descent-override: 38.88%; line-gap-override: 0%; }
+@font-face { font-family: 'Geist Fallback'; font-display: swap; src: local('Arial'), local('ArialMT'), local('Roboto'), local('Helvetica'); size-adjust: 103.93%; ascent-override: 96.7%; descent-override: 28.38%; line-gap-override: 0%; }
+@font-face { font-family: 'Instrument Serif Fallback'; font-style: italic; font-display: swap; src: local('Georgia Italic'), local('Georgia-Italic'), local('Times New Roman Italic'); size-adjust: 79.73%; ascent-override: 124.17%; descent-override: 38.88%; line-gap-override: 0%; }
 
 @tailwind base;
 @tailwind components;
