@@ -14,7 +14,8 @@
     };
   }
 
-  // Cada forma devolve N posições normalizadas (raio ~1), embaralhadas para o morph cruzar o espaço
+  // Cada forma devolve N posições normalizadas (raio ~1), embaralhadas para o morph cruzar o espaço.
+  // São geradas sob demanda (uma por vez) para não travar a página no carregamento
   function shapes(n) {
     const r = rng(7);
     const out = {};
@@ -38,13 +39,13 @@
       return [p[0] + (q[0] - p[0]) * t + Math.cos(ang) * rad, p[1] + (q[1] - p[1]) * t + Math.sin(ang) * rad, (p[2] || 0) + ((q[2] || 0) - (p[2] || 0)) * t + jitter(thick * 2)];
     };
 
-    out.chaos = make(() => {
+    out.chaos = () => make(() => {
       const u = r() * TAU, v = Math.acos(2 * r() - 1), d = 2.5 + r() * 4;
       return [Math.sin(v) * Math.cos(u) * d * 1.6, Math.sin(v) * Math.sin(u) * d, Math.cos(v) * d];
     });
 
     const ringCount = Math.floor(n * 0.24);
-    out.sphere = make((i) => {
+    out.sphere = () => make((i) => {
       if (i < ringCount) {
         const a = r() * TAU, d = 1.16 + r() * 0.16 + (r() < 0.2 ? 0.14 : 0);
         const x = Math.cos(a) * d, z = Math.sin(a) * d, y = jitter(0.025);
@@ -62,13 +63,13 @@
       [[0.26, 0.82], [-0.26, -0.82]],
       [[0.55, 0.62], [1.2, 0]], [[1.2, 0], [0.55, -0.62]],
     ];
-    out.code = make(() => {
+    out.code = () => make(() => {
       const [p, q] = glyph[Math.floor(r() * glyph.length)];
       if (r() < 0.12) return [p[0] + jitter(0.5), p[1] + jitter(0.5), jitter(0.5)];
       return onSegment(p, q, 0.07);
     });
 
-    out.galaxy = make(() => {
+    out.galaxy = () => make(() => {
       if (r() < 0.18) return [jitter(0.5), jitter(0.12), jitter(0.5)];
       const arm = r() < 0.5 ? 0 : Math.PI;
       const d = Math.pow(r(), 0.7) * 1.9;
@@ -77,7 +78,7 @@
     });
 
     const cols = Math.ceil(Math.sqrt(n * 1.6)), rows = Math.ceil(n / cols);
-    out.grid = make((i) => {
+    out.grid = () => make((i) => {
       const c = i % cols, w = Math.floor(i / cols);
       return [(c / (cols - 1) - 0.5) * 3.6, 0, (w / (rows - 1) - 0.5) * 2.2];
     });
@@ -90,7 +91,7 @@
       const d = corners[a].reduce((s, c, k) => s + Math.abs(c - corners[b][k]), 0);
       if (d === 2) edges.push([corners[a], corners[b]]);
     }
-    out.cube = make(() => {
+    out.cube = () => make(() => {
       const s = 0.62;
       if (r() < 0.62) {
         const [p, q] = edges[Math.floor(r() * edges.length)];
@@ -116,7 +117,7 @@
     const areas = tris.map((t) => area(...t));
     const total = areas.reduce((a, b) => a + b, 0);
     const folds = [[N, WL], [N, WR], [N, K], [N, T], [T, WL], [T, WR], [T, K]];
-    out.plane = make(() => {
+    out.plane = () => make(() => {
       if (r() < 0.36) {
         const [p, q] = folds[Math.floor(r() * folds.length)];
         return onSegment(p, q, 0.018);
@@ -207,8 +208,11 @@ void main() {
 }`;
 
   function createField(canvas, opts) {
-    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: false, powerPreference: 'high-performance' });
+    // Só com GPU de verdade: em renderização por software (sem aceleração) o efeito travaria a página, então fica de fora
+    const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true });
     if (!gl) return null;
+    const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    if (dbg && /swiftshader|llvmpipe|softpipe|software|basic render/i.test(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL))) return null;
 
     const compile = (type, src) => {
       const s = gl.createShader(type);
@@ -225,13 +229,17 @@ void main() {
     gl.useProgram(prog);
 
     const n = opts.count;
-    const data = shapes(n);
+    const gens = shapes(n);
     const buffers = {};
-    for (const k in data) {
-      buffers[k] = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffers[k]);
-      gl.bufferData(gl.ARRAY_BUFFER, data[k], gl.STATIC_DRAW);
-    }
+    const ensure = (k) => {
+      if (buffers[k] || !gens[k]) return;
+      const b = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, b);
+      gl.bufferData(gl.ARRAY_BUFFER, gens[k](), gl.STATIC_DRAW);
+      buffers[k] = b;
+    };
+    ensure('chaos');
+    ensure('sphere');
     const r = rng(99);
     const seeds = new Float32Array(n * 4).map(() => r());
     const seedBuf = gl.createBuffer();
@@ -250,10 +258,14 @@ void main() {
     gl.uniform4f(loc.uRipple, 0, 0, 0, -100);
 
     const focal = 1 / Math.tan((40 * Math.PI) / 360);
-    let w = 0, h = 0, lost = false;
+    let w = 0, h = 0, lost = false, dirty = true;
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); lost = true; });
+    // Lê o tamanho só quando a janela muda (ler a cada quadro forçaria o navegador a recalcular o layout)
+    window.addEventListener('resize', () => (dirty = true), { passive: true });
 
     function resize() {
+      if (!dirty) return;
+      dirty = false;
       const dpr = Math.min(window.devicePixelRatio || 1, opts.maxDpr);
       const cw = canvas.clientWidth, ch = canvas.clientHeight;
       if (cw === w && ch === h) return;
@@ -277,9 +289,11 @@ void main() {
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       if (st.alpha < 0.005) return;
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffers[st.from]);
+      const from = buffers[st.from] ? st.from : 'sphere';
+      const to = buffers[st.to] ? st.to : from;
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffers[from]);
       gl.vertexAttribPointer(loc.aFrom, 3, gl.FLOAT, false, 0, 0);
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffers[st.to]);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffers[to]);
       gl.vertexAttribPointer(loc.aTo, 3, gl.FLOAT, false, 0, 0);
       gl.uniform1f(loc.uMix, st.mix);
       gl.uniform1f(loc.uTime, st.time);
@@ -299,7 +313,7 @@ void main() {
       gl.uniform4f(loc.uRipple, x, y, 0, time);
     }
 
-    return { draw, ripple, toWorld, pxToWorld, size: () => [w, h] };
+    return { draw, ripple, toWorld, pxToWorld, ensure, shapes: Object.keys(gens), size: () => [w, h] };
   }
 
   window.ParticleField = { createField };

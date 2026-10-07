@@ -16,9 +16,9 @@ module.exports = {
         fuchsia: { 400: '#d27bff', 500: '#c668ff' },
       },
       fontFamily: {
-        sans: ['Geist', 'system-ui', 'sans-serif'],
-        display: ['Geist', 'system-ui', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        sans: ['Geist', '"Geist Fallback"', 'system-ui', 'sans-serif'],
+        display: ['Geist', '"Geist Fallback"', 'system-ui', 'sans-serif'],
+        serif: ['"Instrument Serif"', '"Instrument Serif Fallback"', 'Georgia', 'serif'],
         mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
       letterSpacing: { tightest: '-0.045em' },

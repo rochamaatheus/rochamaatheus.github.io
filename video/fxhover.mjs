@@ -7,7 +7,7 @@ const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, r
 const page = await ctx.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
-await page.goto('http://localhost:5510/', { waitUntil: 'networkidle' });
+await page.goto((process.env.URL || 'http://localhost:5510/'), { waitUntil: 'networkidle' });
 await page.waitForTimeout(3500);
 
 const center = async (sel) => page.evaluate((s) => { const r = document.querySelector(s).getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }, sel);

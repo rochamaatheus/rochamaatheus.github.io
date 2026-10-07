@@ -18,7 +18,7 @@ const page = await ctx.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-await page.goto('http://localhost:5510/', { waitUntil: 'networkidle' });
+await page.goto((process.env.URL || 'http://localhost:5510/'), { waitUntil: 'networkidle' });
 await page.waitForTimeout(3500);
 const info = await page.evaluate(() => ({ cls: document.documentElement.className, canvas: [document.getElementById('fx-canvas').width, document.getElementById('fx-canvas').height] }));
 console.log(kind, JSON.stringify(info));

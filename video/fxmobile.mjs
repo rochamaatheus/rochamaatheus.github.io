@@ -8,7 +8,7 @@ const page = await ctx.newPage();
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
-await page.goto('http://localhost:5510/', { waitUntil: 'networkidle' });
+await page.goto((process.env.URL || 'http://localhost:5510/'), { waitUntil: 'networkidle' });
 const cdp = await ctx.newCDPSession(page);
 await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
 await page.waitForTimeout(3000);

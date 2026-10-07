@@ -382,6 +382,9 @@ if (!hasGsap || reduceMotion) {
 
 function initMotion() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
+  // Imagens têm tamanho fixo e as fontes de reserva têm as mesmas medidas: o layout não muda no 'load',
+  // então a recalibragem completa que o ScrollTrigger faria ali só custaria tempo
+  ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,resize' });
 
   // Rolagem suave só em desktop com mouse; no touch fica o scroll nativo
   if (finePointer && window.Lenis) {
@@ -429,13 +432,24 @@ function initMotion() {
     else setTimeout(run, 60);
   });
   const afterLoad = new Promise((r) => (document.readyState === 'complete' ? r() : window.addEventListener('load', r, { once: true })));
+  // Cada seção só monta as animações quando o visitante chega perto dela
+  const whenNear = (el, fn) => {
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      idle(fn);
+    }, { rootMargin: '120% 0px' });
+    io.observe(el);
+  };
   afterLoad
-    .then(() => idle(initBuild))
-    .then(() => idle(initServices))
+    .then(() => idle(initParticles))
     .then(() => idle(initExtras))
-    .then(() => document.fonts.ready)
-    .then(() => idle(splitHeadings))
-    .then(() => idle(initParticles));
+    .then(() => {
+      whenNear($('#servicos'), initServices);
+      whenNear($('#processo'), initBuild);
+      return document.fonts.ready;
+    })
+    .then(() => $$('[data-split]').forEach((h) => whenNear(h, () => splitHeading(h))));
 
   // Marquee contínuo que acelera com a velocidade da rolagem
   const half = track.scrollWidth / 2;
@@ -769,10 +783,17 @@ function initParticles() {
   });
 
   let ranges = [];
+  // Posições dos elementos de referência em coordenadas da página: medidas no refresh, não a cada quadro
+  const anchorBox = (c) => {
+    if (!c.el) return;
+    const r = c.el.getBoundingClientRect();
+    c.box = r.width ? { left: r.left, top: r.top + window.scrollY, width: r.width, height: r.height } : null;
+  };
   const measure = () => {
     const vh = window.innerHeight;
     const sy = window.scrollY;
     const max = document.documentElement.scrollHeight - vh;
+    KEYS.forEach((k) => { anchorBox(k.d); anchorBox(k.m); });
     ranges = KEYS.map((k) => {
       const top = k.els[0].getBoundingClientRect().top + sy;
       const bottom = k.els[k.els.length - 1].getBoundingClientRect().bottom + sy;
@@ -797,9 +818,9 @@ function initParticles() {
     const c = small.matches ? k.m : k.d;
     const [vw, vh] = field.size();
     let px, py, base;
-    if (c.el) {
-      const r = c.el.getBoundingClientRect();
-      if (r.width) { px = r.left + r.width * c.ax; py = r.top + r.height * c.ay; base = r.width; }
+    if (c.box) {
+      const r = c.box;
+      px = r.left + r.width * c.ax; py = r.top - window.scrollY + r.height * c.ay; base = r.width;
     }
     if (base === undefined) {
       const f = c.fixed || [0.5, 0.5];
@@ -827,9 +848,20 @@ function initParticles() {
 
   let time = 0;
   let s = target(window.scrollY);
+  // A forma da posição atual sai na hora; as outras são geradas uma por vez nos momentos ociosos
+  field.ensure(KEYS[Math.round(s)].shape);
+  const pending = field.shapes.slice();
+  const prepNext = () => {
+    const k = pending.shift();
+    if (!k) return;
+    field.ensure(k);
+    if ('requestIdleCallback' in window) requestIdleCallback(prepNext, { timeout: 800 });
+    else setTimeout(prepNext, 50);
+  };
+  setTimeout(prepNext, 400);
   const tilt = { x: 0, y: 0 };
   const intro = { v: 0 };
-  gsap.to(intro, { v: 1, duration: 2.8, ease: 'power3.inOut', delay: 0.15 });
+  gsap.to(intro, { v: 1, duration: 1.9, ease: 'power3.inOut' });
   window.addEventListener('pointerdown', (e) => field.ripple(e.clientX, e.clientY, time), { passive: true });
   canvas.classList.add('ready');
 
@@ -902,6 +934,10 @@ function initExtras() {
       scrollTrigger: { trigger: card, start: 'top 85%' },
     });
   });
+
+  // Abrir uma pergunta muda a altura da página: recalcula as posições depois que o acordeão termina de abrir
+  let faqTimer = 0;
+  $$('.faq-item').forEach((d) => d.addEventListener('toggle', () => { clearTimeout(faqTimer); faqTimer = setTimeout(() => ScrollTrigger.refresh(), 500); }));
 
   // Carrossel no celular: o cartão do centro fica em destaque
   const mq = window.matchMedia('(max-width: 767px)');
@@ -998,16 +1034,13 @@ function initTilt() {
 }
 
 // Títulos das seções: SplitText precisa das fontes prontas para medir as linhas
-function splitHeadings() {
-  $$('[data-split]').forEach((h) => {
-    const split = new SplitText(h, { type: 'lines', linesClass: 'split-line', mask: 'lines' });
-    gsap.from(split.lines, {
-      yPercent: 105,
-      duration: 1.1,
-      ease: 'expo.out',
-      stagger: 0.1,
-      scrollTrigger: { trigger: h, start: 'top 85%' },
-    });
+function splitHeading(h) {
+  const split = new SplitText(h, { type: 'lines', linesClass: 'split-line', mask: 'lines' });
+  gsap.from(split.lines, {
+    yPercent: 105,
+    duration: 1.1,
+    ease: 'expo.out',
+    stagger: 0.1,
+    scrollTrigger: { trigger: h, start: 'top 85%' },
   });
-  ScrollTrigger.refresh();
 }

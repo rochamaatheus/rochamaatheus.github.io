@@ -9,7 +9,7 @@ for (const kind of ['desktop', 'mobile']) {
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
-  await page.goto('http://localhost:5510/', { waitUntil: 'domcontentloaded' });
+  await page.goto((process.env.URL || 'http://localhost:5510/'), { waitUntil: 'domcontentloaded' });
   if (mobile) await page.evaluate(() => window.scrollTo(0, 420));
   for (const t of [900, 1700, 2600]) {
     await page.waitForTimeout(t === 900 ? 900 : 800);
