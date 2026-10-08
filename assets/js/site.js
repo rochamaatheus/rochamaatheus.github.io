@@ -388,7 +388,7 @@ function initMotion() {
 
   // Rolagem suave só em desktop com mouse; no touch fica o scroll nativo
   if (finePointer && window.Lenis) {
-    const lenis = new Lenis({ lerp: 0.1, anchors: { offset: -80 } });
+    const lenis = new Lenis({ lerp: 0.1 });
     window.lenisInstance = lenis;
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -406,10 +406,22 @@ function initMotion() {
   });
 
 
+  // Link interno: o alvo da navegação fica registrado por um instante para que a seção de destino anime primeiro
+  let navTarget = null;
+  let navTimer = 0;
+  const skipsReveal = (el) => {
+    if (el.getBoundingClientRect().bottom < 100) return true;
+    return !!navTarget && !navTarget.contains(el) && !!(navTarget.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING);
+  };
+  // O que ficou para trás (rolagem rápida ou salto por link) aparece pronto, sem entrar na fila da animação
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 88%',
     once: true,
-    onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.09, overwrite: true }),
+    onEnter: (els) => {
+      const past = els.filter(skipsReveal);
+      if (past.length) gsap.set(past, { opacity: 1, y: 0 });
+      gsap.to(els.filter((el) => !past.includes(el)), { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: 0.09, overwrite: true });
+    },
   });
 
   $$('[data-count]').forEach((el) => {
@@ -432,28 +444,77 @@ function initMotion() {
     else setTimeout(run, 60);
   });
   const afterLoad = new Promise((r) => (document.readyState === 'complete' ? r() : window.addEventListener('load', r, { once: true })));
-  // Cada seção só monta as animações quando o visitante chega perto dela
-  const whenNear = (el, fn) => {
-    const io = new IntersectionObserver((entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      idle(fn);
-    }, { rootMargin: '120% 0px' });
-    io.observe(el);
+  // Cada seção só monta as animações quando o visitante chega perto dela (ou quando um link interno leva até lá)
+  const lazy = [];
+  const queue = (el, fn) => {
+    const item = { el, io: null, done: false, run() {
+      if (this.done) return;
+      this.done = true;
+      if (this.io) this.io.disconnect();
+      fn();
+    } };
+    lazy.push(item);
+    return item;
   };
+  const arm = (item) => {
+    if (item.done) return;
+    item.io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      item.io.disconnect();
+      idle(() => item.run());
+    }, { rootMargin: '120% 0px' });
+    item.io.observe(item.el);
+  };
+  const once = (fn) => { let done = false; return () => { if (!done) { done = true; fn(); } }; };
+  const extras = once(initExtras);
+  const services = queue($('#servicos'), initServices);
+  const processo = queue($('#processo'), initBuild);
+  const headings = $$('[data-split]').map((h) => queue(h, () => splitHeading(h)));
+
   // Ligar o WebGL acorda o processo de GPU do navegador: isso só acontece depois da primeira pintura e da entrada do hero
   const painted = new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   afterLoad
     .then(() => painted)
     .then(() => new Promise((r) => setTimeout(r, 1200)))
     .then(() => idle(initParticles))
-    .then(() => idle(initExtras))
+    .then(() => idle(extras))
     .then(() => {
-      whenNear($('#servicos'), initServices);
-      whenNear($('#processo'), initBuild);
+      arm(services);
+      arm(processo);
       return document.fonts.ready;
     })
-    .then(() => $$('[data-split]').forEach((h) => whenNear(h, () => splitHeading(h))));
+    .then(() => headings.forEach(arm));
+
+  // Links internos: salto direto, sem rolar por cima das seções do meio. Tudo o que o destino precisa
+  // (montagens adiadas, títulos, detalhes) é preparado antes do salto, e o destino anima primeiro
+  async function goTo(target, push = true) {
+    if (document.fonts.status !== 'loaded') await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 700))]);
+    extras();
+    const reach = target.getBoundingClientRect().top + window.scrollY + window.innerHeight * 2.2;
+    lazy.forEach((item) => { if (!item.done && item.el.getBoundingClientRect().top + window.scrollY < reach) item.run(); });
+    const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+    const top = Math.max(0, target.getBoundingClientRect().top + window.scrollY - margin);
+    navTarget = target;
+    clearTimeout(navTimer);
+    navTimer = setTimeout(() => (navTarget = null), 1000);
+    if (window.lenisInstance) lenisInstance.scrollTo(top, { immediate: true, force: true });
+    else window.scrollTo({ top, behavior: 'instant' });
+    if (push && location.hash !== `#${target.id}`) history.pushState(null, '', `#${target.id}`);
+  }
+  const hashTarget = () => (location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null);
+  document.addEventListener('click', (e) => {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    const a = e.target.closest('a[href^="#"]');
+    const id = a && a.getAttribute('href');
+    if (!id || id.length < 2 || a.target === '_blank') return;
+    const target = document.getElementById(decodeURIComponent(id.slice(1)));
+    if (!target) return;
+    e.preventDefault();
+    goTo(target);
+  });
+  window.addEventListener('popstate', () => { const t = hashTarget(); if (t) goTo(t, false); });
+  const first = hashTarget();
+  if (first) goTo(first, false);
 
   // Marquee contínuo que acelera com a velocidade da rolagem
   const half = track.scrollWidth / 2;
