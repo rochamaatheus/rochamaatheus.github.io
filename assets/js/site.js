@@ -521,7 +521,11 @@ function initMotion() {
   let x = 0;
   let boost = 0;
   ScrollTrigger.create({ onUpdate: (self) => (boost = Math.min(Math.abs(self.getVelocity()) / 120, 14)) });
+  // Fora da tela o marquee para: nada de mexer no estilo a cada quadro sem ninguém ver
+  let marqueeOn = true;
+  new IntersectionObserver(([e]) => (marqueeOn = e.isIntersecting)).observe(track);
   gsap.ticker.add((_, dt) => {
+    if (!marqueeOn) return;
     boost *= 0.92;
     x -= (0.6 + boost) * (dt / 16.7);
     if (x <= -half) x += half;
@@ -802,6 +806,12 @@ function initParticles() {
   const canvas = $('#fx-canvas');
   if (!canvas || !window.ParticleField) return;
   const small = window.matchMedia('(max-width: 767px)');
+  // Rolagem e largura guardadas pelos próprios eventos: ler window.scrollY no ticker, logo depois do marquee
+  // mexer no estilo, obrigava o navegador a recalcular o estilo da página a cada quadro
+  let isSmall = small.matches;
+  small.addEventListener('change', () => (isSmall = small.matches));
+  let scrollY = window.scrollY;
+  window.addEventListener('scroll', () => (scrollY = window.scrollY), { passive: true });
   let field = null;
   try {
     field = ParticleField.createField(canvas, {
@@ -880,12 +890,12 @@ function initParticles() {
     return ranges.length - 1;
   };
   const place = (k, t) => {
-    const c = small.matches ? k.m : k.d;
+    const c = isSmall ? k.m : k.d;
     const [vw, vh] = field.size();
     let px, py, base;
     if (c.box) {
       const r = c.box;
-      px = r.left + r.width * c.ax; py = r.top - window.scrollY + r.height * c.ay; base = r.width;
+      px = r.left + r.width * c.ax; py = r.top - scrollY + r.height * c.ay; base = r.width;
     }
     if (base === undefined) {
       const f = c.fixed || [0.5, 0.5];
@@ -912,7 +922,7 @@ function initParticles() {
   }
 
   let time = 0;
-  let s = target(window.scrollY);
+  let s = target(scrollY);
   // A forma da posição atual sai na hora; as outras são geradas uma por vez nos momentos ociosos
   field.ensure(KEYS[Math.round(s)].shape);
   const pending = field.shapes.slice();
@@ -934,7 +944,7 @@ function initParticles() {
   gsap.ticker.add((_, dt) => {
     const step = Math.min(dt, 64) / 1000;
     time += step;
-    s += (target(window.scrollY) - s) * (1 - Math.exp(-step * 4.5));
+    s += (target(scrollY) - s) * (1 - Math.exp(-step * 4.5));
     const i = Math.min(Math.floor(s), KEYS.length - 1);
     const j = Math.min(i + 1, KEYS.length - 1);
     let f = Math.min(1, Math.max(0, s - i));

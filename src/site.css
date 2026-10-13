@@ -184,14 +184,11 @@ body {
 @keyframes hero-word { from { transform: translateY(110%) rotate(4deg); opacity: 0.01; } }
 [data-hero] { animation: hero-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards; animation-delay: var(--d, 0s); }
 [data-hero-card] { --hy: 40px; --hs: 0.94; animation: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards; animation-delay: var(--d, 0s); }
-[data-hero-card].float-y { animation: floaty 6s ease-in-out infinite, hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) backwards; }
-[data-hero-card].float-y.delay { animation-delay: -3s, var(--d, 0s); }
 /* O parágrafo é o maior texto da primeira tela (LCP): sobe sem sumir, para contar já na primeira pintura */
 p[data-hero] { animation-name: hero-rise; }
 @keyframes hero-rise { from { transform: translateY(18px); } }
 /* Quem volta pelo botão "voltar" já viu a entrada: a página aparece pronta */
 .no-intro .hw > span, .no-intro [data-hero], .no-intro [data-hero-card] { animation-name: none; }
-.no-intro [data-hero-card].float-y { animation: floaty 6s ease-in-out infinite; }
 @keyframes hero-in { from { opacity: 0.01; transform: translateY(var(--hy, 24px)) scale(var(--hs, 1)); } }
 .code-box > * { grid-area: 1 / 1; }
 .cursor-blink { animation: blink 1.05s step-end infinite; }
