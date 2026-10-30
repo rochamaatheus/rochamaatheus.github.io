@@ -16,7 +16,7 @@
 ## Como funciona
 
 1. Conversa pelo WhatsApp sobre o desafio da empresa.
-2. Proposta com escopo, prazo e valor fechados. Quando faz sentido, um protótipo navegável antes de começar.
+2. Proposta com escopo, prazo e valor fechados antes de começar.
 3. Construção do zero, com o andamento mostrado durante o projeto.
 4. Publicação com domínio, Google e rastreamento configurados, e suporte depois da entrega.
 

@@ -37,7 +37,7 @@ const L = M
       browser: { x: 95, y: 450, w: 520, h: 360, r: -4 }, phone: { x: 420, y: 380, w: 560, h: 960 }, label: { x: 85, y: 1250, w: 910, h: 230 }, pheadY: 270,
       bScroll: [100, 600, 600, 60, 80, 500], pScroll: [150, 1500, 1400, 100, 120, 1200],
       tile: [420, 262], cols: 5, rows: 6, panel: { x: 90, y: 620, w: 900, h: 600 }, p1: 84, p2: 118,
-      chat: { x: 90, y: 480, w: 900, h: 560 }, title6Y: 290,
+      chat: { x: 90, y: 505, w: 900, h: 560 }, title6Y: 290,
       s7: { l1: 112, l2: 130, y1: 280, y2: 400, stat: (i) => ({ x: 90, y: 610 + i * 225, w: 900, h: 200 }), rows: [1310, 1400] },
       logo8: 230, logo8Y: 420, ctaTop: 590, ctaSize: 112, ctaLines: ['Seu próximo', 'projeto', '#começa aqui.'], pillsTop: 1080, signY: 1010,
     }
@@ -62,7 +62,6 @@ const PROJ = [
   { n: 'Lynch Store', t: 'Loja online', u: 'lynchstore.com.br', k: 'lynch', tint: '#c98f1c' },
   { n: 'O Ponto Cego da Marcenaria', t: 'Landing page', u: 'pontocegodamarcenaria.com.br', k: 'pontocego', tint: '#5b4cff' },
 ];
-const PROTOS = ['liderarh', 'wesen', 'ties', 'az3'];
 
 function build() {
   const tl = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } });
@@ -185,7 +184,7 @@ function build() {
   const s3 = $('#s3');
   S3.forEach((s, i) => {
     const r = L.svc(i);
-    const ws = M ? 96 : 100;
+    const ws = M ? 96 : 84;
     const ill = M ? { x: 540, y: 40, w: 320, h: 250 } : { x: 44, y: 390, w: 432, h: 206 };
     const el = document.createElement('div');
     el.className = 'svc';
@@ -228,7 +227,7 @@ function build() {
     tl.fromTo($('.ic', el), { scale: 0, rotate: -40 }, { scale: 1, rotate: 0, duration: 0.5, ease: 'back.out(3)' }, t + 0.22);
     tl.fromTo($('p', el), { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5 }, t + 0.3);
     tl.fromTo($('.ill', el), { opacity: 0, y: 30, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.6 }, t + 0.4);
-    tl.to(el, { yPercent: i % 2 ? -2 : 2, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 7.4 + i * 0.12);
+    tl.to(el, { yPercent: 2, duration: 1.1, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 7.4 + i * 0.12);
     cue(t, 'thud', 0.85, [-0.4, 0, 0.4][i]);
     cue(t + 0.1, 'swish', 0.5, [-0.4, 0, 0.4][i]);
     cue(t + 0.22, 'pop', 0.45, [-0.4, 0, 0.4][i]);
@@ -269,7 +268,7 @@ function build() {
     <div class="abs mono" style="left:38px;top:32px;font-size:22px;letter-spacing:.12em;color:#c7b6ff;text-transform:uppercase"><span class="swap chk" id="typeSwap" style="display:block;width:${LB.w - 200}px;height:28px">${PROJ.map((p) => `<div>${p.t}</div>`).join('')}</span></div>
     <div class="abs" style="left:38px;top:${M ? 78 : 72}px;"><span class="swap t chk" id="nameSwap" style="display:block;width:${LB.w - 70}px;height:${Math.round(ts * 1.25)}px;font-size:${ts}px">${PROJ.map((p) => `<div style="${p.n.length > 20 ? `font-size:${M ? 54 : 44}px;top:${M ? 6 : 8}px` : ''}">${p.n}</div>`).join('')}</span></div>
     <div class="abs mono" style="left:38px;bottom:${M ? 34 : 30}px;font-size:${M ? 26 : 22}px;color:#a19bc2;display:flex;gap:10px;align-items:center">${icon('globe', M ? 26 : 22)}<span class="swap" id="urlSwap2" style="display:inline-block;width:${LB.w - 120}px;height:${M ? 32 : 28}px">${PROJ.map((p) => `<div>${p.u}</div>`).join('')}</span></div>`;
-  show('#s4', 9.8, 18.6);
+  show('#s4', 9.8, 21.9);
   tl.fromTo('#browser', { scale: 0.22, opacity: 0, rotationX: 30, transformPerspective: 1600 }, { scale: 1, opacity: 1, rotationX: 0.01, duration: 0.75 }, 9.82);
   tl.fromTo('#phone', { y: M ? 1700 : 900, rotation: 12 }, { y: 0, rotation: M ? 2 : 4, duration: 0.8 }, 10.0);
   tl.fromTo('#pheadChip', { y: -160, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'back.out(2)' }, 10.1);
@@ -285,11 +284,11 @@ function build() {
   };
   ['#urlSwap', '#numSwap', '#typeSwap', '#nameSwap', '#urlSwap2'].forEach((s) => $$(`${s} > div`).forEach((k, j) => gsap.set(k, { opacity: j ? 0 : 1, yPercent: j ? 110 : 0 })));
   PROJ.forEach((p, i) => {
-    const s = 10.0 + i * 1.27;
+    const s = 10.0 + i * 1.93;
     const bImg = $$('#bstrip img')[i];
     const pImg = $$('#pstrip img')[i];
-    tl.fromTo(bImg, { y: 0 }, { y: -L.bScroll[i], duration: 1.15, ease: 'power1.inOut' }, s + 0.15);
-    tl.fromTo(pImg, { y: 0 }, { y: -L.pScroll[i], duration: 1.15, ease: 'power1.inOut' }, s + 0.2);
+    tl.fromTo(bImg, { y: 0 }, { y: -L.bScroll[i], duration: 1.7, ease: 'power1.inOut' }, s + 0.15);
+    tl.fromTo(pImg, { y: 0 }, { y: -L.pScroll[i], duration: 1.7, ease: 'power1.inOut' }, s + 0.2);
     if (i > 0) {
       const t = s - 0.2;
       tl.set(['#bstrip', '#pstrip'], { filter: 'url(#mblur)' }, t);
@@ -306,46 +305,8 @@ function build() {
     }
     tint(s, p.tint);
   });
-  tl.to(['#browser', '#phone', '#plabel', '#pheadChip'], { scale: 0.9, filter: 'blur(6px)', duration: 0.5, ease: 'power2.in' }, 17.65);
-
-  // S5: protótipos (íris)
-  const wall = $('#wall');
-  const [tw, th] = L.tile;
-  const gap = 34;
-  const ww = L.cols * tw + (L.cols - 1) * gap, wh = L.rows * th + (L.rows - 1) * gap;
-  Object.assign(wall.style, { width: ww + 'px', height: wh + 'px', marginLeft: -ww / 2 + 'px', marginTop: -wh / 2 + 'px' });
-  let k = 0;
-  for (let r = 0; r < L.rows; r++) for (let c = 0; c < L.cols; c++) {
-    const t = document.createElement('div');
-    t.className = 'tile';
-    Object.assign(t.style, { left: c * (tw + gap) + 'px', top: r * (th + gap) + 'px', width: tw + 'px', height: th + 'px' });
-    t.innerHTML = `<img src="shots/${PROTOS[(k + r * 2) % PROTOS.length]}.jpeg">`;
-    wall.appendChild(t);
-    k++;
-  }
-  $('#s5').style.background = 'radial-gradient(circle at 70% 40%, #1b1240, #08070f 70%)';
-  if (M) $('#wallShade').style.background = 'radial-gradient(ellipse at 50% 48%, rgba(8,7,15,.9), rgba(8,7,15,.35) 75%)';
-  const PN = L.panel;
-  Object.assign($('#protoPanel').style, { left: PN.x + 'px', top: PN.y + 'px', width: PN.w + 'px', height: PN.h + 'px' });
-  $('#protoPanel').innerHTML = `<div class="abs mono chk" style="left:56px;top:54px;font-size:24px;letter-spacing:.16em;color:#c7b6ff">PROPOSTAS E PROTÓTIPOS</div>
-    <div class="abs" style="left:56px;top:${M ? 112 : 104}px;overflow:hidden;padding-bottom:10px"><div class="pl chk" style="font-size:${L.p1}px;font-weight:600;letter-spacing:-.05em;white-space:nowrap">Antes de fechar,</div></div>
-    <div class="abs" style="left:52px;top:${M ? 205 : 196}px;overflow:hidden;padding:0 10px 14px 4px"><div class="pl serif grad chk" style="font-size:${L.p2}px;line-height:1.05;white-space:nowrap">eu mostro.</div></div>
-    <div class="abs chk" id="protoSub" style="left:56px;top:${M ? 405 : 350}px;font-size:${M ? 36 : 32}px;line-height:1.35;color:#a19bc2">Layouts e protótipos para<br>decidir antes de começar.</div>`;
-  gsap.set('#protoPanel', { transformPerspective: 1400, rotationY: 0.01, force3D: true });
-  show('#s5', 17.85, 22.15);
-  tl.fromTo('#s5', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(80% at 50% 50%)', duration: 0.6, ease: 'expo.inOut' }, 17.85);
-  cue(17.85, 'swell', 0.9);
-  tl.fromTo(wall, { rotationX: 26, rotationZ: -13, transformPerspective: 2400, x: 260, y: 120, scale: 1.25 }, { x: -260, y: -120, scale: 1.08, duration: 4.2, ease: 'none' }, 17.9);
-  tl.fromTo('#wall .tile', { z: -500, opacity: 0 }, { z: 0, opacity: 1, duration: 0.8, stagger: { each: 0.018, from: 'random' } }, 17.95);
-  tl.fromTo('#protoPanel', { scale: 0.88, opacity: 0, y: 50 }, { scale: 1, opacity: 1, y: 0, duration: 0.7 }, 18.3);
-  tl.fromTo('#protoPanel .pl', { yPercent: 115 }, { yPercent: 0, duration: 0.75, stagger: 0.22 }, 18.45);
-  cue(18.3, 'thud', 0.7); cue(18.45, 'swish', 0.5); cue(18.67, 'swish', 0.5);
-  tl.fromTo('#protoSub', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7 }, 19.0);
-  cue(19.0, 'swish', 0.5);
-  tl.to(wall, { rotationX: 75, yPercent: -35, opacity: 0, duration: 0.45, ease: 'power3.in' }, 21.55);
-  tl.to('#protoPanel', { rotationY: -80, transformPerspective: 1400, opacity: 0, x: -120, duration: 0.42, ease: 'power3.in' }, 21.58);
-  tl.to('#s5', { opacity: 0, duration: 0.4, ease: 'power2.in' }, 21.72);
-  cue(21.6, 'whoosh', 0.8, -0.4);
+  tl.to(['#browser', '#phone', '#plabel', '#pheadChip'], { scale: 0.9, opacity: 0, filter: 'blur(6px)', duration: 0.42, ease: 'power2.in' }, 21.45);
+  cue(21.45, 'whoosh', 0.8, -0.4);
 
   // S6: processo
   const s6 = $('#s6');
@@ -461,7 +422,7 @@ function build() {
   $$('#s7 .row').forEach((row, ri) => {
     const wRow = row.scrollWidth / 3;
     const dir = ri ? 1 : -1;
-    tl.fromTo(row, { x: ri ? -wRow : 0, opacity: 0 }, { x: ri ? -wRow + 700 : -700, opacity: 1, duration: 3.0, ease: 'none' }, 26.9);
+    tl.fromTo(row, { x: ri ? -wRow : 0 }, { x: ri ? -wRow + 700 : -700, duration: 3.0, ease: 'none' }, 26.9);
     tl.fromTo(row, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power1.out' }, 26.9 + ri * 0.15);
     cue(26.9 + ri * 0.15, 'swish', 0.4, dir * 0.6);
   });

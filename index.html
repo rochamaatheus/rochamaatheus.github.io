@@ -617,7 +617,7 @@
                     <span class="build-num">02</span>
                     <div>
                       <h3 class="text-lg font-semibold text-ink">Proposta</h3>
-                      <p class="mt-1.5 text-[15px] leading-relaxed text-dim">Escopo, prazo e valor fechados. Quando faz sentido, um protótipo navegável antes de começar.</p>
+                      <p class="mt-1.5 text-[15px] leading-relaxed text-dim">Escopo, prazo e valor fechados antes de começar.</p>
                     </div>
                   </li>
                   <li class="build-step">
@@ -664,7 +664,8 @@
                     <ul>
                       <li><span>Escopo</span><b>Site + agendamento</b><span class="bs-check"><i data-lucide="check" class="h-3 w-3"></i></span></li>
                       <li><span>Prazo</span><b>3 semanas</b><span class="bs-check"><i data-lucide="check" class="h-3 w-3"></i></span></li>
-                      <li><span>Valor</span><b>Fechado, sem surpresa</b><span class="bs-check"><i data-lucide="check" class="h-3 w-3"></i></span></li>
+                      <li><span>Valor</span><b>Fechado na proposta</b><span class="bs-check"><i data-lucide="check" class="h-3 w-3"></i></span></li>
+                      <li><span>Entrega</span><b>Com data definida</b><span class="bs-check"><i data-lucide="check" class="h-3 w-3"></i></span></li>
                     </ul>
                     <span class="bs-stamp">Aprovado</span>
                   </div>
@@ -719,7 +720,7 @@
       </section>
 
       <!-- PROJETOS REAIS -->
-      <section id="projetos" class="px-5 pt-16 md:pt-24 pb-10 border-t border-line bg-surface/30">
+      <section id="projetos" class="px-5 py-16 md:py-24 border-t border-line bg-surface/30">
         <div class="mx-auto max-w-6xl">
           <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
             <div class="max-w-3xl">
@@ -735,26 +736,6 @@
           <div
             id="projetos-grid"
             class="mt-10 md:mt-14 flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-5 px-5 pb-2 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-12 md:gap-6 md:overflow-visible"
-          ></div>
-        </div>
-      </section>
-
-      <!-- PROTÓTIPOS -->
-      <section id="prototipos" class="px-5 pt-14 md:pt-20 pb-16 md:pb-24 bg-surface/30">
-        <div class="mx-auto max-w-6xl">
-          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
-            <div class="max-w-2xl">
-              <h3 data-split class="font-semibold text-ink tracking-tightest leading-[1.05]" style="font-size: clamp(1.7rem, 3.6vw, 2.6rem)">
-                Propostas e protótipos: <span class="serif-accent gradient-text">antes de fechar, eu mostro.</span>
-              </h3>
-              <p data-reveal class="mt-4 text-dim">Protótipos apresentados a clientes. Cada um abre aqui mesmo.</p>
-            </div>
-            <p class="flex items-center gap-1.5 text-xs text-dim md:hidden">Arraste para o lado <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i></p>
-          </div>
-
-          <div
-            id="prototipos-grid"
-            class="mt-10 flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-5 px-5 pb-2 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-5 md:overflow-visible"
           ></div>
         </div>
       </section>
@@ -947,30 +928,6 @@
             </a>
             <a id="project-link" href="#" target="_blank" rel="noopener" class="font-mono text-[11px] text-mute underline-offset-4 transition-colors hover:text-violet-300 hover:underline"></a>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MODAL DEMO -->
-    <div id="demo-modal" class="modal" role="dialog" aria-modal="true" aria-label="Demonstração do projeto">
-      <div class="modal-window demo-window">
-        <div class="flex items-center justify-between gap-3 border-b border-line bg-surface px-4 py-3 shrink-0">
-          <div class="flex min-w-0 items-center gap-2.5 font-mono text-xs text-violet-300">
-            <i data-lucide="monitor-play" class="h-4 w-4 shrink-0"></i>
-            <span id="demo-title-text" class="truncate">Demonstração</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <a id="demo-newtab" href="#" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 font-mono text-xs text-dim transition-colors hover:border-violet-400 hover:text-violet-300">
-              Nova aba <i data-lucide="external-link" class="h-3.5 w-3.5"></i>
-            </a>
-            <button type="button" data-close class="inline-flex items-center gap-2 rounded-lg border border-line px-3 py-1.5 font-mono text-xs text-ink transition-colors hover:border-violet-400 hover:text-violet-300">
-              Fechar <i data-lucide="x" class="h-4 w-4"></i>
-            </button>
-          </div>
-        </div>
-        <div class="demo-content">
-          <div id="demo-loading"><span class="spinner"></span> carregando demo…</div>
-          <iframe id="demo-frame" title="Demonstração do projeto" src="about:blank"></iframe>
         </div>
       </div>
     </div>

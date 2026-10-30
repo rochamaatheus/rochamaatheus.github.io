@@ -283,23 +283,8 @@ p[data-hero] { animation-name: hero-rise; }
   transition: transform 0.5s var(--ease-out);
 }
 .modal.active .modal-window { transform: none; }
-.demo-window { height: 88vh; }
 .project-window { max-width: 1040px; max-height: 94dvh; overflow-y: auto; }
 .project-video { display: block; width: 100%; aspect-ratio: 16 / 10; max-height: 62dvh; object-fit: cover; object-position: top; background: #08070f; }
-.demo-content { flex: 1; position: relative; background: #fff; min-height: 0; }
-.demo-content iframe { width: 100%; height: 100%; border: none; display: block; }
-#demo-loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background: #08070f;
-  color: #a585ff;
-  font-family: 'Geist Mono', monospace;
-  font-size: 0.85rem;
-}
 .spinner {
   width: 18px;
   height: 18px;
@@ -356,7 +341,6 @@ p[data-hero] { animation-name: hero-rise; }
 
 @media (max-width: 768px) {
   .modal { padding: 0; }
-  .demo-window { max-width: 100%; height: 100vh; height: 100dvh; border: none; border-radius: 0; }
 }
 
 /* Perguntas frequentes: acordeão nativo (details), abre suave onde o navegador suporta */
@@ -616,34 +600,37 @@ html:not(.motion) .build-hint { display: none; }
 
 .bs-proposal {
   position: absolute;
-  left: 95px;
-  top: 64px;
-  width: 330px;
-  padding: 22px;
-  border-radius: 20px;
+  left: 0;
+  top: 8px;
+  width: 520px;
+  height: 396px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border-radius: 24px;
   border: 1px solid #2c2645;
   background: #14111f;
   box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.85);
   opacity: 0;
   visibility: hidden;
 }
-.bs-prop-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid #24203a; }
-.bs-prop-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: rgba(138, 99, 255, 0.18); color: #c7b6ff; }
-.bs-prop-head b { font-size: 16px; font-weight: 600; color: #f1eefc; }
-.bs-prop-head small { font: 11px 'Geist Mono', monospace; color: #6f6990; }
-.bs-proposal ul { display: grid; gap: 12px; margin-top: 16px; }
-.bs-proposal li { display: flex; align-items: center; gap: 10px; font-size: 13px; }
-.bs-proposal li > span:first-child { width: 52px; font: 11px 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; color: #6f6990; }
+.bs-prop-head { display: flex; align-items: center; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid #24203a; }
+.bs-prop-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 14px; background: rgba(138, 99, 255, 0.18); color: #c7b6ff; }
+.bs-prop-head b { font-size: 24px; font-weight: 600; color: #f1eefc; }
+.bs-prop-head small { margin-top: 2px; font: 13px 'Geist Mono', monospace; color: #6f6990; }
+.bs-proposal ul { flex: 1; display: grid; align-content: space-evenly; margin-top: 12px; }
+.bs-proposal li { display: flex; align-items: center; gap: 14px; font-size: 18px; }
+.bs-proposal li > span:first-child { width: 88px; font: 13px 'Geist Mono', monospace; text-transform: uppercase; letter-spacing: 0.06em; color: #6f6990; }
 .bs-proposal li b { flex: 1; font-weight: 500; color: #e6e1fb; }
-.bs-check { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #34d399; color: #062b1d; }
+.bs-check { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #34d399; color: #062b1d; }
 .bs-stamp {
   position: absolute;
-  right: 18px;
-  top: 18px;
-  padding: 4px 10px;
+  right: 30px;
+  top: 36px;
+  padding: 6px 14px;
   border: 2px solid #34d399;
   border-radius: 8px;
-  font: 700 12px 'Geist Mono', monospace;
+  font: 700 15px 'Geist Mono', monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #34d399;

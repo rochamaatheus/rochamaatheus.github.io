@@ -7,7 +7,7 @@ const PROJETOS = [
     tags: ['Enterprise', 'Web', 'Android', 'iOS'],
     id: 'mobcorp',
     url: 'https://mobcorp.eco.br/',
-    span: 'md:col-span-7',
+    span: 'md:col-span-6',
   },
   {
     titulo: 'Kamino CRM',
@@ -16,7 +16,7 @@ const PROJETOS = [
     tags: ['Enterprise', 'Next.js', 'IA', 'WhatsApp'],
     id: 'crm',
     url: 'https://crm.agenciakamino.com.br/',
-    span: 'md:col-span-5',
+    span: 'md:col-span-6',
   },
   {
     titulo: 'Agência Kamino',
@@ -25,7 +25,7 @@ const PROJETOS = [
     tags: ['Site', 'WebGL', 'VPS', 'SEO'],
     id: 'kamino',
     url: 'https://agenciakamino.com.br/',
-    span: 'md:col-span-5',
+    span: 'md:col-span-6',
   },
   {
     titulo: 'Desafio Ponto de Virada',
@@ -34,7 +34,7 @@ const PROJETOS = [
     tags: ['Landing page', 'Conversão'],
     id: 'benante',
     url: 'https://marianabenante.com/desafio-ponto-de-virada/',
-    span: 'md:col-span-7',
+    span: 'md:col-span-6',
   },
   {
     titulo: 'Lynch Store',
@@ -43,7 +43,7 @@ const PROJETOS = [
     tags: ['Loja', 'PHP', 'WhatsApp'],
     id: 'lynch',
     url: 'https://lynchstore.com.br/',
-    span: 'md:col-span-7',
+    span: 'md:col-span-6',
   },
   {
     titulo: 'O Ponto Cego da Marcenaria',
@@ -52,49 +52,7 @@ const PROJETOS = [
     tags: ['Landing page', 'Conversão'],
     id: 'pontocego',
     url: 'https://pontocegodamarcenaria.com.br/',
-    span: 'md:col-span-5',
-  },
-];
-
-// Propostas e protótipos apresentados a clientes: abrem no modal
-const PROTOTIPOS = [
-  {
-    titulo: 'LIDERARH Check',
-    tipo: 'Protótipo de app',
-    descricao: 'App de check-in emocional e riscos psicossociais (NR-01), com visões de colaborador, líder e RH.',
-    stack: 'HTML · Tailwind · jQuery',
-    img: 'assets/projetos/liderarh.webp',
-    demo: 'https://rochamaatheus.github.io/liderarh-check-prototipo/',
-    repo: 'https://github.com/rochamaatheus/liderarh-check-prototipo',
-    span: 'md:col-span-2',
-  },
-  {
-    titulo: 'Wesen Clínica',
-    tipo: 'Identidade visual',
-    descricao: 'Três caminhos de identidade para a landing page de uma clínica: clássico, premium e editorial.',
-    stack: 'TypeScript · CSS',
-    img: 'assets/projetos/wesen.webp',
-    demo: 'https://rochamaatheus.github.io/wesen-clinica/',
-    repo: 'https://github.com/rochamaatheus/wesen-clinica',
-  },
-  {
-    titulo: 'Ties Comunicação',
-    tipo: 'Estudo de layout',
-    descricao: 'Três rascunhos de layout para o novo site, com o mesmo conteúdo organizado de jeitos diferentes.',
-    stack: 'HTML · CSS',
-    img: 'assets/projetos/ties.webp',
-    demo: 'https://rochamaatheus.github.io/ties-comunicacao/',
-    repo: 'https://github.com/rochamaatheus/ties-comunicacao',
-  },
-  {
-    titulo: 'AZ3 Usinagem',
-    tipo: 'Estudo de layout',
-    descricao: 'Duas propostas de estrutura para o site de uma usinagem industrial, lado a lado para comparar.',
-    stack: 'HTML · CSS',
-    img: 'assets/projetos/az3.webp',
-    demo: 'https://rochamaatheus.github.io/az3-apresentacao/',
-    repo: 'https://github.com/rochamaatheus/az3-apresentacao',
-    span: 'md:col-span-2',
+    span: 'md:col-span-6',
   },
 ];
 
@@ -131,7 +89,7 @@ function projectCard(p, i) {
   return `
     <article data-reveal data-tilt class="spot lift group relative w-[84%] shrink-0 snap-center overflow-hidden rounded-3xl border border-line bg-card md:w-auto ${p.span}">
       <button type="button" data-project="${i}" data-cursor="Ver projeto" class="absolute inset-0 z-10 rounded-3xl" aria-label="Ver vídeo de ${p.titulo}"></button>
-      <div class="relative aspect-[16/10] overflow-hidden bg-surface2 md:aspect-auto md:h-[21rem]">
+      <div class="relative aspect-[16/10] overflow-hidden bg-surface2">
         <video data-card-video muted loop playsinline preload="none" poster="assets/projetos/${p.id}.webp" src="assets/projetos/video/${p.id}.mp4" aria-hidden="true"
                class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"></video>
         <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-80"></div>
@@ -150,31 +108,6 @@ function projectCard(p, i) {
     </article>`;
 }
 
-function prototypeCard(p) {
-  return `
-    <article data-reveal data-tilt class="spot lift group flex w-[78%] shrink-0 snap-center flex-col overflow-hidden rounded-3xl border border-line bg-card md:w-auto ${p.span || ''}">
-      <button type="button" data-demo="${p.demo}" data-title="${p.titulo}" data-cursor="Ver demo" class="block w-full text-left" aria-label="Abrir demonstração de ${p.titulo}">
-        <div class="relative aspect-[16/10] overflow-hidden bg-surface2 md:aspect-auto md:h-56">
-          <img src="${p.img}" alt="Prévia de ${p.titulo}" loading="lazy" decoding="async" width="1200" height="750"
-               class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.05]" />
-          <div class="absolute inset-0 grid place-items-center bg-bg/50 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100">
-            <span class="btn-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white">
-              <i data-lucide="play" class="h-4 w-4"></i> Abrir demo
-            </span>
-          </div>
-        </div>
-      </button>
-      <div class="flex flex-1 flex-col p-5">
-        <div class="flex items-center justify-between gap-3">
-          <h4 class="text-lg font-semibold tracking-tight text-ink">${p.titulo}</h4>
-        </div>
-        <p class="mt-1 font-mono text-[11px] uppercase tracking-wide text-violet-300">${p.tipo}</p>
-        <p class="mt-3 flex-1 text-sm leading-relaxed text-dim">${p.descricao}</p>
-        <p class="mt-4 border-t border-line pt-4 font-mono text-[11px] text-mute">${p.stack}</p>
-      </div>
-    </article>`;
-}
-
 function stackCard(s) {
   return `
     <div data-reveal class="spot rounded-3xl border border-line bg-card p-6">
@@ -187,7 +120,6 @@ function stackCard(s) {
 }
 
 $('#projetos-grid').innerHTML = PROJETOS.map(projectCard).join('');
-$('#prototipos-grid').innerHTML = PROTOTIPOS.map(prototypeCard).join('');
 $('#stack-grid').innerHTML = STACK.map(stackCard).join('');
 
 const marqueeChunk = MARQUEE.map(
@@ -281,42 +213,9 @@ if (!reduceMotion && !navigator.connection?.saveData) {
   $$('[data-card-video]').forEach((v) => cardObs.observe(v));
 }
 
-// Modal de demo
-const modal = $('#demo-modal');
-const frame = $('#demo-frame');
-const loading = $('#demo-loading');
-let lastFocus = null;
-function openDemo(url, title) {
-  lastFocus = document.activeElement;
-  $('#demo-title-text').textContent = title;
-  $('#demo-newtab').href = url;
-  loading.style.display = 'flex';
-  frame.src = url;
-  modal.classList.add('active');
-  document.documentElement.classList.add('cursor-native');
-  document.body.style.overflow = 'hidden';
-  if (window.lenisInstance) lenisInstance.stop();
-  setTimeout(() => $('[data-close]', modal).focus(), 60);
-}
-function closeDemo() {
-  modal.classList.remove('active');
-  document.documentElement.classList.remove('cursor-native');
-  document.body.style.overflow = '';
-  if (window.lenisInstance) lenisInstance.start();
-  setTimeout(() => (frame.src = 'about:blank'), 350);
-  if (lastFocus) lastFocus.focus();
-}
-frame.addEventListener('load', () => { if (frame.src !== 'about:blank') loading.style.display = 'none'; });
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-demo]');
-  if (btn) openDemo(btn.dataset.demo, btn.dataset.title);
-});
-$('[data-close]', modal).addEventListener('click', closeDemo);
-modal.addEventListener('click', (e) => { if (e.target === modal) closeDemo(); });
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
   if (pModal.classList.contains('active')) closeProject();
-  else if (modal.classList.contains('active')) closeDemo();
   else if (mobileMenu.classList.contains('open')) setMenu(false);
 });
 
@@ -401,9 +300,6 @@ function onScroll() {
     const sec = $(l.getAttribute('href'));
     if (sec && sec.offsetTop <= mid && sec.offsetTop + sec.offsetHeight > mid) active = l;
   });
-  if (!active && $('#prototipos').offsetTop <= mid && $('#stack').offsetTop + $('#stack').offsetHeight > mid) {
-    active = navLinks.find((l) => l.getAttribute('href') === '#projetos');
-  }
   movePill(active);
   const contato = $('#contato').getBoundingClientRect();
   // No celular o botão cobriria o palco do processo enquanto ele está fixo na tela
@@ -668,7 +564,7 @@ function initBuild() {
     .to('.bs-typing', { autoAlpha: 0, duration: 0.1 }, 2.0)
     .from('.bs-slot .bs-msg', { autoAlpha: 0, y: 10, scale: 0.92, transformOrigin: '100% 100%', duration: 0.25 }, 2.02);
 
-  // 2 · Proposta e protótipo (wireframe)
+  // 2 · Proposta
   tl.to('.bs-chat', { autoAlpha: 0, x: -60, scale: 0.9, duration: 0.45, ease: 'power2.in' }, 2.55)
     .fromTo('.bs-proposal', { autoAlpha: 0, y: 50, rotation: -4 }, { autoAlpha: 1, y: 0, rotation: 0, duration: 0.5, ease: 'back.out(1.4)' }, 2.75)
     .from(q('.bs-proposal li'), { autoAlpha: 0, x: -14, stagger: 0.25, duration: 0.3 }, 3.0)
@@ -891,7 +787,7 @@ function initParticles() {
       d: { fixed: [0.5, 0.55], r: 0.3, alpha: 0.45 },
       m: { fixed: [0.5, 0.62], r: 0.5, alpha: 0.3 },
       rot: (t) => [1.15, t * 0.06, 0.3] },
-    { shape: 'grid', range: ['#projetos', '#prototipos'], wave: 1,
+    { shape: 'grid', range: ['#projetos'], wave: 1,
       d: { fixed: [0.5, 0.8], r: 0.5, alpha: 0.55 },
       m: { fixed: [0.5, 0.82], r: 0.6, alpha: 0.38 },
       rot: () => [0.9, 0, 0] },
@@ -1069,7 +965,7 @@ function initExtras() {
 
   // Carrossel no celular: o cartão do centro fica em destaque
   const mq = window.matchMedia('(max-width: 767px)');
-  $$('#projetos-grid, #prototipos-grid').forEach((rail) => {
+  $$('#projetos-grid').forEach((rail) => {
     const cards = [...rail.children];
     let raf = 0;
     const update = () => {

@@ -31,7 +31,7 @@ video/                ferramentas: prints, revisão visual e render do vídeo
 
 ## Editando
 
-Projetos, protótipos e stack ficam em arrays no topo de `assets/js/site.js`.
+Projetos e stack ficam em arrays no topo de `assets/js/site.js`.
 
 Os vídeos dos cards ficam em `assets/projetos/video/` e são gravados por `video/projetos/build.mjs` (definição em `clips.json`). O script usa `video/reels-unico/sitecap.mjs`.
 
