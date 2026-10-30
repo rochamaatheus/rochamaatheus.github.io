@@ -5,6 +5,8 @@ const SITES = {
   crm: 'https://crm.agenciakamino.com.br/',
   mobcorp: 'https://mobcorp.eco.br/',
   pontocego: 'https://pontocegodamarcenaria.com.br/',
+  benante: 'https://marianabenante.com/desafio-ponto-de-virada/',
+  lynch: 'https://lynchstore.com.br/',
   portfolio: 'https://rochamaatheus.github.io/',
 };
 const only = process.argv.slice(2);
@@ -15,7 +17,7 @@ for (const [name, url] of Object.entries(SITES)) {
     { tag: 'd', width: 1440, height: 900, dpr: 1, mobile: false, maxH: 5200 },
     { tag: 'm', width: 390, height: 844, dpr: 2, mobile: true, maxH: 4200 },
   ]) {
-    const ctx = await browser.newContext({ viewport: { width: v.width, height: v.height }, deviceScaleFactor: v.dpr, isMobile: v.mobile, hasTouch: v.mobile });
+    const ctx = await browser.newContext({ viewport: { width: v.width, height: v.height }, deviceScaleFactor: v.dpr, isMobile: v.mobile, hasTouch: v.mobile, bypassCSP: true });
     const page = await ctx.newPage();
     try {
       await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });

@@ -284,6 +284,8 @@ p[data-hero] { animation-name: hero-rise; }
 }
 .modal.active .modal-window { transform: none; }
 .demo-window { height: 88vh; }
+.project-window { max-width: 1040px; max-height: 94dvh; overflow-y: auto; }
+.project-video { display: block; width: 100%; aspect-ratio: 16 / 10; max-height: 62dvh; object-fit: cover; object-position: top; background: #08070f; }
 .demo-content { flex: 1; position: relative; background: #fff; min-height: 0; }
 .demo-content iframe { width: 100%; height: 100%; border: none; display: block; }
 #demo-loading {

@@ -1,40 +1,58 @@
-// Projetos reais: abrem o site em nova aba
+// Projetos reais: o vídeo toca no card e o clique abre o modal com a chamada para o WhatsApp
 const PROJETOS = [
   {
-    titulo: 'Agência Kamino',
-    tipo: 'Site + infraestrutura',
-    descricao: 'Construí o site institucional da agência e hoje mantenho toda a VPS e os clientes de desenvolvimento.',
-    tags: ['Site', 'VPS', 'SEO'],
-    img: 'assets/projetos/agenciakamino.webp',
-    url: 'https://agenciakamino.com.br/',
+    titulo: 'Mobcorp Fleet',
+    tipo: 'Site, sistema e app',
+    descricao: 'Site institucional, painel web de gestão e aplicativo Android e iOS para transporte executivo 100% elétrico.',
+    tags: ['Enterprise', 'Web', 'Android', 'iOS'],
+    id: 'mobcorp',
+    url: 'https://mobcorp.eco.br/',
     span: 'md:col-span-7',
   },
   {
     titulo: 'Kamino CRM',
     tipo: 'SaaS em produção',
     descricao: 'CRM para WhatsApp com atendimento por IA 24h, funil de vendas e automações, do primeiro contato até a venda.',
-    tags: ['Next.js', 'IA', 'WhatsApp'],
-    img: 'assets/projetos/crm-kamino.webp',
+    tags: ['Enterprise', 'Next.js', 'IA', 'WhatsApp'],
+    id: 'crm',
     url: 'https://crm.agenciakamino.com.br/',
     span: 'md:col-span-5',
   },
   {
-    titulo: 'Mobcorp Fleet',
-    tipo: 'Site, sistema e app',
-    descricao: 'Site institucional, sistema de gestão web e aplicativo Android/iOS para transporte executivo 100% elétrico.',
-    tags: ['Web', 'Android', 'iOS'],
-    img: 'assets/projetos/mobcorp.webp',
-    url: 'https://mobcorp.eco.br/',
+    titulo: 'Agência Kamino',
+    tipo: 'Site + infraestrutura',
+    descricao: 'Site institucional da agência de marketing e tecnologia, com a VPS e os clientes de desenvolvimento sob minha gestão.',
+    tags: ['Site', 'WebGL', 'VPS', 'SEO'],
+    id: 'kamino',
+    url: 'https://agenciakamino.com.br/',
     span: 'md:col-span-5',
+  },
+  {
+    titulo: 'Desafio Ponto de Virada',
+    tipo: 'Landing page',
+    descricao: 'Página do desafio de 7 dias da Mari Benante para advogadas, com identidade editorial própria.',
+    tags: ['Landing page', 'Conversão'],
+    id: 'benante',
+    url: 'https://marianabenante.com/desafio-ponto-de-virada/',
+    span: 'md:col-span-7',
+  },
+  {
+    titulo: 'Lynch Store',
+    tipo: 'Loja online',
+    descricao: 'Loja de moda geek e cosplay de Joinville, com identidade própria, painel administrativo e atendimento pelo WhatsApp.',
+    tags: ['Loja', 'PHP', 'WhatsApp'],
+    id: 'lynch',
+    url: 'https://lynchstore.com.br/',
+    span: 'md:col-span-7',
   },
   {
     titulo: 'O Ponto Cego da Marcenaria',
     tipo: 'Landing page',
     descricao: 'Página de captação para a imersão presencial do Giba Klein, voltada a donos de lojas do setor moveleiro.',
     tags: ['Landing page', 'Conversão'],
-    img: 'assets/projetos/pontocego.webp',
+    id: 'pontocego',
     url: 'https://pontocegodamarcenaria.com.br/',
-    span: 'md:col-span-7',
+    span: 'md:col-span-5',
   },
 ];
 
@@ -60,15 +78,6 @@ const PROTOTIPOS = [
     repo: 'https://github.com/rochamaatheus/wesen-clinica',
   },
   {
-    titulo: 'Lynch Store',
-    tipo: 'Wireframe de loja',
-    descricao: 'Nova vitrine de uma loja geek e cosplay, com catálogo, coleções, brechó e pedido pelo WhatsApp.',
-    stack: 'HTML · CSS · JS',
-    img: 'assets/projetos/lynch.webp',
-    demo: 'https://rochamaatheus.github.io/site-lynch-store/',
-    repo: 'https://github.com/rochamaatheus/site-lynch-store',
-  },
-  {
     titulo: 'Ties Comunicação',
     tipo: 'Estudo de layout',
     descricao: 'Três rascunhos de layout para o novo site, com o mesmo conteúdo organizado de jeitos diferentes.',
@@ -85,6 +94,7 @@ const PROTOTIPOS = [
     img: 'assets/projetos/az3.webp',
     demo: 'https://rochamaatheus.github.io/az3-apresentacao/',
     repo: 'https://github.com/rochamaatheus/az3-apresentacao',
+    span: 'md:col-span-2',
   },
 ];
 
@@ -95,13 +105,13 @@ const STACK = [
   { grupo: 'Infra e dados', icone: 'cloud-cog', itens: ['Docker', 'Linux / VPS', 'Nginx', 'Traefik', 'Meta e Google Ads', 'GTM'] },
 ];
 
-const MARQUEE = ['Sites', 'Sistemas', 'IA no WhatsApp', 'Painéis', 'Automação', 'SEO', 'Landing pages', 'Apps', 'Sob medida', 'Do zero ao ar'];
+const MARQUEE = ['Sites responsivos', 'Google Ads', 'WhatsApp', 'Agentes de IA', 'Sistemas', 'Apps Android e iOS', 'Landing pages', 'SEO', 'Projetos enterprise', 'Sob medida'];
 
 const CODE_LINES = [
   [['k', 'const'], ['t', ' matheus '], ['d', '= {']],
   [['p', '  entrega'], ['d', ':  ['], ['s', "'sites'"], ['d', ', '], ['s', "'sistemas'"], ['d', ', '], ['s', "'IA'"], ['d', '],']],
-  [['p', '  extra'], ['d', ':    '], ['s', "'o que o negócio precisar'"], ['d', ',']],
-  [['p', '  foco'], ['d', ':     '], ['s', "'resolver, sem enrolação'"], ['d', ',']],
+  [['p', '  extra'], ['d', ':    '], ['s', "'Google Ads calibrado'"], ['d', ',']],
+  [['p', '  foco'], ['d', ':     '], ['s', "'empresas de todos os portes'"], ['d', ',']],
   [['p', '  base'], ['d', ':     '], ['s', "'Joinville, SC'"], ['d', ',']],
   [['p', '  processo'], ['d', ': '], ['s', "'do zero ao ar, direto comigo'"], ['d', ',']],
   [['p', '  disponivel'], ['d', ': '], ['k', 'true'], ['d', ',']],
@@ -117,27 +127,26 @@ const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matc
 const hasGsap = typeof window.gsap !== 'undefined';
 if (!hasGsap) document.documentElement.classList.remove('js', 'motion');
 
-function projectCard(p) {
+function projectCard(p, i) {
   return `
-    <article data-reveal data-tilt class="spot lift group w-[84%] shrink-0 snap-center overflow-hidden rounded-3xl border border-line bg-card md:w-auto ${p.span}">
-      <a href="${p.url}" target="_blank" rel="noopener" data-cursor="Abrir site" class="block">
-        <div class="relative aspect-[16/10] overflow-hidden bg-surface2 md:aspect-auto md:h-[21rem]">
-          <img src="${p.img}" alt="Página inicial de ${p.titulo}" loading="lazy" decoding="async" width="1200" height="750"
-               data-parallax class="h-[112%] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
-          <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-80"></div>
-          <span class="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full glass-card text-ink opacity-0 -translate-y-1 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
-            <i data-lucide="arrow-up-right" class="h-5 w-5"></i>
-          </span>
+    <article data-reveal data-tilt class="spot lift group relative w-[84%] shrink-0 snap-center overflow-hidden rounded-3xl border border-line bg-card md:w-auto ${p.span}">
+      <button type="button" data-project="${i}" data-cursor="Ver projeto" class="absolute inset-0 z-10 rounded-3xl" aria-label="Ver vídeo de ${p.titulo}"></button>
+      <div class="relative aspect-[16/10] overflow-hidden bg-surface2 md:aspect-auto md:h-[21rem]">
+        <video data-card-video muted loop playsinline preload="none" poster="assets/projetos/${p.id}.webp" src="assets/projetos/video/${p.id}.mp4" aria-hidden="true"
+               class="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"></video>
+        <div class="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-80"></div>
+        <span class="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full glass-card text-ink opacity-0 -translate-y-1 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0">
+          <i data-lucide="play" class="h-5 w-5"></i>
+        </span>
+      </div>
+      <div class="p-6 md:p-7">
+        <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <h3 class="text-xl md:text-2xl font-semibold tracking-tight text-ink">${p.titulo}</h3>
+          <span class="shrink-0 rounded-full border border-line px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-violet-300">${p.tipo}</span>
         </div>
-        <div class="p-6 md:p-7">
-          <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
-            <h3 class="text-xl md:text-2xl font-semibold tracking-tight text-ink">${p.titulo}</h3>
-            <span class="shrink-0 rounded-full border border-line px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-violet-300">${p.tipo}</span>
-          </div>
-          <p class="mt-3 text-[15px] leading-relaxed text-dim">${p.descricao}<span class="sr-only"> (abre o site em nova aba)</span></p>
-          <div class="mt-5 flex flex-wrap gap-2">${p.tags.map((t) => `<span class="rounded-md bg-white/5 px-2 py-1 font-mono text-[11px] text-dim">${t}</span>`).join('')}</div>
-        </div>
-      </a>
+        <p class="mt-3 text-[15px] leading-relaxed text-dim">${p.descricao}</p>
+        <div class="mt-5 flex flex-wrap gap-2">${p.tags.map((t) => `<span class="rounded-md bg-white/5 px-2 py-1 font-mono text-[11px] text-dim">${t}</span>`).join('')}</div>
+      </div>
     </article>`;
 }
 
@@ -158,7 +167,6 @@ function prototypeCard(p) {
       <div class="flex flex-1 flex-col p-5">
         <div class="flex items-center justify-between gap-3">
           <h4 class="text-lg font-semibold tracking-tight text-ink">${p.titulo}</h4>
-          <a href="${p.repo}" target="_blank" rel="noopener" aria-label="Código de ${p.titulo} no GitHub" class="text-mute transition-colors hover:text-violet-300"><i data-lucide="github" class="h-4 w-4"></i></a>
         </div>
         <p class="mt-1 font-mono text-[11px] uppercase tracking-wide text-violet-300">${p.tipo}</p>
         <p class="mt-3 flex-1 text-sm leading-relaxed text-dim">${p.descricao}</p>
@@ -229,6 +237,50 @@ function setMenu(open) {
 menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
 $$('#mobile-menu a').forEach((l) => l.addEventListener('click', () => setMenu(false)));
 
+// Modal de projeto: vídeo em destaque, WhatsApp como ação principal e o site como link secundário
+const pModal = $('#project-modal');
+const pVideo = $('#project-video');
+let pLastFocus = null;
+function openProject(p) {
+  pLastFocus = document.activeElement;
+  $('#project-title').textContent = p.titulo;
+  $('#project-desc').textContent = p.descricao;
+  $('#project-cta').href = `https://wa.me/5547999653593?text=${encodeURIComponent(`Olá Matheus! Vi o projeto ${p.titulo} e quero um projeto assim.`)}`;
+  const link = $('#project-link');
+  link.href = p.url;
+  link.textContent = `Ver ${new URL(p.url).hostname.replace('www.', '')}`;
+  pVideo.poster = `assets/projetos/${p.id}.webp`;
+  pVideo.src = `assets/projetos/video/${p.id}.mp4`;
+  pVideo.play().catch(() => {});
+  pModal.classList.add('active');
+  document.documentElement.classList.add('cursor-native');
+  document.body.style.overflow = 'hidden';
+  if (window.lenisInstance) lenisInstance.stop();
+  setTimeout(() => $('[data-close-project]', pModal).focus(), 60);
+}
+function closeProject() {
+  pModal.classList.remove('active');
+  document.documentElement.classList.remove('cursor-native');
+  document.body.style.overflow = '';
+  if (window.lenisInstance) lenisInstance.start();
+  pVideo.pause();
+  if (pLastFocus) pLastFocus.focus();
+}
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-project]');
+  if (btn) openProject(PROJETOS[+btn.dataset.project]);
+});
+$('[data-close-project]', pModal).addEventListener('click', closeProject);
+pModal.addEventListener('click', (e) => { if (e.target === pModal) closeProject(); });
+
+// Vídeos dos cards: só tocam na tela, e ficam no poster com economia de dados ou ?motion=0
+if (!reduceMotion && !navigator.connection?.saveData) {
+  const cardObs = new IntersectionObserver((entries) => {
+    entries.forEach((en) => { if (en.isIntersecting) en.target.play().catch(() => {}); else en.target.pause(); });
+  }, { threshold: 0.35 });
+  $$('[data-card-video]').forEach((v) => cardObs.observe(v));
+}
+
 // Modal de demo
 const modal = $('#demo-modal');
 const frame = $('#demo-frame');
@@ -263,7 +315,8 @@ $('[data-close]', modal).addEventListener('click', closeDemo);
 modal.addEventListener('click', (e) => { if (e.target === modal) closeDemo(); });
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
-  if (modal.classList.contains('active')) closeDemo();
+  if (pModal.classList.contains('active')) closeProject();
+  else if (modal.classList.contains('active')) closeDemo();
   else if (mobileMenu.classList.contains('open')) setMenu(false);
 });
 

@@ -1,0 +1,173 @@
+{
+ "kamino": {
+  "url": "https://agenciakamino.com.br/",
+  "device": "desktop",
+  "dismiss": "Recusar",
+  "dur": 8,
+  "warm": 4000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    1.6,
+    0
+   ],
+   [
+    4.4,
+    1540
+   ],
+   [
+    5.2,
+    1540
+   ],
+   [
+    8,
+    2620
+   ]
+  ]
+ },
+ "crm": {
+  "url": "https://crm.agenciakamino.com.br/",
+  "device": "desktop",
+  "dismiss": "Somente necessários",
+  "dur": 8,
+  "warm": 4000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    1.6,
+    0
+   ],
+   [
+    4.6,
+    "0.3"
+   ],
+   [
+    5.2,
+    "0.3"
+   ],
+   [
+    8,
+    "0.6"
+   ]
+  ],
+  "setup": "[...document.querySelectorAll('button')].find((b) => /somente necess/i.test(b.innerText))?.click()"
+ },
+ "mobcorp": {
+  "url": "https://mobcorp.eco.br/",
+  "device": "desktop",
+  "dismiss": "Recusar",
+  "dur": 8,
+  "warm": 6000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    1.8,
+    0
+   ],
+   [
+    4.6,
+    "0.25"
+   ],
+   [
+    5.2,
+    "0.25"
+   ],
+   [
+    8,
+    "0.5"
+   ]
+  ]
+ },
+ "benante": {
+  "url": "https://marianabenante.com/desafio-ponto-de-virada/",
+  "device": "desktop",
+  "dismiss": "Recusar",
+  "dur": 8,
+  "warm": 5000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    1.6,
+    0
+   ],
+   [
+    4.6,
+    "0.2"
+   ],
+   [
+    5.2,
+    "0.2"
+   ],
+   [
+    8,
+    "0.42"
+   ]
+  ]
+ },
+ "lynch": {
+  "url": "https://lynchstore.com.br/",
+  "device": "desktop",
+  "dismiss": "Recusar",
+  "dur": 8,
+  "warm": 5000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    3.4,
+    0
+   ],
+   [
+    6,
+    "0.97"
+   ],
+   [
+    8,
+    "0.97"
+   ]
+  ]
+ },
+ "pontocego": {
+  "url": "https://pontocegodamarcenaria.com.br/",
+  "device": "desktop",
+  "dismiss": "Recusar",
+  "dur": 8,
+  "warm": 4000,
+  "scroll": [
+   [
+    0,
+    0
+   ],
+   [
+    1.6,
+    0
+   ],
+   [
+    4.6,
+    "0.2"
+   ],
+   [
+    5.2,
+    "0.2"
+   ],
+   [
+    8,
+    "0.42"
+   ]
+  ]
+ }
+}

@@ -31,36 +31,38 @@ const logoSVG = (id) => `<svg class="logo-svg" viewBox="0 0 48 48"><path class="
 const L = M
   ? {
       logo1: 320, name1Y: 1180, name1Size: 96,
-      hookSize: 138, hookLines: [['Seu', 'negócio'], ['merece', 'mais'], ['que', 'um'], ['#tmpl']], hookB: [['merece', 'um'], ['projeto'], ['~sob medida.']], hookTop: 640,
+      hookSize: 138, hookLines: [['Sua', 'empresa'], ['merece', 'mais'], ['que', 'um'], ['#tmpl']], hookB: [['merece', 'um'], ['projeto'], ['~sob medida.']], hookTop: 640,
       hchips: [[80, 400, 'palette', 'Visual próprio'], [430, 1290, 'code-xml', '100% código próprio'], [120, 1400, 'message-circle', 'Direto comigo']],
       svc: (i) => ({ x: 90, y: 330 + i * 360, w: 900, h: 330 }), tagY: 1385, tagSize: 52,
       browser: { x: 95, y: 450, w: 520, h: 360, r: -4 }, phone: { x: 420, y: 380, w: 560, h: 960 }, label: { x: 85, y: 1250, w: 910, h: 230 }, pheadY: 270,
-      bScroll: [700, 700, 600, 500], pScroll: [2400, 2000, 1800, 1500],
+      bScroll: [100, 600, 600, 60, 80, 500], pScroll: [150, 1500, 1400, 100, 120, 1200],
       tile: [420, 262], cols: 5, rows: 6, panel: { x: 90, y: 620, w: 900, h: 600 }, p1: 84, p2: 118,
       chat: { x: 90, y: 480, w: 900, h: 560 }, title6Y: 290,
       s7: { l1: 112, l2: 130, y1: 280, y2: 400, stat: (i) => ({ x: 90, y: 610 + i * 225, w: 900, h: 200 }), rows: [1310, 1400] },
-      logo8: 230, logo8Y: 420, ctaTop: 590, ctaSize: 112, ctaLines: ['Vamos tirar', 'a sua ideia', '#do papel?'], pillsTop: 1080, signY: 1010,
+      logo8: 230, logo8Y: 420, ctaTop: 590, ctaSize: 112, ctaLines: ['Seu próximo', 'projeto', '#começa aqui.'], pillsTop: 1080, signY: 1010,
     }
   : {
       logo1: 270, name1Y: 720, name1Size: 84,
-      hookSize: 168, hookLines: [['Seu', 'negócio'], ['merece', 'mais', 'que'], ['um', '#tmpl']], hookB: [['merece', 'um', 'projeto'], ['~sob medida.']], hookTop: 270,
+      hookSize: 168, hookLines: [['Sua', 'empresa'], ['merece', 'mais', 'que'], ['um', '#tmpl']], hookB: [['merece', 'um', 'projeto'], ['~sob medida.']], hookTop: 270,
       hchips: [[170, 150, 'palette', 'Visual próprio'], [1330, 175, 'code-xml', '100% código próprio'], [770, 880, 'message-circle', 'Direto comigo']],
       svc: (i) => ({ x: 132 + i * 568, y: 200, w: 520, h: 640 }), tagY: 900, tagSize: 58,
       browser: { x: 150, y: 170, w: 1240, h: 760, r: 0 }, phone: { x: 1440, y: 200, w: 340, h: 720 }, label: { x: 90, y: 790, w: 660, h: 210 }, pheadY: 60,
-      bScroll: [1300, 1100, 950, 800], pScroll: [1300, 1100, 1000, 900],
+      bScroll: [120, 900, 900, 80, 120, 800], pScroll: [180, 1000, 900, 100, 140, 900],
       tile: [520, 325], cols: 6, rows: 4, panel: { x: 150, y: 300, w: 840, h: 480 }, p1: 92, p2: 124,
       chat: { x: 150, y: 270, w: 720, h: 640 }, title6Y: 110,
       s7: { l1: 128, l2: 150, y1: 110, y2: 245, stat: (i) => ({ x: 215 + i * 510, y: 500, w: 470, h: 230 }), rows: [790, 905] },
-      logo8: 190, logo8Y: 250, ctaTop: 395, ctaSize: 112, ctaLines: ['Vamos tirar a sua ideia', '#do papel?'], pillsTop: 700, signY: 930,
+      logo8: 190, logo8Y: 250, ctaTop: 395, ctaSize: 112, ctaLines: ['Seu próximo projeto', '#começa aqui.'], pillsTop: 700, signY: 930,
     };
 
 const PROJ = [
-  { n: 'Agência Kamino', t: 'Site + infraestrutura', u: 'agenciakamino.com.br', k: 'kamino', tint: '#2f5bff' },
+  { n: 'Mobcorp Fleet', t: 'Site, sistema e app', u: 'mobcorp.eco.br', k: 'mobcorp', tint: '#1f9d6b' },
   { n: 'Kamino CRM', t: 'SaaS em produção', u: 'crm.agenciakamino.com.br', k: 'crm', tint: '#3d7bff' },
-  { n: 'Mobcorp Fleet', t: 'Site, sistema e app', u: 'mobcorp.eco.br', k: 'mobcorp', tint: '#8a63ff' },
+  { n: 'Agência Kamino', t: 'Site + infraestrutura', u: 'agenciakamino.com.br', k: 'kamino', tint: '#2f5bff' },
+  { n: 'Desafio Ponto de Virada', t: 'Landing page', u: 'marianabenante.com', k: 'benante', tint: '#a0522d' },
+  { n: 'Lynch Store', t: 'Loja online', u: 'lynchstore.com.br', k: 'lynch', tint: '#c98f1c' },
   { n: 'O Ponto Cego da Marcenaria', t: 'Landing page', u: 'pontocegodamarcenaria.com.br', k: 'pontocego', tint: '#5b4cff' },
 ];
-const PROTOS = ['liderarh', 'wesen', 'lynch', 'ties', 'az3'];
+const PROTOS = ['liderarh', 'wesen', 'ties', 'az3'];
 
 function build() {
   const tl = gsap.timeline({ paused: true, defaults: { ease: 'expo.out' } });
@@ -176,9 +178,9 @@ function build() {
 
   // S3: serviços
   const S3 = [
-    { w: 'Sites.', ic: 'monitor-smartphone', sub: 'que aparecem no Google e trazem cliente', ill: 'site' },
-    { w: 'Sistemas.', ic: 'layout-dashboard', sub: 'que organizam a sua operação', ill: 'chart' },
-    { w: 'IA.', ic: 'bot', sub: 'que atende no WhatsApp 24h', ill: 'chat' },
+    { w: 'Sites.', ic: 'monitor-smartphone', sub: 'responsivos, com Google Ads calibrado', ill: 'site' },
+    { w: 'WhatsApp.', ic: 'bot', sub: 'com agentes de IA, 24h por dia', ill: 'chat' },
+    { w: 'Sistemas.', ic: 'layout-dashboard', sub: 'robustos, com apps Android e iOS', ill: 'chart' },
   ];
   const s3 = $('#s3');
   S3.forEach((s, i) => {
@@ -216,7 +218,7 @@ function build() {
   const tag = document.createElement('div');
   tag.className = 'abs chk';
   Object.assign(tag.style, { left: 0, right: 0, top: L.tagY + 'px', textAlign: 'center', fontSize: L.tagSize + 'px', fontWeight: 600, letterSpacing: '-0.04em' });
-  tag.innerHTML = 'Se envolve código, <span class="serif grad" style="font-size:1.2em">eu resolvo.</span>';
+  tag.innerHTML = 'Do projeto simples <span class="serif grad" style="font-size:1.2em">ao enterprise.</span>';
   s3.appendChild(tag);
   show('#s3', 5.95, 10.15);
   $$('#s3 .svc').forEach((el, i) => {
@@ -263,7 +265,7 @@ function build() {
   $('#pstrip').innerHTML = PROJ.map((p) => `<div class="slot" style="width:${scrW}px"><img src="shots/full-${p.k}-m.jpg"></div>`).join('');
   $('#urlSwap').innerHTML = PROJ.map((p) => `<div style="top:0">${p.u}</div>`).join('');
   const ts = M ? 62 : 54;
-  $('#plabel').innerHTML = `<div class="abs mono" style="right:34px;top:30px;font-size:22px;color:#c7b6ff"><span class="swap" id="numSwap" style="display:inline-block;width:40px;height:26px;vertical-align:top">${PROJ.map((_, i) => `<div>0${i + 1}</div>`).join('')}</span><span style="color:#6f6990">/04</span></div>
+  $('#plabel').innerHTML = `<div class="abs mono" style="right:34px;top:30px;font-size:22px;color:#c7b6ff"><span class="swap" id="numSwap" style="display:inline-block;width:40px;height:26px;vertical-align:top">${PROJ.map((_, i) => `<div>0${i + 1}</div>`).join('')}</span><span style="color:#6f6990">/06</span></div>
     <div class="abs mono" style="left:38px;top:32px;font-size:22px;letter-spacing:.12em;color:#c7b6ff;text-transform:uppercase"><span class="swap chk" id="typeSwap" style="display:block;width:${LB.w - 200}px;height:28px">${PROJ.map((p) => `<div>${p.t}</div>`).join('')}</span></div>
     <div class="abs" style="left:38px;top:${M ? 78 : 72}px;"><span class="swap t chk" id="nameSwap" style="display:block;width:${LB.w - 70}px;height:${Math.round(ts * 1.25)}px;font-size:${ts}px">${PROJ.map((p) => `<div style="${p.n.length > 20 ? `font-size:${M ? 54 : 44}px;top:${M ? 6 : 8}px` : ''}">${p.n}</div>`).join('')}</span></div>
     <div class="abs mono" style="left:38px;bottom:${M ? 34 : 30}px;font-size:${M ? 26 : 22}px;color:#a19bc2;display:flex;gap:10px;align-items:center">${icon('globe', M ? 26 : 22)}<span class="swap" id="urlSwap2" style="display:inline-block;width:${LB.w - 120}px;height:${M ? 32 : 28}px">${PROJ.map((p) => `<div>${p.u}</div>`).join('')}</span></div>`;
@@ -283,11 +285,11 @@ function build() {
   };
   ['#urlSwap', '#numSwap', '#typeSwap', '#nameSwap', '#urlSwap2'].forEach((s) => $$(`${s} > div`).forEach((k, j) => gsap.set(k, { opacity: j ? 0 : 1, yPercent: j ? 110 : 0 })));
   PROJ.forEach((p, i) => {
-    const s = 10.0 + i * 2;
+    const s = 10.0 + i * 1.27;
     const bImg = $$('#bstrip img')[i];
     const pImg = $$('#pstrip img')[i];
-    tl.fromTo(bImg, { y: 0 }, { y: -L.bScroll[i], duration: 1.75, ease: 'power1.inOut' }, s + 0.15);
-    tl.fromTo(pImg, { y: 0 }, { y: -L.pScroll[i], duration: 1.75, ease: 'power1.inOut' }, s + 0.2);
+    tl.fromTo(bImg, { y: 0 }, { y: -L.bScroll[i], duration: 1.15, ease: 'power1.inOut' }, s + 0.15);
+    tl.fromTo(pImg, { y: 0 }, { y: -L.pScroll[i], duration: 1.15, ease: 'power1.inOut' }, s + 0.2);
     if (i > 0) {
       const t = s - 0.2;
       tl.set(['#bstrip', '#pstrip'], { filter: 'url(#mblur)' }, t);
@@ -328,7 +330,7 @@ function build() {
   $('#protoPanel').innerHTML = `<div class="abs mono chk" style="left:56px;top:54px;font-size:24px;letter-spacing:.16em;color:#c7b6ff">PROPOSTAS E PROTÓTIPOS</div>
     <div class="abs" style="left:56px;top:${M ? 112 : 104}px;overflow:hidden;padding-bottom:10px"><div class="pl chk" style="font-size:${L.p1}px;font-weight:600;letter-spacing:-.05em;white-space:nowrap">Antes de fechar,</div></div>
     <div class="abs" style="left:52px;top:${M ? 205 : 196}px;overflow:hidden;padding:0 10px 14px 4px"><div class="pl serif grad chk" style="font-size:${L.p2}px;line-height:1.05;white-space:nowrap">eu mostro.</div></div>
-    <div class="abs chk" id="protoSub" style="left:56px;top:${M ? 405 : 350}px;font-size:${M ? 36 : 32}px;line-height:1.35;color:#a19bc2">Layouts e protótipos para<br>decidir junto, quando faz sentido.</div>`;
+    <div class="abs chk" id="protoSub" style="left:56px;top:${M ? 405 : 350}px;font-size:${M ? 36 : 32}px;line-height:1.35;color:#a19bc2">Layouts e protótipos para<br>decidir antes de começar.</div>`;
   gsap.set('#protoPanel', { transformPerspective: 1400, rotationY: 0.01, force3D: true });
   show('#s5', 17.85, 22.15);
   tl.fromTo('#s5', { clipPath: 'circle(0% at 50% 50%)' }, { clipPath: 'circle(80% at 50% 50%)', duration: 0.6, ease: 'expo.inOut' }, 17.85);
@@ -362,7 +364,7 @@ function build() {
       <div class="msg out chk" id="m2" style="top:${M ? 290 : 320}px">Bora! Te mando a proposta ainda hoje.<span class="tm mono">10:25 ✓✓</span></div>
       <div class="msg in chk" id="m3" style="top:${M ? 432 : 495}px">Fechado! Vamos nessa.<span class="tm mono">10:26</span></div>
     </div>`;
-  const STEPS = [['Conversa', 'Você me conta o problema.'], ['Proposta', 'Escopo, prazo e valor fechados.'], ['Construção', 'Do zero, com você acompanhando.'], ['No ar', 'Publicado, com suporte depois.']];
+  const STEPS = [['Conversa', 'Você apresenta o desafio.'], ['Proposta', 'Escopo, prazo e valor fechados.'], ['Construção', 'Do zero, com você acompanhando.'], ['No ar', 'Publicado, com suporte depois.']];
   STEPS.forEach(([h, p], i) => {
     const st = document.createElement('div');
     st.className = 'step';
@@ -421,7 +423,7 @@ function build() {
   const S7 = L.s7;
   s7.innerHTML = `<div class="abs" style="left:0;right:0;top:${S7.y1}px;text-align:center;overflow:hidden;padding-bottom:12px"><div class="l7 chk" style="font-size:${S7.l1}px;font-weight:600;letter-spacing:-.055em;line-height:1">Do zero ao ar.</div></div>
     <div class="abs" style="left:0;right:0;top:${S7.y2}px;text-align:center;overflow:hidden;padding-bottom:18px"><div class="l7 serif grad chk" style="font-size:${S7.l2}px;line-height:1.02;display:inline-block;padding:0 .08em">direto comigo.</div></div>`;
-  [['70', '+', 'repositórios no GitHub'], ['4', '', 'sistemas e sites em produção'], ['100', '%', 'código próprio, sem template']].forEach(([v, suf, l], i) => {
+  [['6', '', 'projetos em produção'], ['3', '', 'frentes de entrega'], ['100', '%', 'código próprio, sem template']].forEach(([v, suf, l], i) => {
     const r = S7.stat(i);
     const d = document.createElement('div');
     d.className = 'stat glass';

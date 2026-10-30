@@ -33,6 +33,10 @@ video/                ferramentas: prints, revisão visual e render do vídeo
 
 Projetos, protótipos e stack ficam em arrays no topo de `assets/js/site.js`.
 
+Os vídeos dos cards ficam em `assets/projetos/video/` e são gravados por `video/projetos/build.mjs` (definição em `clips.json`). O script usa `video/reels-unico/sitecap.mjs`.
+
+Antes de renderizar o vídeo de apresentação de novo, apague `video/frames/`: o `render.mjs` pula os quadros que já existem.
+
 Depois de mudar classes no HTML ou no JS, recompile o CSS:
 
 ```bash
